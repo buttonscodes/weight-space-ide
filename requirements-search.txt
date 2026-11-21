@@ -1,0 +1,2 @@
+-r requirements.txt
+optuna==5.0.0  # the sampler of the automatic search (Heretic 64e9991 uses optuna~=5.0)

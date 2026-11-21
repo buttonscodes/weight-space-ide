@@ -1,0 +1,1135 @@
+{
+  "platform": "macOS arm64, 128 GiB unified memory",
+  "runs": [
+    {
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "revision": "9217f5db79a29953eb74d5343926648285ec7e67",
+      "artifact_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "logical_stored_parameters": 630167424,
+      "tensor_types": [
+        "F32",
+        "Q4_0",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 0.6123239580192603,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 422782464,
+        "dense_parameter_bytes": 286208,
+        "forecast": {
+          "weights": 422782464,
+          "runtime": 2147483648,
+          "kv": 88080384,
+          "activations": 2489319424,
+          "patches": 0,
+          "temporary": 959653376,
+          "total": 6107319296
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase1-attempt3",
+      "generation": null,
+      "memory": {
+        "baseline_available_gib": 68.68673706054688,
+        "minimum_available_gib": 67.32797241210938,
+        "peak_rss_gib": 2.3525238037109375,
+        "peak_footprint_gib": 1.557970866560936,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 24.73565345897805
+        }
+      },
+      "merged": "unsupported; companion carries FP32 patches and original-base SHA-256"
+    },
+    {
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "revision": "9217f5db79a29953eb74d5343926648285ec7e67",
+      "artifact_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "logical_stored_parameters": 630167424,
+      "tensor_types": [
+        "F32",
+        "Q4_0",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 0.7015498750261031,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 422782464,
+        "dense_parameter_bytes": 286208,
+        "forecast": {
+          "weights": 422782464,
+          "runtime": 2147483648,
+          "kv": 88080384,
+          "activations": 2489319424,
+          "patches": 0,
+          "temporary": 959653376,
+          "total": 6107319296
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen2-export",
+      "generation": {
+        "base": {
+          "tokens": 8,
+          "seconds": 0.5371554170269519,
+          "tokens_per_second": 14.893268775503381
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 0.5814033329952508,
+          "tokens_per_second": 13.759811039929742
+        }
+      },
+      "memory": {
+        "baseline_available_gib": 69.34562683105469,
+        "minimum_available_gib": 66.68701171875,
+        "peak_rss_gib": 4.2311553955078125,
+        "peak_footprint_gib": 3.0992777943611145,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 60.83818575000623
+        }
+      },
+      "merged": {
+        "format": "standalone-gguf-same-scheme",
+        "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+        "artifact_sha256": "f6253bf37f76ce624b611fbd5b3548cd2f5b5c71051890949286c01e7b5b6eb5",
+        "path": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen2-export/edited-standalone.gguf",
+        "standalone": true,
+        "patches": [
+          {
+            "id": "0001-62847",
+            "message": "Acceptance: promote selected city token",
+            "author": "human",
+            "source": {
+              "kind": "wscript",
+              "script": "P(\"lm_head.weight\")[7148, :] += 4 * P(\"lm_head.weight\")[12095, :]"
+            },
+            "enabled": true,
+            "strength": 1.0,
+            "created": 1794562847.5656488,
+            "info": {
+              "tests": null,
+              "drift": 17.81821
+            },
+            "stats": [
+              {
+                "param": "lm_head.weight",
+                "changed": 890,
+                "norm": 1.5056005037335525,
+                "max_abs": 0.16314411163330078,
+                "rank": null,
+                "kinds": [
+                  "block"
+                ],
+                "stored": 896,
+                "pieces": 1
+              }
+            ],
+            "changed": 890,
+            "stored": 896
+          }
+        ],
+        "rows_requantized": 1,
+        "changed_rows_max_weight_error": 0.000698089599609375,
+        "changed_rows_rms_weight_error": 0.00028912537629008226,
+        "float_slab_limit_bytes": 1048576,
+        "backend": "ggml 0.29.0 quantize_chunk",
+        "limitations": "Same tensor schemes only; rounding changes logits; original GGUF metadata retained; no patch undo",
+        "max_logit_error": 0.22188568115234375,
+        "next_token_preserved": true,
+        "last_token_kl": -1.8276602115692278e-28
+      },
+      "behavior": {
+        "intent": "reinforce an existing fact; not demonstrated knowledge acquisition",
+        "residual_rms": 1.8824244737625122,
+        "trials": [
+          {
+            "magnitude": 0.03,
+            "target_margin_gain": 0.05478096008300781,
+            "preservation_kl": [
+              0.0,
+              0.0,
+              0.0,
+              3.100634557995363e-06
+            ],
+            "unrelated_top1_preserved": [
+              true,
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            "magnitude": 0.1,
+            "target_margin_gain": 0.20328617095947266,
+            "preservation_kl": [
+              0.0,
+              0.0,
+              0.0,
+              4.600615284289233e-06
+            ],
+            "unrelated_top1_preserved": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ],
+        "rank_commit": {
+          "drift": {
+            "kl": 0.00014,
+            "kl_max": 0.004,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 4358144,
+              "of": 4358144,
+              "norm": 0.00509,
+              "max_abs": 0.0004,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 5760
+            }
+          ],
+          "output": "",
+          "n_changed": 4358144,
+          "stored": 5760,
+          "patch": "0002-62862"
+        },
+        "sparse_commit": {
+          "drift": {
+            "kl": 0.00017,
+            "kl_max": 0.0048,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3,
+              "of": 4358144,
+              "norm": 0.00515,
+              "max_abs": 0.00349,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9
+            }
+          ],
+          "output": "",
+          "n_changed": 3,
+          "stored": 9,
+          "patch": "0003-62864"
+        },
+        "sparse_max_logit_change": 0.054491519927978516,
+        "suite": {
+          "name": "bounded-locality",
+          "passed": 5,
+          "total": 5,
+          "score": 1.0,
+          "cases": [
+            {
+              "name": "France target",
+              "type": "next_token",
+              "prompt": "The capital of France is",
+              "got": "\u00b7Paris",
+              "pass": true,
+              "expect": [
+                "\u00b7Paris"
+              ],
+              "rank": 0,
+              "prob": 0.5379,
+              "value": 2.1153
+            },
+            {
+              "name": "preserve 0",
+              "type": "preserve",
+              "prompt": "The capital of Germany is",
+              "got": "\u00b7Berlin",
+              "pass": true,
+              "value": 1e-05,
+              "base": "\u00b7Berlin"
+            },
+            {
+              "name": "preserve 1",
+              "type": "preserve",
+              "prompt": "Water freezes at",
+              "got": "\u00b7",
+              "pass": true,
+              "value": 0.0,
+              "base": "\u00b7"
+            },
+            {
+              "name": "preserve 2",
+              "type": "preserve",
+              "prompt": "The sum of one and two is",
+              "got": "\u00b7",
+              "pass": true,
+              "value": 0.0,
+              "base": "\u00b7"
+            },
+            {
+              "name": "preserve 3",
+              "type": "preserve",
+              "prompt": "A small bird flies over",
+              "got": "\u00b7a",
+              "pass": true,
+              "value": 1e-05,
+              "base": "\u00b7a"
+            }
+          ]
+        },
+        "held_out_prompt": "A small bird flies over",
+        "combined_companion_reload_error": 0.0,
+        "locality_pass": true,
+        "merged_export": {
+          "format": "standalone-gguf-same-scheme",
+          "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+          "artifact_sha256": "111079193e0b7f5d8c7382a64d0bac7de712f68a000b2f29c974ff06f07a20d9",
+          "path": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen2-export/internal-standalone.gguf",
+          "standalone": true,
+          "patches": [
+            {
+              "id": "0002-62862",
+              "message": "Bounded factual reinforcement rank-one experiment",
+              "author": "acceptance",
+              "source": {
+                "kind": "lowrank"
+              },
+              "enabled": true,
+              "strength": 1.0,
+              "created": 1794562862.7554061,
+              "info": {
+                "tests": null,
+                "drift": 0.00014
+              },
+              "stats": [
+                {
+                  "param": "model.layers.23.mlp.down_proj.weight",
+                  "changed": 4358144,
+                  "norm": 0.005092505723615848,
+                  "max_abs": 0.000403155165258795,
+                  "rank": 1,
+                  "kinds": [
+                    "lowrank"
+                  ],
+                  "stored": 5760,
+                  "pieces": 1
+                }
+              ],
+              "changed": 4358144,
+              "stored": 5760
+            },
+            {
+              "id": "0003-62864",
+              "message": "Sparse internal-layer interoperability probe",
+              "author": "acceptance",
+              "source": {
+                "kind": "sparse"
+              },
+              "enabled": true,
+              "strength": 1.0,
+              "created": 1794562864.147279,
+              "info": {
+                "tests": null,
+                "drift": 0.00017
+              },
+              "stats": [
+                {
+                  "param": "model.layers.23.mlp.down_proj.weight",
+                  "changed": 3,
+                  "norm": 0.005151446280443042,
+                  "max_abs": 0.0034894479904323816,
+                  "rank": null,
+                  "kinds": [
+                    "sparse"
+                  ],
+                  "stored": 9,
+                  "pieces": 1
+                }
+              ],
+              "changed": 3,
+              "stored": 9
+            }
+          ],
+          "rows_requantized": 896,
+          "changed_rows_max_weight_error": 0.00034945830702781677,
+          "changed_rows_rms_weight_error": 2.612490826010689e-06,
+          "float_slab_limit_bytes": 1048576,
+          "backend": "ggml 0.29.0 quantize_chunk",
+          "limitations": "Same tensor schemes only; rounding changes logits; original GGUF metadata retained; no patch undo",
+          "suite": {
+            "name": "bounded-locality",
+            "cases": [
+              {
+                "name": "France target",
+                "type": "next_token",
+                "prompt": "The capital of France is",
+                "got": "\u00b7Paris",
+                "pass": true,
+                "expect": [
+                  "\u00b7Paris"
+                ],
+                "rank": 0,
+                "prob": 0.5096,
+                "value": 2.0155
+              },
+              {
+                "name": "preserve 0",
+                "type": "preserve",
+                "prompt": "The capital of Germany is",
+                "max_kl": 0.01,
+                "value": 1.2406179848767351e-05,
+                "pass": true,
+                "top1_preserved": true
+              },
+              {
+                "name": "preserve 1",
+                "type": "preserve",
+                "prompt": "Water freezes at",
+                "max_kl": 0.01,
+                "value": 2.3356699330179254e-06,
+                "pass": true,
+                "top1_preserved": true
+              },
+              {
+                "name": "preserve 2",
+                "type": "preserve",
+                "prompt": "The sum of one and two is",
+                "max_kl": 0.01,
+                "value": 6.002338182042877e-07,
+                "pass": true,
+                "top1_preserved": true
+              },
+              {
+                "name": "preserve 3",
+                "type": "preserve",
+                "prompt": "A small bird flies over",
+                "max_kl": 0.01,
+                "value": 2.8459432996896794e-06,
+                "pass": true,
+                "top1_preserved": true
+              }
+            ],
+            "passed": 5,
+            "total": 5
+          },
+          "comparison_base": "original immutable GGUF logits, not the exported checkpoint itself",
+          "target_margin_base": 7.190736770629883,
+          "target_margin_overlay": 7.425996780395508,
+          "target_margin_exported": 7.227374076843262,
+          "max_last_logit_error_vs_overlay": 0.10910320281982422,
+          "kl_vs_overlay": [
+            0.0016864028293639421,
+            0.0,
+            0.0,
+            6.002338182042877e-07,
+            4.30315094490652e-06
+          ],
+          "edited_tensor_type": "Q4_0"
+        }
+      }
+    },
+    {
+      "repo": "bartowski/SmolLM2-135M-Instruct-GGUF",
+      "revision": "09816acd5d99df7be770d85ea30822623dab342c",
+      "artifact_sha256": "2e8040ceae7815abe0dcb3540b9995eaa1fa0d2ca9e797d0a635ae4433c68c2d",
+      "logical_stored_parameters": 134515008,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q5_0",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 0.7369953339803033,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 103668480,
+        "dense_parameter_bytes": 140544,
+        "forecast": {
+          "weights": 103668480,
+          "runtime": 2147483648,
+          "kv": 70778880,
+          "activations": 805306368,
+          "patches": 0,
+          "temporary": 640539392,
+          "total": 3767776768
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol135-q4km",
+      "generation": {
+        "base": {
+          "tokens": 8,
+          "seconds": 0.42258499999297783,
+          "tokens_per_second": 18.93110261872271
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 0.41600912500871345,
+          "tokens_per_second": 19.230347410846907
+        }
+      },
+      "memory": {
+        "baseline_available_gib": 68.5281982421875,
+        "minimum_available_gib": 67.48309326171875,
+        "peak_rss_gib": 0.99163818359375,
+        "peak_footprint_gib": 0.7096878662705421,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 12.375221625028644
+        }
+      },
+      "merged": "unsupported; companion carries FP32 patches and original-base SHA-256"
+    },
+    {
+      "repo": "bartowski/SmolLM2-360M-Instruct-GGUF",
+      "revision": "7be6f65f1db715fe5dc5a4634c0d459b4eed42ec",
+      "artifact_sha256": "5fa72b081370dbfc015f0be3fe71aa2ae78b620fd5c1d1f484fb976bab7dae73",
+      "logical_stored_parameters": 361821120,
+      "tensor_types": [
+        "F32",
+        "Q5_1",
+        "Q5_K",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 0.6047151670209132,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 288157440,
+        "dense_parameter_bytes": 249600,
+        "forecast": {
+          "weights": 288157440,
+          "runtime": 2147483648,
+          "kv": 125829120,
+          "activations": 805306368,
+          "patches": 0,
+          "temporary": 825028352,
+          "total": 4191804928
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol360-q5km",
+      "generation": {
+        "base": {
+          "tokens": 8,
+          "seconds": 0.5845213329885155,
+          "tokens_per_second": 13.68641236599175
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 0.6293579580378719,
+          "tokens_per_second": 12.711367033383246
+        }
+      },
+      "memory": {
+        "baseline_available_gib": 68.08586120605469,
+        "minimum_available_gib": 67.15707397460938,
+        "peak_rss_gib": 1.3430023193359375,
+        "peak_footprint_gib": 0.7176227271556854,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 15.458977125003003
+        }
+      },
+      "merged": "unsupported; companion carries FP32 patches and original-base SHA-256"
+    },
+    {
+      "repo": "bartowski/SmolLM2-135M-Instruct-GGUF",
+      "revision": "09816acd5d99df7be770d85ea30822623dab342c",
+      "artifact_sha256": "5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "logical_stored_parameters": 134515008,
+      "tensor_types": [
+        "F32",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 0.6814037499716505,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 143025408,
+        "dense_parameter_bytes": 140544,
+        "forecast": {
+          "weights": 143025408,
+          "runtime": 2147483648,
+          "kv": 70778880,
+          "activations": 805306368,
+          "patches": 0,
+          "temporary": 679896320,
+          "total": 3846490624
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol135-q8-final",
+      "generation": {
+        "base": {
+          "tokens": 8,
+          "seconds": 0.36393204098567367,
+          "tokens_per_second": 21.982126053899506
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 0.3633605829672888,
+          "tokens_per_second": 22.016697393729668
+        }
+      },
+      "memory": {
+        "baseline_available_gib": 68.28790283203125,
+        "minimum_available_gib": 66.7794189453125,
+        "peak_rss_gib": 1.4766693115234375,
+        "peak_footprint_gib": 1.0449695065617561,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 28.89137516595656
+        }
+      },
+      "merged": {
+        "format": "standalone-gguf-same-scheme",
+        "base_sha256": "5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+        "artifact_sha256": "1fbf81b22ed562ac905124c6ea081bd9de1834f8108c1f9e0c3520272d56c2ce",
+        "path": "~/.cache/wsp-quantized-ide/evidence/phase2-smol135-q8-final/edited-standalone.gguf",
+        "standalone": true,
+        "patches": [
+          {
+            "id": "0001-62594",
+            "message": "Acceptance: promote selected city token",
+            "author": "human",
+            "source": {
+              "kind": "wscript",
+              "script": "P(\"model.embed_tokens.weight\")[4528, :] += 4 * P(\"model.embed_tokens.weight\")[7042, :]"
+            },
+            "enabled": true,
+            "strength": 1.0,
+            "created": 1794562594.204202,
+            "info": {
+              "tests": null,
+              "drift": 31.70101
+            },
+            "stats": [
+              {
+                "param": "model.embed_tokens.weight",
+                "changed": 567,
+                "norm": 8.8109955810478,
+                "max_abs": 1.9688720703125,
+                "rank": null,
+                "kinds": [
+                  "block"
+                ],
+                "stored": 576,
+                "pieces": 1
+              }
+            ],
+            "changed": 567,
+            "stored": 576
+          }
+        ],
+        "rows_requantized": 1,
+        "changed_rows_max_weight_error": 0.009456634521484375,
+        "changed_rows_rms_weight_error": 0.0026963238272338665,
+        "float_slab_limit_bytes": 1048576,
+        "backend": "ggml 0.29.0 quantize_chunk",
+        "limitations": "Same tensor schemes only; rounding changes logits; original GGUF metadata retained; no patch undo",
+        "max_logit_error": 0.33638763427734375,
+        "next_token_preserved": true,
+        "last_token_kl": -5.356260775861695e-26
+      },
+      "behavior": {
+        "intent": "reinforce an existing fact; not demonstrated knowledge acquisition",
+        "residual_rms": 27.005657196044922,
+        "trials": [
+          {
+            "magnitude": 0.03,
+            "target_margin_gain": 0.1174774169921875,
+            "preservation_kl": [
+              0.0,
+              0.0,
+              0.0,
+              5.127487384015694e-05
+            ],
+            "unrelated_top1_preserved": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ],
+        "rank_commit": {
+          "drift": {
+            "kl": 3e-05,
+            "kl_max": 0.0003,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.29.mlp.down_proj.weight",
+              "changed": 884736,
+              "of": 884736,
+              "norm": 0.01539,
+              "max_abs": 0.00082,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 2112
+            }
+          ],
+          "output": "",
+          "n_changed": 884736,
+          "stored": 2112,
+          "patch": "0002-62608"
+        },
+        "sparse_commit": {
+          "drift": {
+            "kl": 4e-05,
+            "kl_max": 0.0003,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.29.mlp.down_proj.weight",
+              "changed": 3,
+              "of": 884736,
+              "norm": 0.04805,
+              "max_abs": 0.02974,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9
+            }
+          ],
+          "output": "",
+          "n_changed": 3,
+          "stored": 9,
+          "patch": "0003-62609"
+        },
+        "sparse_max_logit_change": 0.04665040969848633,
+        "suite": {
+          "name": "bounded-locality",
+          "passed": 5,
+          "total": 5,
+          "score": 1.0,
+          "cases": [
+            {
+              "name": "France target",
+              "type": "next_token",
+              "prompt": "The capital of France is",
+              "got": "\u00b7Paris",
+              "pass": true,
+              "expect": [
+                "\u00b7Paris"
+              ],
+              "rank": 0,
+              "prob": 0.4868,
+              "value": 0.7523
+            },
+            {
+              "name": "preserve 0",
+              "type": "preserve",
+              "prompt": "The capital of Germany is",
+              "got": "\u00b7Berlin",
+              "pass": true,
+              "value": 1e-05,
+              "base": "\u00b7Berlin"
+            },
+            {
+              "name": "preserve 1",
+              "type": "preserve",
+              "prompt": "Water freezes at",
+              "got": "\u00b7night",
+              "pass": true,
+              "value": 0.0,
+              "base": "\u00b7night"
+            },
+            {
+              "name": "preserve 2",
+              "type": "preserve",
+              "prompt": "The sum of one and two is",
+              "got": "\u00b7",
+              "pass": true,
+              "value": 1e-05,
+              "base": "\u00b7"
+            },
+            {
+              "name": "preserve 3",
+              "type": "preserve",
+              "prompt": "A small bird flies over",
+              "got": "\u00b7the",
+              "pass": true,
+              "value": 0.00014,
+              "base": "\u00b7the"
+            }
+          ]
+        },
+        "held_out_prompt": "A small bird flies over",
+        "combined_companion_reload_error": 0.0,
+        "locality_pass": true
+      }
+    },
+    {
+      "repo": "unsloth/Qwen3.5-0.8B-GGUF",
+      "revision": "6ab461498e2023f6e3c1baea90a8f0fe38ab64d0",
+      "artifact_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "logical_stored_parameters": 752393024,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q5_K",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "first_logits_seconds": 2.1503455420024693,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 521555200,
+        "dense_parameter_bytes": 1993984,
+        "forecast": {
+          "weights": 521555200,
+          "runtime": 2147483648,
+          "kv": 100663296,
+          "activations": 4068474880,
+          "patches": 0,
+          "temporary": 1058426112,
+          "total": 7896603136
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "trace_intervention": true,
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen35-q4km",
+      "generation": {
+        "base": {
+          "tokens": 8,
+          "seconds": 11.777589459030423,
+          "tokens_per_second": 0.6792561438678804
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 12.206268041976728,
+          "tokens_per_second": 0.6554009769807129
+        }
+      },
+      "memory": {
+        "baseline_available_gib": 67.627685546875,
+        "minimum_available_gib": 65.93832397460938,
+        "peak_rss_gib": 3.6103057861328125,
+        "peak_footprint_gib": 2.4090917333960533,
+        "swap_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "mps_current_peak": 0,
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 134.46989374997793
+        }
+      },
+      "merged": "unsupported; companion carries FP32 patches and original-base SHA-256"
+    }
+  ],
+  "review_corrections": {
+    "historical_evidence_preserved": true,
+    "available_memory_qualification": "Original macOS available estimates used free+inactive; inactive can be anonymous and those values overstate reclaimable headroom. Original runs and logs are unchanged. Retrospective free+file_backed is a conservative proxy from recorded counters (sample timestamps may differ), not a replacement measurement. Corrected guard uses one vm_stat sample, requires free/speculative/file-backed/purgeable counters, excludes speculative double counting and gives purgeable no additional credit.",
+    "historical_proxy": [
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase1-attempt3",
+        "original_minimum_available_gib": 67.32797241210938,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 48.10749816894531
+      },
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen2-export",
+        "original_minimum_available_gib": 66.68701171875,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 48.479583740234375
+      },
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol135-q4km",
+        "original_minimum_available_gib": 67.48309326171875,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 48.37886047363281
+      },
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol360-q5km",
+        "original_minimum_available_gib": 67.15707397460938,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 48.09315490722656
+      },
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-smol135-q8-final",
+        "original_minimum_available_gib": 66.7794189453125,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 48.421539306640625
+      },
+      {
+        "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/phase2-qwen35-q4km",
+        "original_minimum_available_gib": 65.93832397460938,
+        "conservative_recorded_free_plus_file_backed_minimum_gib": 47.88648986816406
+      }
+    ],
+    "chat_portability_qualification": "Historical companion evidence established completion logits only; templates were omitted. Fixed export includes default and named Jinja templates with manifest checksums. New tokenizer-only tests cover named templates; corrected live smoke proves source/imported chat prompt identity. Re-export old workspaces to repair old companion bundles.",
+    "corrected_smoke": {
+      "repo": "bartowski/SmolLM2-135M-Instruct-GGUF",
+      "revision": "09816acd5d99df7be770d85ea30822623dab342c",
+      "artifact_sha256": "2e8040ceae7815abe0dcb3540b9995eaa1fa0d2ca9e797d0a635ae4433c68c2d",
+      "logical_stored_parameters": 134515008,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q5_0",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "context": 512,
+      "generation_limit": 8,
+      "seed": 0,
+      "batch": 1,
+      "residency": {
+        "backend": "ggml-cpu",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "cpu",
+        "packed_bytes": 103668480,
+        "dense_parameter_bytes": 140544,
+        "forecast": {
+          "weights": 103668480,
+          "runtime": 2147483648,
+          "kv": 70778880,
+          "activations": 805306368,
+          "patches": 0,
+          "temporary": 640539392,
+          "total": 3767776768
+        },
+        "mps_current": 0,
+        "mps_driver": 475136,
+        "mps_recommended": 115448725504
+      },
+      "chat_portability": {
+        "prompt_sha256": "9963c1c3286f5f89a9ee75ba200c5e336ad58e844c0310f08fd72778266599b5",
+        "template_files": {
+          "chat_template.jinja": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788"
+        },
+        "companion_prompt_identical": true
+      },
+      "companion_logit_error": 0.0,
+      "immutable_base": true,
+      "generation_benchmarks": {
+        "base": {
+          "tokens": 8,
+          "seconds": 0.39406979200430214,
+          "tokens_per_second": 20.30097247320257
+        },
+        "current": {
+          "tokens": 8,
+          "seconds": 0.39327404100913554,
+          "tokens_per_second": 20.342049476421366
+        }
+      },
+      "evidence_directory": "~/.cache/wsp-quantized-ide/evidence/review-corrected-smol135",
+      "memory": {
+        "baseline_available_gib": 50.990692138671875,
+        "minimum_available_gib": 50.152252197265625,
+        "peak_rss_gib": 1.0113067626953125,
+        "peak_footprint_gib": 0.7268539592623711,
+        "swap_growth": 0,
+        "compression_growth": 0,
+        "pressure_values": [
+          1
+        ],
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 12.35656745795859
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,719 @@
+{
+ "date": "2026-11-18",
+ "what": "Prompt sets from datasets (wsp.directions_datasets) against Heretic: without a model and offline on the Hugging Face cache that finished Heretic runs filled, then per-prompt system messages on one model.",
+ "ide": {
+  "commit": "fa12e91",
+  "scripts": "the ones this file is committed with"
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991"
+ },
+ "acceptance": "written in scripts/heretic_compare_datasets.py and scripts/heretic_compare_prompt_ids.py before the runs; stage 4's was extended after its first run, as the script's header says",
+ "without_a_model": {
+  "what": "scripts/heretic_compare_datasets.py: Heretic's side written to a file under Heretic's libraries, the IDE's resolution under the IDE's own libraries against that file and against the runs' dumps",
+  "versions": {
+   "oracle": {
+    "python": "3.12.13",
+    "datasets": "5.0.1",
+    "pyarrow": "25.0.1",
+    "fsspec": "2026.6.0",
+    "huggingface_hub": "1.33.0",
+    "pyyaml": "6.0.3"
+   },
+   "ide": {
+    "python": "3.12.13",
+    "datasets": null,
+    "pyarrow": "25.0.1",
+    "fsspec": "2026.9.0",
+    "huggingface_hub": "2.4.0",
+    "pyyaml": "6.0.3"
+   }
+  },
+  "ok": true,
+  "stages": {
+   "1": {
+    "runs": 15,
+    "run_names": [
+     "qwen05b/abl-full",
+     "qwen05b/abl-none",
+     "qwen05b/ara",
+     "qwen05b/search-abl-full",
+     "qwen05b/search-ara",
+     "qwen3-06b/ara",
+     "tiny/ara-nomag-s12345",
+     "tiny/ara-s1",
+     "tiny/ara-s12345",
+     "tiny/full",
+     "tiny/none",
+     "tiny/perlayer-s1",
+     "tiny/pre",
+     "tiny/search-ara",
+     "tiny/search-full"
+    ],
+    "sets": 60,
+    "equal": 60,
+    "files_checked": 60,
+    "record_faults": 0,
+    "differences": 0,
+    "ok": true
+   },
+   "2": {
+    "cases": 4048,
+    "agree": 4048,
+    "differences": 0,
+    "ok": true
+   },
+   "3": {
+    "cases": 27,
+    "same": 24,
+    "both_refuse": 1,
+    "deliberate": 2,
+    "differences": 0,
+    "ok": true,
+    "rows": [
+     {
+      "case": [
+       "flat",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 20
+     },
+     {
+      "case": [
+       "flat",
+       "test[:3]",
+       null
+      ],
+      "result": "same",
+      "count": 3
+     },
+     {
+      "case": [
+       "sharded",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 20
+     },
+     {
+      "case": [
+       "sharded",
+       "test[-2:]",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "dirs",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 5
+     },
+     {
+      "case": [
+       "dirs",
+       "validation[1:3]",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "onejson",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 7
+     },
+     {
+      "case": [
+       "txtdir",
+       "train",
+       null
+      ],
+      "result": "deliberate",
+      "count": null
+     },
+     {
+      "case": [
+       "cfg",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "cfg",
+       "train",
+       "en"
+      ],
+      "result": "same",
+      "count": 5
+     },
+     {
+      "case": [
+       "cfg",
+       "test",
+       "en"
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "mixed",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 3
+     },
+     {
+      "case": [
+       "hidden",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "tsv",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "keywords",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "keywords",
+       "validation",
+       null
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "keywords",
+       "test",
+       null
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "blank",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "bom",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 1
+     },
+     {
+      "case": [
+       "saved",
+       "train[2:5]",
+       null
+      ],
+      "result": "same",
+      "count": 3
+     },
+     {
+      "case": [
+       "saved",
+       "train[:3]+train[5:6]",
+       null
+      ],
+      "result": "deliberate",
+      "count": null
+     },
+     {
+      "case": [
+       "textfile.txt",
+       null,
+       null
+      ],
+      "result": "same",
+      "count": 3
+     },
+     {
+      "case": [
+       "textfile.txt",
+       "[1:]",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "textfile.txt",
+       "train[:2]",
+       null
+      ],
+      "result": "same",
+      "count": 2
+     },
+     {
+      "case": [
+       "sharded",
+       "train+test",
+       null
+      ],
+      "result": "same",
+      "count": 30
+     },
+     {
+      "case": [
+       "overlap",
+       "train",
+       null
+      ],
+      "result": "same",
+      "count": 4
+     },
+     {
+      "case": [
+       "literal",
+       "train",
+       null
+      ],
+      "result": "both_refuse",
+      "count": null
+     }
+    ]
+   },
+   "4": {
+    "cases": 28,
+    "same_rows": 20,
+    "both_refuse": 2,
+    "empty_refused": 5,
+    "over_limit_rows_equal": 1,
+    "differences": 0,
+    "ok": true,
+    "rows": [
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[:400]",
+      "result": "same_rows",
+      "datasets_rows": 400
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "test[:100]",
+      "result": "same_rows",
+      "datasets_rows": 100
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[200:250]",
+      "result": "same_rows",
+      "datasets_rows": 50
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[-7:]",
+      "result": "same_rows",
+      "datasets_rows": 7
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "test[:10%]",
+      "result": "same_rows",
+      "datasets_rows": 626
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[10%:12%]",
+      "result": "same_rows",
+      "datasets_rows": 501
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "test",
+      "result": "over_limit_rows_equal",
+      "datasets_rows": 6265
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[:3]+test[:3]",
+      "result": "same_rows",
+      "datasets_rows": 6
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "test[-5:]+train[:2]",
+      "result": "same_rows",
+      "datasets_rows": 7
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[:2%](pct1_dropremainder)",
+      "result": "same_rows",
+      "datasets_rows": 500
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[5:5]",
+      "result": "empty_refused",
+      "datasets_rows": null
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[7:3]",
+      "result": "empty_refused",
+      "datasets_rows": 0
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "validation[:5]",
+      "result": "both_refuse",
+      "datasets_rows": null
+     },
+     {
+      "repository": "mlabonne/harmless_alpaca",
+      "split": "train[1000:1100]",
+      "result": "same_rows",
+      "datasets_rows": 100
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[:400]",
+      "result": "same_rows",
+      "datasets_rows": 400
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "test[:100]",
+      "result": "same_rows",
+      "datasets_rows": 100
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[200:250]",
+      "result": "same_rows",
+      "datasets_rows": 50
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[-7:]",
+      "result": "same_rows",
+      "datasets_rows": 7
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "test[:10%]",
+      "result": "same_rows",
+      "datasets_rows": 10
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[10%:12%]",
+      "result": "same_rows",
+      "datasets_rows": 8
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "test",
+      "result": "same_rows",
+      "datasets_rows": 104
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[:3]+test[:3]",
+      "result": "same_rows",
+      "datasets_rows": 6
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "test[-5:]+train[:2]",
+      "result": "same_rows",
+      "datasets_rows": 7
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[:2%](pct1_dropremainder)",
+      "result": "same_rows",
+      "datasets_rows": 8
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[5:5]",
+      "result": "empty_refused",
+      "datasets_rows": null
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[7:3]",
+      "result": "empty_refused",
+      "datasets_rows": 0
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "validation[:5]",
+      "result": "both_refuse",
+      "datasets_rows": null
+     },
+     {
+      "repository": "mlabonne/harmful_behaviors",
+      "split": "train[1000:1100]",
+      "result": "empty_refused",
+      "datasets_rows": null
+     }
+    ]
+   }
+  },
+  "one_process_under_heretics_interpreter": {
+   "versions": {
+    "python": "3.12.13",
+    "datasets": "5.0.1",
+    "pyarrow": "25.0.1",
+    "fsspec": "2026.6.0",
+    "huggingface_hub": "1.33.0",
+    "pyyaml": "6.0.3"
+   },
+   "ok": true,
+   "every_stage_and_row_equal_to_the_run_above": true
+  },
+  "first_run_of_stage_4": "20 same rows, 2 refused by both, 5 empty selections refused, 1 difference: the whole test split of mlabonne/harmless_alpaca (6,265 rows) refused by the IDE's limit of 1,024 prompts per set; the acceptance did not list the case, and the stage then gained the check with the limit lifted (over_limit_rows_equal)"
+ },
+ "per_prompt_system_messages_on_a_model": {
+  "what": "scripts/heretic_prompt_ids.py under Heretic's interpreter, then scripts/heretic_compare_prompt_ids.py: the IDE's own measurement, scores and prefix detection from the same specifications; the token ids each prompt reaches the model with",
+  "model": "tiny-random/qwen2.5",
+  "model_commit": "7a6a3128ee4137a248d6d1582824592b87a81647",
+  "dtype": "float32",
+  "device": "cpu",
+  "system_prompt": "You are a helpful assistant.",
+  "specifications": {
+   "good": [
+    {
+     "dataset": "mlabonne/harmless_alpaca",
+     "commit": "02c6a92cfcf11bb0c387334f8146d149d65b587f",
+     "split": "train[:3]",
+     "column": "text",
+     "prefix": "Write a short story based on the writing prompt below.",
+     "system_prompt": "You are a hyper-terse assistant.\nYou respond with the minimum amount of text that satisfies the prompt."
+    },
+    {
+     "dataset": "mlabonne/harmless_alpaca",
+     "commit": "02c6a92cfcf11bb0c387334f8146d149d65b587f",
+     "split": "train[3:5]",
+     "column": "text"
+    }
+   ],
+   "bad": {
+    "dataset": "mlabonne/harmful_behaviors",
+    "commit": "01cead01398926d81f7c52bdb790ee8cf77ebba7",
+    "split": "train[:5]",
+    "column": "text",
+    "system_prompt": "You are a loquacious personal assistant."
+   },
+   "kl": {
+    "dataset": "mlabonne/harmless_alpaca",
+    "commit": "02c6a92cfcf11bb0c387334f8146d149d65b587f",
+    "split": "test[:3]+train[10:12]",
+    "column": "text",
+    "system_prompt": ""
+   },
+   "refusal": {
+    "dataset": "mlabonne/harmful_behaviors",
+    "commit": "01cead01398926d81f7c52bdb790ee8cf77ebba7",
+    "split": "test[:5]",
+    "column": "text",
+    "suffix": "Answer in one word."
+   },
+   "prefix": [
+    {
+     "dataset": "mlabonne/harmless_alpaca",
+     "commit": "02c6a92cfcf11bb0c387334f8146d149d65b587f",
+     "split": "train[:2]",
+     "column": "text"
+    },
+    {
+     "dataset": "mlabonne/harmful_behaviors",
+     "commit": "01cead01398926d81f7c52bdb790ee8cf77ebba7",
+     "split": "train[-2:]",
+     "column": "text",
+     "system_prompt": "Answer briefly."
+    }
+   ]
+  },
+  "versions": {
+   "ide": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "heretic": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2",
+    "datasets": "5.0.1",
+    "pyarrow": "25.0.1"
+   }
+  },
+  "sets": {
+   "good": {
+    "calls": 10,
+    "heretic_prompts": 5,
+    "equal": true,
+    "prompts_equal": 5,
+    "tokens": 253
+   },
+   "bad": {
+    "calls": 10,
+    "heretic_prompts": 5,
+    "equal": true,
+    "prompts_equal": 5,
+    "tokens": 168
+   },
+   "kl": {
+    "calls": 15,
+    "heretic_prompts": 5,
+    "equal": true,
+    "prompts_equal": 5,
+    "tokens": 137
+   },
+   "refusal": {
+    "calls": 15,
+    "heretic_prompts": 5,
+    "equal": true,
+    "prompts_equal": 5,
+    "tokens": 173
+   },
+   "prefix": {
+    "calls": 4,
+    "heretic_prompts": 4,
+    "equal": true,
+    "prompts_equal": 4,
+    "tokens": 127
+   }
+  },
+  "prompts": 24,
+  "prompts_with_heretics_ids": 24,
+  "tokens": 858,
+  "stored_measurement": {
+   "good_objects": 3,
+   "good_texts": 2,
+   "bad_objects": 5
+  },
+  "tensors_touched_after": 0,
+  "ok": true
+ },
+ "real_huggingface_hub_without_the_network": {
+  "what": "the installed huggingface_hub's signatures and result fields that the fetch relies on, and the route with download true while HF_HUB_OFFLINE=1 (the real functions are called and refuse before any request), on a scratch copy of one cached dataset",
+  "huggingface_hub": "2.4.0",
+  "checks": {
+   "hf_hub_download parameters": {
+    "repo_id": true,
+    "filename": true,
+    "repo_type": true,
+    "revision": true,
+    "cache_dir": true,
+    "token": true,
+    "tqdm_class": true
+   },
+   "hf_hub_download positional order": true,
+   "dataset_info parameters": {
+    "repo_id": true,
+    "revision": true,
+    "files_metadata": true,
+    "token": true
+   },
+   "DatasetInfo has sha and siblings": true,
+   "RepoSibling has rfilename and size": true,
+   "error classes": {
+    "OfflineModeIsEnabled": true,
+    "RevisionNotFoundError": true,
+    "RepositoryNotFoundError": true,
+    "GatedRepoError": true,
+    "HfHubHTTPError": true,
+    "HFValidationError": true
+   },
+   "GatedRepoError is a RepositoryNotFoundError": true,
+   "hub_info offline": "OfflineModeIsEnabled",
+   "hub_fetch of a cached file offline returns it": true,
+   "hub_fetch of an uncached file offline": "LocalEntryNotFoundError"
+  },
+  "route": {
+   "pinned and cached, download true": {
+    "status": 200,
+    "cached": true,
+    "count": 5,
+    "fetched": []
+   },
+   "unpinned, download true": {
+    "status": 400,
+    "error": "DirectionError: prompts: download was asked for, but HF_HUB_OFFLINE is set in the IDE's environment, so nothing can be downloaded"
+   },
+   "unpinned, no download": {
+    "status": 200,
+    "cached": false,
+    "fetched": []
+   },
+   "pinned to a commit that is not cached, download true": {
+    "status": 400,
+    "error": "DirectionError: prompts: download was asked for, but HF_HUB_OFFLINE is set in the IDE's environment, so nothing can be downloaded"
+   }
+  }
+ },
+ "memory_guard": {
+  "what": "the runs that open a model's workspace ran under python -m wsp.memory_guard, one at a time, offline, in an isolated root",
+  "heretic's token ids": {
+   "peak_footprint_gib": 0.65,
+   "seconds": 9.3,
+   "violations": 0
+  },
+  "the IDE's token ids": {
+   "peak_footprint_gib": 0.5,
+   "seconds": 3.1,
+   "violations": 0
+  },
+  "the offline check of the real library (workspace opened, model not run)": {
+   "peak_footprint_gib": 0.27,
+   "seconds": 2.1,
+   "violations": 0
+  }
+ },
+ "not_covered": [
+  "a real fetch from the Hub: a transfer, its progress and the Hub's error answers (the fetch is tested with a fake Hub; a 40 KB fetch into an empty scratch cache was prepared and refused by the session's permission check)",
+  "per-prompt system messages on a model other than tiny-random/qwen2.5, on GGUF or through the model worker",
+  "sources other than Heretic's four; compressed files; datasets builder options such as a csv separator",
+  "a Hub snapshot filled only partly by another tool without a file list in the workspace"
+ ]
+}

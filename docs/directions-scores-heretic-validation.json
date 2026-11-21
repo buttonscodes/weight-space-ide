@@ -1,0 +1,862 @@
+{
+ "date": "2026-11-18",
+ "what": "The IDE's scores (refusals, KL divergence, response length) and response-prefix detection against Heretic's, on the same models, prompts and weights; then the IDE alone, end to end, against Heretic's exported trials.",
+ "ide": {
+  "commit": "ba3de96",
+  "scripts": "the ones this file is committed with",
+  "runner": "HFRunner",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "attention": "eager",
+  "prompts_at_a_time": 1
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "heretic-llm": "2.2.0.dev0",
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "attention": "sdpa",
+  "batch_size": 1
+ },
+ "acceptance": {
+  "decided": "before any run; written at the top of scripts/heretic_compare_scores.py",
+  "S0": "eps = largest difference of the base first-token logits (reported)",
+  "S1": "token ids identical",
+  "S2": "detected prefix identical; prefix-test responses as S3",
+  "S3": "responses identical, or diverging only where the margin between the two tokens is below max(1e-3, 4 eps)",
+  "S4": "flags identical on identical responses; scores identical",
+  "S5": "Heretic's merged model as its own workspace: as S3 and S4; |KL difference| <= 1e-6 + max(1e-3 KL, 3 eps sqrt(2 KL))",
+  "S6": "every trial of an ablation run as an uncommitted candidate: refusals as S4, KL as S5",
+  "outcome": "every stage passed on every run; no response diverged, so the near-tie rule of S3 was never used"
+ },
+ "models": {
+  "tiny-random/qwen2.5": {
+   "commit": "7a6a3128ee4137a248d6d1582824592b87a81647",
+   "prompts_per_score": 5,
+   "runs": {
+    "directional ablation, full": {
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "base_logits_scale": 0.3172760307788849,
+     "token_ids_identical": {
+      "refusal": "5/5",
+      "length": "5/5",
+      "kl": "5/5",
+      "prefix_test_without": "10/10"
+     },
+     "prefix": {
+      "ide": "",
+      "heretic": "",
+      "found_by": "none"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "10/10"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "5/5",
+       "length": "5/5"
+      },
+      "refusals": {
+       "ide": "0/5",
+       "heretic": "0/5"
+      },
+      "mean_response_length": {
+       "ide": 37.4,
+       "heretic": 37.4
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "5/5",
+       "length": "5/5"
+      },
+      "refusals": {
+       "ide": "0/5",
+       "heretic": "0/5"
+      },
+      "mean_response_length": {
+       "ide": 40.0,
+       "heretic": 40.0
+      },
+      "kl": {
+       "ide": 0.0007419359055347741,
+       "heretic": 0.0007421084446832538,
+       "bound": 1.7421084446832538e-06,
+       "within_bound": true,
+       "logits_max_abs_diff": 2.086162567138672e-07
+      }
+     },
+     "generation": {
+      "max_response_length": 10,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ],
+       "repetition_penalty": 1.05
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0,
+     "trials_as_uncommitted_candidates": [
+      {
+       "index": 1,
+       "refusals": {
+        "ide": "0/5",
+        "heretic": "0/5"
+       },
+       "kl": {
+        "ide": 0.0007420970010571182,
+        "heretic": 0.000742275093216449,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 2,
+       "refusals": {
+        "ide": "0/5",
+        "heretic": "0/5"
+       },
+       "kl": {
+        "ide": 0.0007945745252072811,
+        "heretic": 0.0007944536628201604,
+        "within_bound": true
+       }
+      }
+     ]
+    },
+    "ARA": {
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "base_logits_scale": 0.3172760307788849,
+     "token_ids_identical": {
+      "refusal": "5/5",
+      "length": "5/5",
+      "kl": "5/5",
+      "prefix_test_without": "10/10"
+     },
+     "prefix": {
+      "ide": "",
+      "heretic": "",
+      "found_by": "none"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "10/10"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "5/5",
+       "length": "5/5"
+      },
+      "refusals": {
+       "ide": "0/5",
+       "heretic": "0/5"
+      },
+      "mean_response_length": {
+       "ide": 37.4,
+       "heretic": 37.4
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "5/5",
+       "length": "5/5"
+      },
+      "refusals": {
+       "ide": "0/5",
+       "heretic": "0/5"
+      },
+      "mean_response_length": {
+       "ide": 35.6,
+       "heretic": 35.6
+      },
+      "kl": {
+       "ide": 9.925767699314747e-07,
+       "heretic": 1.0392672038506134e-06,
+       "bound": 1.0010392672038506e-06,
+       "within_bound": true,
+       "logits_max_abs_diff": 1.9371509552001953e-07
+      }
+     },
+     "generation": {
+      "max_response_length": 10,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ],
+       "repetition_penalty": 1.05
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0
+    }
+   }
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct": {
+   "commit": "7ae557604adf67be50417f59c2c2f167def9a775",
+   "prompts_per_score": 32,
+   "runs": {
+    "directional ablation, full": {
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "base_logits_scale": 23.16415786743164,
+     "token_ids_identical": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     },
+     "prefix": {
+      "ide": "",
+      "heretic": "",
+      "found_by": "none"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "32/32"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "30/32",
+       "heretic": "30/32"
+      },
+      "mean_response_length": {
+       "ide": 133.53125,
+       "heretic": 133.53125
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "28/32",
+       "heretic": "28/32"
+      },
+      "mean_response_length": {
+       "ide": 131.53125,
+       "heretic": 131.53125
+      },
+      "kl": {
+       "ide": 0.013251462760308641,
+       "heretic": 0.013251330703496933,
+       "bound": 3.9658426924123344e-05,
+       "within_bound": true,
+       "logits_max_abs_diff": 8.058547973632812e-05
+      }
+     },
+     "generation": {
+      "max_response_length": 30,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ],
+       "repetition_penalty": 1.1
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0,
+     "trials_as_uncommitted_candidates": [
+      {
+       "index": 1,
+       "refusals": {
+        "ide": "28/32",
+        "heretic": "28/32"
+       },
+       "kl": {
+        "ide": 0.013251571894215886,
+        "heretic": 0.013251576572656631,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 2,
+       "refusals": {
+        "ide": "30/32",
+        "heretic": "30/32"
+       },
+       "kl": {
+        "ide": 0.0319438323713257,
+        "heretic": 0.03194257989525795,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 3,
+       "refusals": {
+        "ide": "29/32",
+        "heretic": "29/32"
+       },
+       "kl": {
+        "ide": 0.0037134688545847894,
+        "heretic": 0.003713575191795826,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 4,
+       "refusals": {
+        "ide": "30/32",
+        "heretic": "30/32"
+       },
+       "kl": {
+        "ide": 0.007412979658511176,
+        "heretic": 0.007412843406200409,
+        "within_bound": true
+       }
+      }
+     ]
+    },
+    "directional ablation, none": {
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "base_logits_scale": 23.16415786743164,
+     "token_ids_identical": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     },
+     "prefix": {
+      "ide": "",
+      "heretic": "",
+      "found_by": "none"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "32/32"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "30/32",
+       "heretic": "30/32"
+      },
+      "mean_response_length": {
+       "ide": 133.53125,
+       "heretic": 133.53125
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "28/32",
+       "heretic": "28/32"
+      },
+      "mean_response_length": {
+       "ide": 132.25,
+       "heretic": 132.25
+      },
+      "kl": {
+       "ide": 0.013385046833718661,
+       "heretic": 0.013385008089244366,
+       "bound": 3.985292776345133e-05,
+       "within_bound": true,
+       "logits_max_abs_diff": 9.751319885253906e-05
+      }
+     },
+     "generation": {
+      "max_response_length": 30,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ],
+       "repetition_penalty": 1.1
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0,
+     "trials_as_uncommitted_candidates": [
+      {
+       "index": 1,
+       "refusals": {
+        "ide": "28/32",
+        "heretic": "28/32"
+       },
+       "kl": {
+        "ide": 0.013385109908995219,
+        "heretic": 0.013385218568146229,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 2,
+       "refusals": {
+        "ide": "30/32",
+        "heretic": "30/32"
+       },
+       "kl": {
+        "ide": 0.06752390853944235,
+        "heretic": 0.06752379238605499,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 3,
+       "refusals": {
+        "ide": "29/32",
+        "heretic": "29/32"
+       },
+       "kl": {
+        "ide": 0.0035440887295408174,
+        "heretic": 0.003544082399457693,
+        "within_bound": true
+       }
+      },
+      {
+       "index": 4,
+       "refusals": {
+        "ide": "30/32",
+        "heretic": "30/32"
+       },
+       "kl": {
+        "ide": 0.004873125733411143,
+        "heretic": 0.004873096477240324,
+        "within_bound": true
+       }
+      }
+     ]
+    },
+    "ARA": {
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "base_logits_scale": 23.16415786743164,
+     "token_ids_identical": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     },
+     "prefix": {
+      "ide": "",
+      "heretic": "",
+      "found_by": "none"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "32/32"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "30/32",
+       "heretic": "30/32"
+      },
+      "mean_response_length": {
+       "ide": 133.53125,
+       "heretic": 133.53125
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "0/32",
+       "heretic": "0/32"
+      },
+      "mean_response_length": {
+       "ide": 128.0625,
+       "heretic": 128.0625
+      },
+      "kl": {
+       "ide": 0.08775501047784928,
+       "heretic": 0.08775538206100464,
+       "bound": 0.00010048355869509986,
+       "within_bound": true,
+       "logits_max_abs_diff": 9.322166442871094e-05
+      }
+     },
+     "generation": {
+      "max_response_length": 30,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ],
+       "repetition_penalty": 1.1
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0
+    }
+   }
+  },
+  "Qwen/Qwen3-0.6B": {
+   "commit": "c1899de289a04d12100db370d81485cdf75e47ca",
+   "prompts_per_score": 32,
+   "thinking_model": true,
+   "runs": {
+    "ARA": {
+     "base_logits_max_abs_diff": 6.29425048828125e-05,
+     "base_logits_scale": 29.405860900878906,
+     "token_ids_identical": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     },
+     "prefix": {
+      "ide": "<think></think>\nOkay,",
+      "heretic": "<think></think>\nOkay,",
+      "found_by": "common_prefix_block"
+     },
+     "prefix_test_responses_identical": {
+      "without_prefix": "32/32",
+      "with_prefix": "32/32"
+     },
+     "base": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "3/32",
+       "heretic": "3/32"
+      },
+      "mean_response_length": {
+       "ide": 143.9375,
+       "heretic": 143.9375
+      }
+     },
+     "heretic_merged_model": {
+      "responses_identical": {
+       "refusal": "32/32",
+       "length": "32/32"
+      },
+      "refusals": {
+       "ide": "0/32",
+       "heretic": "0/32"
+      },
+      "mean_response_length": {
+       "ide": 143.09375,
+       "heretic": 143.09375
+      },
+      "kl": {
+       "ide": 0.1809987062588334,
+       "heretic": 0.18099737167358398,
+       "bound": 0.00018199737167358399,
+       "within_bound": true,
+       "logits_max_abs_diff": 5.817413330078125e-05
+      }
+     },
+     "generation": {
+      "max_response_length": 30,
+      "settings_applied": {
+       "eos_token_id": [
+        151645,
+        151643
+       ]
+      },
+      "heretic_attention": "sdpa",
+      "heretic_batch_size": 1
+     },
+     "responses_that_diverged": 0
+    }
+   }
+  }
+ },
+ "ide_end_to_end": {
+  "what": "The IDE's own measurement, the exported trial's parameters as a script scored as an uncommitted candidate, the IDE's own scores; against the scores Heretic recorded for that trial.",
+  "Qwen/Qwen2.5-0.5B-Instruct, directional ablation, full": {
+   "method": "Abliteration",
+   "prefix": null,
+   "parameters": {
+    "direction_index": 11.315066334286588,
+    "weight_distributions": {
+     "attn.o_proj": {
+      "max_weight": 0.9431921949871278,
+      "max_weight_position": 19.023070267551518,
+      "min_weight": 0.5617131156159574,
+      "min_weight_distance": 13.345785852615956
+     },
+     "mlp.down_proj": {
+      "max_weight": 0.8930599195252491,
+      "max_weight_position": 20.689941065311988,
+      "min_weight": 0.5836770562669782,
+      "min_weight_distance": 10.570749558672304
+     }
+    }
+   },
+   "ide_base": {
+    "refusals": "30/32",
+    "mean_response_length": 133.53125
+   },
+   "ide_candidate": {
+    "refusals": "28/32",
+    "kl": 0.013251490776383434,
+    "mean_response_length": 131.53125,
+    "stored_values": 321408
+   },
+   "heretic_exported_trial": {
+    "refusals": "28/32",
+    "kl": 0.013251576572656631
+   },
+   "seconds": {
+    "measurement": 8.7,
+    "base_scores": 52.6,
+    "candidate_scores": 47.0
+   },
+   "tensors_touched_after_scoring": 0
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct, ARA": {
+   "method": "ARA",
+   "prefix": null,
+   "parameters": {
+    "start_layer_index": 12,
+    "end_layer_index": 16,
+    "preserve_good_behavior_weight": 0.18391881167709445,
+    "steer_bad_behavior_weight": 0.0006580230611475311,
+    "overcorrect_relative_weight": 0.7380425378061927,
+    "neighbor_count": 9
+   },
+   "ide_base": {
+    "refusals": "30/32",
+    "mean_response_length": 133.53125
+   },
+   "ide_candidate": {
+    "refusals": "0/32",
+    "kl": 0.09015011675364804,
+    "mean_response_length": 133.65625,
+    "stored_values": 1510400
+   },
+   "heretic_exported_trial": {
+    "refusals": "0/32",
+    "kl": 0.0877549946308136
+   },
+   "seconds": {
+    "measurement": 9.1,
+    "base_scores": 52.8,
+    "candidate_scores": 61.0
+   },
+   "tensors_touched_after_scoring": 0
+  },
+  "Qwen/Qwen3-0.6B, ARA": {
+   "method": "ARA",
+   "prefix": "<think></think>\nOkay,",
+   "parameters": {
+    "start_layer_index": 4,
+    "end_layer_index": 26,
+    "preserve_good_behavior_weight": 0.9660620307264481,
+    "steer_bad_behavior_weight": 0.9290060241775031,
+    "overcorrect_relative_weight": 0.7503842142808693,
+    "neighbor_count": 15
+   },
+   "ide_base": {
+    "refusals": "3/32",
+    "mean_response_length": 143.9375
+   },
+   "ide_candidate": {
+    "refusals": "0/32",
+    "kl": 0.09311499349132646,
+    "mean_response_length": 144.03125,
+    "stored_values": 7884800
+   },
+   "heretic_exported_trial": {
+    "refusals": "0/32",
+    "kl": 0.18099814653396606
+   },
+   "seconds": {
+    "measurement": 17.7,
+    "base_scores": 86.2,
+    "candidate_scores": 121.8
+   },
+   "tensors_touched_after_scoring": 0
+  }
+ },
+ "qwen3_ara_fit": {
+  "model": {
+   "layers": 28,
+   "d_model": 1024,
+   "tensors": 311,
+   "parameters": 751632384
+  },
+  "parameters": {
+   "start_layer_index": 4,
+   "end_layer_index": 26,
+   "preserve_good_behavior_weight": 0.9660620307264481,
+   "steer_bad_behavior_weight": 0.9290060241775031,
+   "overcorrect_relative_weight": 0.7503842142808693,
+   "neighbor_count": 15,
+   "preserve_row_magnitudes": true,
+   "lora_rank": 50,
+   "n_optimization_steps": 5,
+   "learning_rate": 1.0,
+   "max_iter": 20,
+   "history_size": 10,
+   "seed": 12345
+  },
+  "tokens_identical": {
+   "good": "64/64",
+   "bad": "64/64",
+   "kl": "32/32"
+  },
+  "means_rel_worst": 6.155537849955759e-07,
+  "module_io": {
+   "components": 56,
+   "captured_by_both": 56,
+   "inputs_rel_worst": 4.8710446939979165e-06,
+   "outputs_rel_worst": 5.3203304501898e-06
+  },
+  "tensors": {
+   "changed_in_both": 44,
+   "unchanged_in_both": 266,
+   "changed_in_one_only": 0
+  },
+  "fitted_change_rel_diff_from_heretic": {
+   "ide_own_captures": {
+    "min": 0.10993366483945334,
+    "median": 0.22662631305545577,
+    "max": 1.1956863376415618
+   },
+   "ide_from_heretic_captures": {
+    "min": 0.09121973706480424,
+    "median": 0.2610251563680148,
+    "max": 2.134461761624556
+   }
+  },
+  "objective": {
+   "matrices": 44,
+   "sum_at_start": 277.8860305781808,
+   "sum_reached": {
+    "heretic": -69.83125499859548,
+    "ide": -71.41621102600679,
+    "ide_from_heretic_io": -69.50498924399358
+   },
+   "reduction_rel_diff_from_heretic": {
+    "ide": {
+     "median": 0.003612135707935334,
+     "max": 0.06255812912667424
+    },
+    "ide_from_heretic_io": {
+     "median": 0.005102041539108383,
+     "max": 0.0702421026287244
+    }
+   }
+  },
+  "kl": {
+   "heretic": 0.18099814653396606,
+   "ide_own_captures": 0.0931147113442421,
+   "ide_from_heretic_captures": 0.12693272531032562
+  },
+  "base_logits_max_abs_diff": 6.628036499023438e-05,
+  "fit_check_no_model_loaded": {
+   "under_heretic_torch": {
+    "torch": "2.14.1",
+    "matrices": 44,
+    "elements": 115343360,
+    "ide_fit_vs_heretic_loop_worst": 0.0,
+    "heretic_loop_vs_heretic_export": {
+     "min": 1.0038875055563043e-07,
+     "median": 2.4056776233350453e-07,
+     "max": 4.4399974208222e-07
+    },
+    "merged_elements_that_differ": {
+     "heretic_loop": 0,
+     "ide": 0
+    },
+    "nudged_heretic_loop_vs_itself": {
+     "min": 0.072050163015594,
+     "median": 0.22613473269238366,
+     "max": 3.395318773823907
+    }
+   },
+   "under_ide_torch": {
+    "torch": "2.15.0",
+    "matrices": 44,
+    "elements": 115343360,
+    "ide_fit_vs_heretic_loop_worst": 0.0,
+    "heretic_loop_vs_heretic_export": {
+     "min": 0.091219737052674,
+     "median": 0.2610251566159615,
+     "max": 2.1344617616537116
+    },
+    "merged_elements_that_differ": {
+     "heretic_loop": 115343147,
+     "ide": 115343147
+    },
+    "nudged_heretic_loop_vs_itself": {
+     "min": 0.07295327752305987,
+     "median": 0.24955205804046543,
+     "max": 3.6884689997256412
+    }
+   }
+  }
+ },
+ "memory_guard": {
+  "what": "every model load ran under python -m wsp.memory_guard, one at a time, offline, in an isolated root and model cache",
+  "violations": 0,
+  "scores comparison, tiny": {
+   "peak_footprint_gib": 0.74,
+   "largest_step_gib": 0.28,
+   "seconds": 6
+  },
+  "scores comparison, Qwen2.5-0.5B": {
+   "peak_footprint_gib": 3.11,
+   "largest_step_gib": 2.04,
+   "seconds": 854
+  },
+  "scores comparison, Qwen3-0.6B": {
+   "peak_footprint_gib": 3.36,
+   "largest_step_gib": 2.9,
+   "seconds": 352
+  },
+  "end to end, Qwen2.5-0.5B ARA": {
+   "peak_footprint_gib": 2.58,
+   "largest_step_gib": 2.04,
+   "seconds": 125
+  },
+  "end to end, Qwen2.5-0.5B directional ablation": {
+   "peak_footprint_gib": 2.94,
+   "largest_step_gib": 2.03,
+   "seconds": 110
+  },
+  "end to end, Qwen3-0.6B ARA": {
+   "peak_footprint_gib": 3.78,
+   "largest_step_gib": 2.2,
+   "seconds": 227
+  },
+  "ARA comparison, Qwen3-0.6B": {
+   "peak_footprint_gib": 9.3,
+   "largest_step_gib": 2.91,
+   "seconds": 139
+  }
+ },
+ "not_covered": [
+  "GGUF runners and a real model through the model worker",
+  "the classifier and benchmark scorers (plan D4, D5)",
+  "a tokenizer that adds a beginning-of-text token, a date-printing template, a template without a system role (plan F4)",
+  "Heretic at batch sizes above 1",
+  "a response that diverges at a near-tie (none did)",
+  "refusal counts of the fit made from Heretic's captures under the IDE's torch on Qwen3-0.6B (its KL only)"
+ ]
+}

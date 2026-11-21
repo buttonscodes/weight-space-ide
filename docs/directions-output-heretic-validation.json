@@ -1,0 +1,2286 @@
+{
+ "date": "2026-11-18",
+ "what": "The IDE's PEFT LoRA adapter export and its reproduction record against Heretic: the adapter in PEFT and against Heretic's adapter export; the record as Heretic's reproduce.json, read and run by Heretic; the re-run of an edit from its record",
+ "ide": {
+  "commit": "353ba68",
+  "scripts": "the ones this file is committed with",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "safetensors": "0.8.0",
+   "peft": null
+  },
+  "python": "3.12.13",
+  "runner": "HFRunner",
+  "dtype": "float32",
+  "device": "cpu"
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "safetensors": "0.8.0",
+   "peft": "0.21.2"
+  },
+  "python": "3.12.13",
+  "dtype": "float32",
+  "device": "cpu",
+  "batch_size": 1
+ },
+ "acceptance": "written in the scripts' docstrings before any run; what the first runs corrected is under corrections",
+ "corrections_after_the_first_runs": [
+  "Heretic refuses an empty scorers list (heretic/evaluator.py:56), also in --reproduce mode: the IDE's file for an edit made by hand now leaves scorers out (it had written []), found by running heretic --reproduce on the IDE's file",
+  "the mapping comparison first failed, on every by-hand run, on settings the IDE's file cannot hold: the answers to Heretic's prompts (checkpoint_action, trial_index, model_action), the scoring settings of an edit without scorers (max_response_length, the scorer tables), ARA's print_loss, and the seed of an ablation made by hand; these are reported with where Heretic reads them, everything else is asserted",
+  "the logits check (P5) had an absolute bound of 1e-5 and failed on Qwen2.5-0.5B at 7.4e-5 with logits up to 23 while the merged weights were bit-equal; the bound is 1e-5 * max(1, max |logit|), and Heretic's own adapter, attached against merged, is measured beside it",
+  "the re-run route answered 400 instead of its verdict when a re-run changed other tensors (an infinite relative difference is not JSON); relative is null there, with only_in naming the side",
+  "an environment row called a runner that is not loaded a difference; same is null until the model is loaded",
+  "the 0.5B oracle runs pinned no model commit: it is the cache snapshot the runs loaded, checked against the cache's refs/main"
+ ],
+ "adapter": {
+  "tiny-random/qwen2.5": {
+   "ide": {
+    "none": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "pre": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "f08446e6a90cd0d7d5b56d4f922a1523ed0ddcbb1a29d2c5e3c42cc3ba996ea7"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "full": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "perlayer-s1": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "3677c81341335b8745c03edf2e1009f9fa951e0b8914b227ad24012387a2a981"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "ara-s12345": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "54204d55bce47cea9240e1b361221ea31160c54fb3827700e6dae3a671276457"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "ara-s1": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    }
+   },
+   "ide_from_heretics_captures": {
+    "ara-s12345": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "68e9814e1d47fedd73ad3c9c26fb421188579b57777d16f4bcd040739b7dc009"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "ara-s1": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       5,
+       5
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "19507ced51be5302f4da4baebf9f37ddfac720bee447a3b0759016685c8a48fc"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    }
+   },
+   "peft": {
+    "none": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 1,
+      "lora_alpha": 1,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 5,
+      "targets": 5,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        1,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 10,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 5,
+      "bit_equal": 5,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 46,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 2.905726432800293e-07,
+      "bound": 1e-05,
+      "relative": 2.905726432800293e-07,
+      "prompts": 5,
+      "scale": 0.3887743353843689,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 2.384185791015625e-07,
+       "scale": 0.3887731432914734
+      }
+     },
+     "P6 products per module (ablation, each tool's own measurement)": {
+      "pass": true,
+      "worst_relative": 1.1552103664406971e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "pre": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 1,
+      "lora_alpha": 1,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 5,
+      "targets": 5,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        1,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 10,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 5,
+      "bit_equal": 5,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 46,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 3.129243850708008e-07,
+      "bound": 1e-05,
+      "relative": 3.129243850708008e-07,
+      "prompts": 5,
+      "scale": 0.38806280493736267,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 2.682209014892578e-07,
+       "scale": 0.3880618214607239
+      }
+     },
+     "P6 products per module (ablation, each tool's own measurement)": {
+      "pass": true,
+      "worst_relative": 1.1592712991692052e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "full": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 3,
+      "lora_alpha": 3,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 5,
+      "targets": 5,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        3,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 10,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 5,
+      "bit_equal": 5,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 46,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 1.7881393432617188e-07,
+      "bound": 1e-05,
+      "relative": 1.7881393432617188e-07,
+      "prompts": 5,
+      "scale": 0.3896128237247467,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 2.8312206268310547e-07,
+       "scale": 0.38961172103881836
+      }
+     },
+     "P6 products per module (ablation, each tool's own measurement)": {
+      "pass": true,
+      "worst_relative": 1.3576743361786994e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "perlayer-s1": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       28,
+       28
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 3,
+      "lora_alpha": 3,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 5,
+      "targets": 5,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        3,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 10,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 5,
+      "bit_equal": 5,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 46,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 2.8312206268310547e-07,
+      "bound": 1e-05,
+      "relative": 2.8312206268310547e-07,
+      "prompts": 5,
+      "scale": 0.3447166681289673,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 1.7881393432617188e-07,
+       "scale": 0.3447161316871643
+      }
+     },
+     "P6 products per module (ablation, each tool's own measurement)": {
+      "pass": true,
+      "worst_relative": 1.3937838557143995e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "ara-s12345": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 4,
+      "lora_alpha": 4,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 1,
+      "targets": 1,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        4,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 2,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 1,
+      "bit_equal": 1,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 50,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 1.4156103134155273e-07,
+      "bound": 1e-05,
+      "relative": 1.4156103134155273e-07,
+      "prompts": 5,
+      "scale": 0.3171466290950775,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 1.2293457984924316e-07,
+       "scale": 0.31715235114097595
+      }
+     },
+     "P6c products per module (ARA, each tool's own captures and libraries; reported)": {
+      "worst_relative": 0.0436215508861262,
+      "only_ide": []
+     },
+     "P6b ARA from Heretic's captures: the factors equal Heretic's": {
+      "pass": true,
+      "modules": 1,
+      "differ": [],
+      "lacking_but_nonzero": []
+     }
+    },
+    "ara-s1": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       20,
+       20
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 4,
+      "lora_alpha": 4,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 8,
+      "expected": 8,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 51,
+      "tensors": 51,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 2,
+      "targets": 2,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        4,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 4,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 2,
+      "bit_equal": 2,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 49,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 1.7881393432617188e-07,
+      "bound": 1e-05,
+      "relative": 1.7881393432617188e-07,
+      "prompts": 5,
+      "scale": 0.31829702854156494,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 2.2910535335540771e-07,
+       "scale": 0.31794700026512146
+      }
+     },
+     "P6c products per module (ARA, each tool's own captures and libraries; reported)": {
+      "worst_relative": 0.3798809132060354,
+      "only_ide": []
+     },
+     "P6b ARA from Heretic's captures: the factors equal Heretic's": {
+      "pass": true,
+      "modules": 2,
+      "differ": [],
+      "lacking_but_nonzero": []
+     }
+    }
+   },
+   "totals": {
+    "ide": {
+     "assertions": 24,
+     "passed": 24
+    },
+    "ide_from_heretics_captures": {
+     "assertions": 8,
+     "passed": 8
+    },
+    "peft": {
+     "assertions": 54,
+     "passed": 54
+    }
+   }
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct": {
+   "ide": {
+    "abl-full": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       56,
+       56
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       64,
+       64
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    },
+    "ara": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       40,
+       40
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       64,
+       64
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    }
+   },
+   "ide_from_heretics_captures": {
+    "ara": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       40,
+       40
+      ],
+      "first_difference": null
+     },
+     "M0 measured prompts are the dump's": {
+      "pass": true,
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       64,
+       64
+      ]
+     },
+     "I1 committed through Session.apply": {
+      "pass": true,
+      "error": null,
+      "record": {
+       "version": 1,
+       "calls": 1,
+       "digest": "ed270991c24e032810ce095fdaa2c1eef2776e54ba91e801367f32a39956e31f"
+      },
+      "record_error": null
+     },
+     "I2 the export changes nothing in the workspace": {
+      "pass": true
+     }
+    }
+   },
+   "peft": {
+    "abl-full": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       56,
+       56
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 3,
+      "lora_alpha": 3,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 48,
+      "expected": 48,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 290,
+      "tensors": 290,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 31,
+      "targets": 31,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        3,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 62,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 31,
+      "bit_equal": 31,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 259,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 7.355213165283203e-05,
+      "bound": 0.00023139928817749025,
+      "relative": 3.1785807221850798e-06,
+      "prompts": 32,
+      "scale": 23.139928817749023,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 7.295608520507812e-05,
+       "scale": 23.13993263244629
+      }
+     },
+     "P6 products per module (ablation, each tool's own measurement)": {
+      "pass": true,
+      "worst_relative": 0.00038706605950834534,
+      "bound": 0.001,
+      "modules": 48,
+      "in_ide": 31,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "ara": {
+     "J journals equal": {
+      "pass": true,
+      "rows": [
+       40,
+       40
+      ],
+      "first_difference": null
+     },
+     "P0 Heretic's adapter": {
+      "pass": true,
+      "r": 50,
+      "lora_alpha": 50,
+      "dtypes": [
+       "torch.float32"
+      ],
+      "metadata": {
+       "format": "pt"
+      },
+      "modules": 48,
+      "expected": 48,
+      "missing": [],
+      "extra": []
+     },
+     "P3 Heretic's adapter merged equals its merged model": {
+      "pass": true,
+      "bit_equal": 290,
+      "tensors": 290,
+      "worst_max_abs": 0.0,
+      "missing": [],
+      "warnings": []
+     },
+     "P1 PEFT loads the IDE's adapter": {
+      "pass": true,
+      "warnings": [],
+      "modules": 8,
+      "targets": 8,
+      "only_peft": [],
+      "only_file": [],
+      "rank_and_scaling": [
+       [
+        50,
+        1.0
+       ]
+      ],
+      "config_equal": true
+     },
+     "P2 the file's keys are PEFT's": {
+      "pass": true,
+      "keys": 16,
+      "only_file": [],
+      "only_peft": [],
+      "dtypes": [
+       "torch.float32"
+      ]
+     },
+     "P4 merged IDE adapter equals the IDE's current weights": {
+      "pass": true,
+      "tensors": 8,
+      "bit_equal": 8,
+      "not_bit_equal": [],
+      "worst_relative": 0.0,
+      "warnings": []
+     },
+     "P4b every other tensor equals the base": {
+      "pass": true,
+      "tensors": 282,
+      "differ": []
+     },
+     "P5 first-token logits, adapter attached vs current weights": {
+      "pass": true,
+      "max_abs": 5.257129669189453e-05,
+      "bound": 0.0002215730667114258,
+      "relative": 2.372639304593946e-06,
+      "prompts": 32,
+      "scale": 22.157306671142578,
+      "heretic_adapter_attached_vs_merged": {
+       "max_abs": 5.14984130859375e-05,
+       "scale": 22.404199600219727
+      }
+     },
+     "P6c products per module (ARA, each tool's own captures and libraries; reported)": {
+      "worst_relative": 0.9359894460669159,
+      "only_ide": []
+     },
+     "P6b ARA from Heretic's captures: the factors equal Heretic's": {
+      "pass": true,
+      "modules": 8,
+      "differ": [],
+      "lacking_but_nonzero": []
+     }
+    }
+   },
+   "totals": {
+    "ide": {
+     "assertions": 8,
+     "passed": 8
+    },
+    "ide_from_heretics_captures": {
+     "assertions": 4,
+     "passed": 4
+    },
+    "peft": {
+     "assertions": 18,
+     "passed": 18
+    }
+   }
+  }
+ },
+ "record": {
+  "heretic_rebuilds_its_own_reproduce_json": {
+   "qwen05b-abl-full": {
+    "pass": true,
+    "trial": 1,
+    "n_trials": 4,
+    "model_commit_from": "argument, equal to the cache's refs/main"
+   },
+   "qwen05b-ara": {
+    "pass": true,
+    "trial": 1,
+    "n_trials": 4,
+    "model_commit_from": "argument, equal to the cache's refs/main"
+   },
+   "tiny-ara-s1": {
+    "pass": true,
+    "trial": 2,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-ara-s12345": {
+    "pass": true,
+    "trial": 2,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-full": {
+    "pass": true,
+    "trial": 1,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-none": {
+    "pass": true,
+    "trial": 1,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-perlayer-s1": {
+    "pass": true,
+    "trial": 2,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-pre": {
+    "pass": true,
+    "trial": 1,
+    "n_trials": 2,
+    "model_commit_from": "config"
+   },
+   "tiny-search-full": {
+    "pass": true,
+    "trial": 12,
+    "n_trials": 12,
+    "model_commit_from": "config"
+   }
+  },
+  "heretic_reads_the_ides_files": {
+   "files": 19,
+   "assertions": 114,
+   "passed": 114,
+   "by_file": {
+    "adapter-tiny/none/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/none/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/pre/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/pre/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/full/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/full/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/perlayer-s1/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/perlayer-s1/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/ara-s12345/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/ara-s12345/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/ara-s1/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-tiny/ara-s1/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "ara-s12345/captures/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "ara-s1/captures/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-q05/abl-full/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-q05/abl-full/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-q05/ara/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "adapter-q05/ara/ide_reproduce_adapter.json": {
+     "assertions": 6,
+     "passed": 6
+    },
+    "search-tiny/search-full/ide_reproduce.json": {
+     "assertions": 6,
+     "passed": 6
+    }
+   }
+  },
+  "mapping_field_by_field": {
+   "totals": {
+    "assertions": 237,
+    "passed": 237
+   },
+   "labels": {
+    "tiny/none": {
+     "assertions": 25,
+     "passed": 25,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed of an ablation made by hand is 0": {
+      "pass": true,
+      "ide": 0,
+      "heretic": 12345
+     }
+    },
+    "tiny/pre": {
+     "assertions": 25,
+     "passed": 25,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed of an ablation made by hand is 0": {
+      "pass": true,
+      "ide": 0,
+      "heretic": 12345
+     }
+    },
+    "tiny/full": {
+     "assertions": 26,
+     "passed": 26,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed of an ablation made by hand is 0": {
+      "pass": true,
+      "ide": 0,
+      "heretic": 12345
+     },
+     "S-C4 the file names row_normalization full's seeded SVD as a difference": {
+      "pass": true,
+      "differences": [
+       "row_normalization full: Heretic stores a randomized rank-r approximation (svd_lowrank seeded with the seed), the IDE the best rank-r one"
+      ]
+     }
+    },
+    "tiny/perlayer-s1": {
+     "assertions": 26,
+     "passed": 26,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed of an ablation made by hand is 0": {
+      "pass": true,
+      "ide": 0,
+      "heretic": 1
+     },
+     "S-C4 the file names row_normalization full's seeded SVD as a difference": {
+      "pass": true,
+      "differences": [
+       "row_normalization full: Heretic stores a randomized rank-r approximation (svd_lowrank seeded with the seed), the IDE the best rank-r one"
+      ]
+     }
+    },
+    "tiny/ara-s12345": {
+     "assertions": 27,
+     "passed": 27,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "modifier.ARA.print_loss",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed": {
+      "pass": true,
+      "ide": 12345,
+      "heretic": 12345
+     }
+    },
+    "tiny/ara-s1": {
+     "assertions": 27,
+     "passed": 27,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "modifier.ARA.print_loss",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed": {
+      "pass": true,
+      "ide": 1,
+      "heretic": 1
+     }
+    },
+    "qwen05b/abl-full": {
+     "assertions": 26,
+     "passed": 26,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed of an ablation made by hand is 0": {
+      "pass": true,
+      "ide": 0,
+      "heretic": 12345
+     },
+     "S-C4 the file names row_normalization full's seeded SVD as a difference": {
+      "pass": true,
+      "differences": [
+       "row_normalization full: Heretic stores a randomized rank-r approximation (svd_lowrank seeded with the seed), the IDE the best rank-r one"
+      ]
+     }
+    },
+    "qwen05b/ara": {
+     "assertions": 27,
+     "passed": 27,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "max_response_length",
+      "model_action",
+      "modifier.ARA.print_loss",
+      "scorer",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed": {
+      "pass": true,
+      "ide": 12345,
+      "heretic": 12345
+     }
+    },
+    "tiny/search-full": {
+     "assertions": 28,
+     "passed": 28,
+     "reported_cannot_change_the_weights": [
+      "checkpoint_action",
+      "model_action",
+      "trial_index"
+     ],
+     "S-C3 parameters": {
+      "pass": true
+     },
+     "S-C4 settings.seed": {
+      "pass": true,
+      "ide": 12345,
+      "heretic": 12345
+     },
+     "S-C5 scorers' plugins and optimizations": {
+      "pass": true,
+      "ide": [
+       [
+        "heretic.scorers.keyword_rate.KeywordRate",
+        "minimize"
+       ],
+       [
+        "heretic.scorers.kl_divergence.KLDivergence",
+        "minimize"
+       ]
+      ],
+      "heretic": [
+       [
+        "heretic.scorers.keyword_rate.KeywordRate",
+        "minimize"
+       ],
+       [
+        "heretic.scorers.kl_divergence.KLDivergence",
+        "minimize"
+       ]
+      ]
+     },
+     "S-C5 score Refusals": {
+      "pass": true,
+      "ide": 0.0,
+      "heretic": 0.0,
+      "bound": 0
+     },
+     "S-C5 score KL divergence": {
+      "pass": true,
+      "ide": 0.0001661860733292997,
+      "heretic": 0.0001663555158302188,
+      "bound": 1.1663555158302188e-06
+     }
+    }
+   }
+  },
+  "heretic_reproduces_from_the_ides_file": {
+   "totals": {
+    "assertions": 26,
+    "passed": 26
+   },
+   "labels": {
+    "tiny/none": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       1,
+       1
+      ],
+      "lora_alpha": [
+       1,
+       1
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 Heretic's reproduction from the IDE's file equals Heretic's own run": {
+      "pass": true,
+      "tensors": 16,
+      "not_bit_equal": []
+     },
+     "S-F2 products per module, Heretic's reproduction against the IDE's adapter": {
+      "pass": true,
+      "worst_relative": 1.155301431071499e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "tiny/pre": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       1,
+       1
+      ],
+      "lora_alpha": [
+       1,
+       1
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 Heretic's reproduction from the IDE's file equals Heretic's own run": {
+      "pass": true,
+      "tensors": 16,
+      "not_bit_equal": []
+     },
+     "S-F2 products per module, Heretic's reproduction against the IDE's adapter": {
+      "pass": true,
+      "worst_relative": 1.1592794987815815e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "tiny/full": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       3,
+       3
+      ],
+      "lora_alpha": [
+       3,
+       3
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 (reported) row_normalization full, seed 0 against the run's seed": {
+      "tensors": 16,
+      "not_bit_equal": 10,
+      "worst_relative_of_products": 3.5710193378132067e-07
+     },
+     "S-F2 products per module, Heretic's reproduction against the IDE's adapter": {
+      "pass": true,
+      "worst_relative": 1.3553786501581008e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "tiny/perlayer-s1": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       3,
+       3
+      ],
+      "lora_alpha": [
+       3,
+       3
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 (reported) row_normalization full, seed 0 against the run's seed": {
+      "tensors": 16,
+      "not_bit_equal": 10,
+      "worst_relative_of_products": 5.477351720687571e-07
+     },
+     "S-F2 products per module, Heretic's reproduction against the IDE's adapter": {
+      "pass": true,
+      "worst_relative": 1.4004179532050259e-05,
+      "bound": 5e-05,
+      "modules": 8,
+      "in_ide": 5,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "tiny/ara-s12345": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       4,
+       4
+      ],
+      "lora_alpha": [
+       4,
+       4
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 Heretic's reproduction from the IDE's file equals Heretic's own run": {
+      "pass": true,
+      "tensors": 16,
+      "not_bit_equal": []
+     },
+     "S-F2 (reported) ARA products, each tool's own fit": {
+      "worst_relative": 0.043621553312625856,
+      "modules": 8,
+      "in_ide": 1,
+      "absent_nonzero": []
+     }
+    },
+    "tiny/ara-s1": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       4,
+       4
+      ],
+      "lora_alpha": [
+       4,
+       4
+      ],
+      "tensors": [
+       16,
+       16
+      ]
+     },
+     "S-F1 Heretic's reproduction from the IDE's file equals Heretic's own run": {
+      "pass": true,
+      "tensors": 16,
+      "not_bit_equal": []
+     },
+     "S-F2 (reported) ARA products, each tool's own fit": {
+      "worst_relative": 0.37988090914369427,
+      "modules": 8,
+      "in_ide": 2,
+      "absent_nonzero": []
+     }
+    },
+    "qwen05b/abl-full": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       3,
+       3
+      ],
+      "lora_alpha": [
+       3,
+       3
+      ],
+      "tensors": [
+       96,
+       96
+      ]
+     },
+     "S-F1 (reported) row_normalization full, seed 0 against the run's seed": {
+      "tensors": 96,
+      "not_bit_equal": 62,
+      "worst_relative_of_products": 0.00047259064952073906
+     },
+     "S-F2 products per module, Heretic's reproduction against the IDE's adapter": {
+      "pass": true,
+      "worst_relative": 0.00040981853729137274,
+      "bound": 0.001,
+      "modules": 48,
+      "in_ide": 31,
+      "absent_nonzero": [],
+      "only_ide": []
+     }
+    },
+    "qwen05b/ara": {
+     "S-F0 the reproduction is an adapter": {
+      "pass": true,
+      "files": [
+       true,
+       true
+      ]
+     },
+     "S-F0 the same r, lora_alpha and tensor names as Heretic's own run": {
+      "pass": true,
+      "r": [
+       50,
+       50
+      ],
+      "lora_alpha": [
+       50,
+       50
+      ],
+      "tensors": [
+       96,
+       96
+      ]
+     },
+     "S-F1 Heretic's reproduction from the IDE's file equals Heretic's own run": {
+      "pass": true,
+      "tensors": 96,
+      "not_bit_equal": []
+     },
+     "S-F2 (reported) ARA products, each tool's own fit": {
+      "worst_relative": 0.9359894462697529,
+      "modules": 48,
+      "in_ide": 8,
+      "absent_nonzero": []
+     }
+    }
+   }
+  },
+  "search_run": {
+   "totals": {
+    "assertions": 3,
+    "passed": 3
+   },
+   "labels": {
+    "search-full": {
+     "SS1 the search finished": {
+      "pass": true,
+      "state": "finished",
+      "reason": null
+     },
+     "SS2 the first front trial committed": {
+      "pass": true,
+      "trial": 12,
+      "error": null,
+      "edit_equals_scored": true
+     },
+     "SS3 the record is Heretic-runnable": {
+      "pass": true,
+      "reasons": []
+     }
+    }
+   }
+  },
+  "rerun_tiny": {
+   "totals": {
+    "assertions": 18,
+    "passed": 18
+   },
+   "labels": {
+    "none": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+      "recorded": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41387",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41612",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "pre": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "f08446e6a90cd0d7d5b56d4f922a1523ed0ddcbb1a29d2c5e3c42cc3ba996ea7",
+      "recorded": "f08446e6a90cd0d7d5b56d4f922a1523ed0ddcbb1a29d2c5e3c42cc3ba996ea7",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41395",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41613",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "full": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+      "recorded": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41403",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41613",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "perlayer-s1": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "3677c81341335b8745c03edf2e1009f9fa951e0b8914b227ad24012387a2a981",
+      "recorded": "3677c81341335b8745c03edf2e1009f9fa951e0b8914b227ad24012387a2a981",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41411",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41614",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "ara-s12345": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "54204d55bce47cea9240e1b361221ea31160c54fb3827700e6dae3a671276457",
+      "recorded": "54204d55bce47cea9240e1b361221ea31160c54fb3827700e6dae3a671276457",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41419",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41615",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "ara-s1": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+      "recorded": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41427",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41616",
+      "verdict": "identical",
+      "error": null
+     }
+    }
+   }
+  },
+  "rerun_qwen05b": {
+   "totals": {
+    "assertions": 6,
+    "passed": 6
+   },
+   "labels": {
+    "abl-full": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "recorded": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41491",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41634",
+      "verdict": "identical",
+      "error": null
+     }
+    },
+    "ara": {
+     "S-E1 dry run identical, nothing committed": {
+      "pass": true,
+      "verdict": "identical",
+      "digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "recorded": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "error": null,
+      "environment": []
+     },
+     "S-E2 measured again from the record": {
+      "pass": true,
+      "measurement": "oracle-r0001-41531",
+      "means": {
+       "equal": true,
+       "relative": {
+        "good": 0.0,
+        "bad": 0.0
+       }
+      },
+      "verdict": "identical",
+      "differences": []
+     },
+     "S-E3 committed re-run equals the original": {
+      "pass": true,
+      "patch": "0002-41666",
+      "verdict": "identical",
+      "error": null
+     }
+    }
+   }
+  }
+ },
+ "memory_guard": {
+  "what": "every model load ran under python -m wsp.memory_guard, one process at a time, offline, in an isolated root; a run that ended non-zero keeps its log directory",
+  "runs": {
+   "ide-tiny": {
+    "peak_footprint_gib": 3.74,
+    "least_available_gib": 48.3,
+    "seconds": 50.6,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "cap-tiny": {
+    "peak_footprint_gib": 3.57,
+    "least_available_gib": 48.7,
+    "seconds": 20.7,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "peft-tiny": {
+    "peak_footprint_gib": 0.7,
+    "least_available_gib": 51.6,
+    "seconds": 6.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "rerun-tiny": {
+    "peak_footprint_gib": 3.81,
+    "least_available_gib": 54.3,
+    "seconds": 7.3,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "ide-q05": {
+    "peak_footprint_gib": 4.41,
+    "least_available_gib": 47.9,
+    "seconds": 76.9,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "cap-q05": {
+    "peak_footprint_gib": 2.78,
+    "least_available_gib": 50.3,
+    "seconds": 43.6,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "peft-q05": {
+    "peak_footprint_gib": 4.01,
+    "least_available_gib": 54.2,
+    "seconds": 20.8,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "rerun-q05": {
+    "peak_footprint_gib": 5.87,
+    "least_available_gib": 52.3,
+    "seconds": 49.9,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "search-tiny": {
+    "peak_footprint_gib": 3.47,
+    "least_available_gib": 54.4,
+    "seconds": 12.4,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-q05-abl-full": {
+    "peak_footprint_gib": 2.62,
+    "least_available_gib": 53.8,
+    "seconds": 221.1,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-q05-ara": {
+    "peak_footprint_gib": 2.73,
+    "least_available_gib": 54.4,
+    "seconds": 204.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-ara-s1": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.2,
+    "seconds": 35.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-ara-s12345": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.4,
+    "seconds": 34.1,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-full": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.4,
+    "seconds": 36.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-none": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.1,
+    "seconds": 36.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-perlayer-s1": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.4,
+    "seconds": 36.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   },
+   "sf-tiny-pre": {
+    "peak_footprint_gib": 0.84,
+    "least_available_gib": 57.3,
+    "seconds": 36.2,
+    "returncode": 0,
+    "stopped_by_guard": null
+   }
+  }
+ },
+ "totals": {
+  "by_part": {
+   "adapter tiny-random/qwen2.5": {
+    "assertions": 86,
+    "passed": 86
+   },
+   "adapter Qwen/Qwen2.5-0.5B-Instruct": {
+    "assertions": 30,
+    "passed": 30
+   },
+   "heretic_rebuilds_its_own_reproduce_json": {
+    "assertions": 9,
+    "passed": 9
+   },
+   "heretic_reads_the_ides_files": {
+    "assertions": 114,
+    "passed": 114
+   },
+   "mapping_field_by_field": {
+    "assertions": 237,
+    "passed": 237
+   },
+   "heretic_reproduces_from_the_ides_file": {
+    "assertions": 26,
+    "passed": 26
+   },
+   "search_run": {
+    "assertions": 3,
+    "passed": 3
+   },
+   "rerun_tiny": {
+    "assertions": 18,
+    "passed": 18
+   },
+   "rerun_qwen05b": {
+    "assertions": 6,
+    "passed": 6
+   }
+  },
+  "assertions": 529,
+  "passed": 529
+ }
+}

@@ -1,0 +1,2263 @@
+{
+ "date": "2026-11-19",
+ "what": "G2b: mixture-of-experts models through Heretic and through the IDE. Which modules Heretic lists, the directional ablation compared, and what Heretic's ARA does with routed experts. The ARA fit of routed experts was not built: Heretic's ARA raises on the Qwen3.5-MoE fixture (and on Qwen2-MoE), and lists no routed experts on any layout the IDE recognises.",
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0"
+  },
+  "device": "cpu",
+  "batch_size": 1,
+  "n_trials": 2,
+  "export_strategy": "adapter"
+ },
+ "ide": {
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2"
+  },
+  "device": "cpu"
+ },
+ "models": {
+  "qwen3_5_moe": "tests/layout_fixtures.py tiny_qwen35(moe=True, seed=0) as saved by transformers 5.22.2 (4 layers, layers 0-2 linear attention, 4 routed experts top 2, a shared expert, d_model 32), weights unchanged; in the copy both tools ran: preprocessor_config.json and video_preprocessor_config.json (Heretic loads AutoProcessor for a checkpoint with a vision_config), a character-level vocabulary in the Qwen3_5Tokenizer pipeline (the fixture's word-level vocabulary becomes no tokens at all for English prompts through Qwen3_5Tokenizer, in both versions), text max_position_embeddings 512 (character prompts exceed 64). The bfloat16 rows use the same copy with every floating tensor stored in bfloat16.",
+  "qwen2_moe": "built with Heretic's transformers 5.18.0: Qwen2MoeConfig, 2 layers, 4 experts top 2, a shared expert, d_model 32, seed 0",
+  "qwen3_moe": "built with Heretic's transformers 5.18.0: Qwen3MoeConfig, 2 layers, 4 experts top 2, no shared expert, d_model 32, seed 0",
+  "prompts": "mlabonne/harmless_alpaca and mlabonne/harmful_behaviors at the commits and splits of the tiny oracle runs (5 each)"
+ },
+ "i_modules": {
+  "qwen3_5_moe": {
+   "modules_per_layer": {
+    "attn.o_proj": [
+     "model.language_model.layers.0.linear_attn.out_proj"
+    ],
+    "mlp.down_proj": [
+     "model.language_model.layers.0.mlp.shared_expert.down_proj"
+    ]
+   },
+   "layers": [
+    {
+     "attn.o_proj": [
+      "model.language_model.layers.0.linear_attn.out_proj"
+     ],
+     "mlp.down_proj": [
+      "model.language_model.layers.0.mlp.shared_expert.down_proj"
+     ]
+    },
+    {
+     "attn.o_proj": [
+      "model.language_model.layers.1.linear_attn.out_proj"
+     ],
+     "mlp.down_proj": [
+      "model.language_model.layers.1.mlp.shared_expert.down_proj"
+     ]
+    },
+    {
+     "attn.o_proj": [
+      "model.language_model.layers.2.linear_attn.out_proj"
+     ],
+     "mlp.down_proj": [
+      "model.language_model.layers.2.mlp.shared_expert.down_proj"
+     ]
+    },
+    {
+     "attn.o_proj": [
+      "model.language_model.layers.3.self_attn.o_proj"
+     ],
+     "mlp.down_proj": [
+      "model.language_model.layers.3.mlp.shared_expert.down_proj"
+     ]
+    }
+   ],
+   "experts_attribute": {
+    "mlp.experts": {
+     "type": "Qwen3_5MoeExperts",
+     "iterating": "TypeError: 'Qwen3_5MoeExperts' object is not iterable",
+     "parameters": {
+      "gate_up_proj": [
+       4,
+       16,
+       32
+      ],
+      "down_proj": [
+       4,
+       32,
+       8
+      ]
+     }
+    }
+   },
+   "observed_hook_shapes_layer0": [
+    [
+     "model.language_model.layers.0.linear_attn.out_proj",
+     [
+      1,
+      79,
+      32
+     ],
+     [
+      1,
+      79,
+      32
+     ]
+    ],
+    [
+     "model.language_model.layers.0.mlp.shared_expert.down_proj",
+     [
+      79,
+      8
+     ],
+     [
+      79,
+      32
+     ]
+    ]
+   ],
+   "fused_expert_arguments_layer0": [
+    [
+     79,
+     32
+    ],
+    [
+     79,
+     2
+    ],
+    [
+     79,
+     2
+    ]
+   ],
+   "router_last_token_experts": {
+    "0": [
+     [
+      2,
+      1
+     ]
+    ],
+    "1": [
+     [
+      3,
+      2
+     ]
+    ],
+    "2": [
+     [
+      3,
+      0
+     ]
+    ],
+    "3": [
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "capture_error": {
+    "type": "IndexError",
+    "message": "too many indices for tensor of dimension 2",
+    "raised_in_hook_of": {
+     "layer": 0,
+     "component": "mlp.down_proj",
+     "index": 0,
+     "module": "model.language_model.layers.0.mlp.shared_expert.down_proj",
+     "input": [
+      79,
+      8
+     ],
+     "output": [
+      79,
+      32
+     ]
+    }
+   },
+   "batched": {
+    "error": "not run: get_module_io on the first batch raised"
+   },
+   "module_order_check": {
+    "all": {
+     "pass": false,
+     "differences": [
+      {
+       "layer": 0,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.0.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.0.mlp.experts.0.down_proj",
+        "model.layers.0.mlp.experts.1.down_proj",
+        "model.layers.0.mlp.experts.2.down_proj",
+        "model.layers.0.mlp.experts.3.down_proj",
+        "model.layers.0.mlp.shared_expert.down_proj"
+       ]
+      },
+      {
+       "layer": 1,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.1.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.1.mlp.experts.0.down_proj",
+        "model.layers.1.mlp.experts.1.down_proj",
+        "model.layers.1.mlp.experts.2.down_proj",
+        "model.layers.1.mlp.experts.3.down_proj",
+        "model.layers.1.mlp.shared_expert.down_proj"
+       ]
+      },
+      {
+       "layer": 2,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.2.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.2.mlp.experts.0.down_proj",
+        "model.layers.2.mlp.experts.1.down_proj",
+        "model.layers.2.mlp.experts.2.down_proj",
+        "model.layers.2.mlp.experts.3.down_proj",
+        "model.layers.2.mlp.shared_expert.down_proj"
+       ]
+      },
+      {
+       "layer": 3,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.3.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.3.mlp.experts.0.down_proj",
+        "model.layers.3.mlp.experts.1.down_proj",
+        "model.layers.3.mlp.experts.2.down_proj",
+        "model.layers.3.mlp.experts.3.down_proj",
+        "model.layers.3.mlp.shared_expert.down_proj"
+       ]
+      }
+     ],
+     "modules_heretic": 8,
+     "modules_ide": 24
+    },
+    "shared": {
+     "pass": true,
+     "differences": [],
+     "modules_heretic": 8,
+     "modules_ide": 8
+    }
+   }
+  },
+  "qwen2_moe": {
+   "modules_per_layer": {
+    "attn.o_proj": [
+     "model.layers.0.self_attn.o_proj"
+    ],
+    "mlp.down_proj": [
+     "model.layers.0.mlp.shared_expert.down_proj"
+    ]
+   },
+   "layers": [
+    {
+     "attn.o_proj": [
+      "model.layers.0.self_attn.o_proj"
+     ],
+     "mlp.down_proj": [
+      "model.layers.0.mlp.shared_expert.down_proj"
+     ]
+    },
+    {
+     "attn.o_proj": [
+      "model.layers.1.self_attn.o_proj"
+     ],
+     "mlp.down_proj": [
+      "model.layers.1.mlp.shared_expert.down_proj"
+     ]
+    }
+   ],
+   "experts_attribute": {
+    "mlp.experts": {
+     "type": "Qwen2MoeExperts",
+     "iterating": "TypeError: 'Qwen2MoeExperts' object is not iterable",
+     "parameters": {
+      "gate_up_proj": [
+       4,
+       16,
+       32
+      ],
+      "down_proj": [
+       4,
+       32,
+       8
+      ]
+     }
+    }
+   },
+   "observed_hook_shapes_layer0": [
+    [
+     "model.layers.0.self_attn.o_proj",
+     [
+      1,
+      79,
+      32
+     ],
+     [
+      1,
+      79,
+      32
+     ]
+    ],
+    [
+     "model.layers.0.mlp.shared_expert.down_proj",
+     [
+      79,
+      8
+     ],
+     [
+      79,
+      32
+     ]
+    ]
+   ],
+   "fused_expert_arguments_layer0": [
+    [
+     79,
+     32
+    ],
+    [
+     79,
+     2
+    ],
+    [
+     79,
+     2
+    ]
+   ],
+   "router_last_token_experts": {
+    "0": [
+     [
+      3,
+      0
+     ]
+    ],
+    "1": [
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   "capture_error": {
+    "type": "IndexError",
+    "message": "too many indices for tensor of dimension 2",
+    "raised_in_hook_of": {
+     "layer": 0,
+     "component": "mlp.down_proj",
+     "index": 0,
+     "module": "model.layers.0.mlp.shared_expert.down_proj",
+     "input": [
+      79,
+      8
+     ],
+     "output": [
+      79,
+      32
+     ]
+    }
+   },
+   "batched": {
+    "error": "not run: get_module_io on the first batch raised"
+   },
+   "module_order_check": {
+    "all": {
+     "pass": false,
+     "differences": [
+      {
+       "layer": 0,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.0.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.0.mlp.experts.0.down_proj",
+        "model.layers.0.mlp.experts.1.down_proj",
+        "model.layers.0.mlp.experts.2.down_proj",
+        "model.layers.0.mlp.experts.3.down_proj",
+        "model.layers.0.mlp.shared_expert.down_proj"
+       ]
+      },
+      {
+       "layer": 1,
+       "component": "mlp.down_proj",
+       "heretic": [
+        "model.layers.1.mlp.shared_expert.down_proj"
+       ],
+       "ide": [
+        "model.layers.1.mlp.experts.0.down_proj",
+        "model.layers.1.mlp.experts.1.down_proj",
+        "model.layers.1.mlp.experts.2.down_proj",
+        "model.layers.1.mlp.experts.3.down_proj",
+        "model.layers.1.mlp.shared_expert.down_proj"
+       ]
+      }
+     ],
+     "modules_heretic": 4,
+     "modules_ide": 12
+    },
+    "shared": {
+     "pass": true,
+     "differences": [],
+     "modules_heretic": 4,
+     "modules_ide": 4
+    }
+   }
+  },
+  "qwen3_moe": {
+   "modules_per_layer": {
+    "attn.o_proj": [
+     "model.layers.0.self_attn.o_proj"
+    ]
+   },
+   "layers": [
+    {
+     "attn.o_proj": [
+      "model.layers.0.self_attn.o_proj"
+     ]
+    },
+    {
+     "attn.o_proj": [
+      "model.layers.1.self_attn.o_proj"
+     ]
+    }
+   ],
+   "experts_attribute": {
+    "mlp.experts": {
+     "type": "Qwen3MoeExperts",
+     "iterating": "TypeError: 'Qwen3MoeExperts' object is not iterable",
+     "parameters": {
+      "gate_up_proj": [
+       4,
+       16,
+       32
+      ],
+      "down_proj": [
+       4,
+       32,
+       8
+      ]
+     }
+    }
+   },
+   "observed_hook_shapes_layer0": [
+    [
+     "model.layers.0.self_attn.o_proj",
+     [
+      1,
+      79,
+      32
+     ],
+     [
+      1,
+      79,
+      32
+     ]
+    ]
+   ],
+   "fused_expert_arguments_layer0": [
+    [
+     79,
+     32
+    ],
+    [
+     79,
+     2
+    ],
+    [
+     79,
+     2
+    ]
+   ],
+   "router_last_token_experts": {
+    "0": [
+     [
+      0,
+      2
+     ]
+    ],
+    "1": [
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "capture_error": null,
+   "batched": {
+    "captured": [
+     {
+      "attn.o_proj": {
+       "0": [
+        [
+         5,
+         32
+        ],
+        [
+         5,
+         32
+        ]
+       ]
+      }
+     },
+     {
+      "attn.o_proj": {
+       "0": [
+        [
+         5,
+         32
+        ],
+        [
+         5,
+         32
+        ]
+       ]
+      }
+     }
+    ]
+   },
+   "module_order_check": {
+    "all": {
+     "pass": false,
+     "differences": [
+      {
+       "layer": 0,
+       "component": "mlp.down_proj",
+       "heretic": [],
+       "ide": [
+        "model.layers.0.mlp.experts.0.down_proj",
+        "model.layers.0.mlp.experts.1.down_proj",
+        "model.layers.0.mlp.experts.2.down_proj",
+        "model.layers.0.mlp.experts.3.down_proj"
+       ]
+      },
+      {
+       "layer": 1,
+       "component": "mlp.down_proj",
+       "heretic": [],
+       "ide": [
+        "model.layers.1.mlp.experts.0.down_proj",
+        "model.layers.1.mlp.experts.1.down_proj",
+        "model.layers.1.mlp.experts.2.down_proj",
+        "model.layers.1.mlp.experts.3.down_proj"
+       ]
+      }
+     ],
+     "modules_heretic": 2,
+     "modules_ide": 10
+    },
+    "shared": {
+     "pass": true,
+     "differences": [],
+     "modules_heretic": 2,
+     "modules_ide": 2
+    }
+   }
+  }
+ },
+ "ii_ablation": {
+  "float32_shared": {
+   "dtype": "float32",
+   "expert_modules": "shared",
+   "pass": true,
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+   },
+   "modes": {
+    "none": {
+     "checks": {
+      "B-S1 token ids (no bound for this dtype)": {
+       "value": true,
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 4.021032822072866e-07,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.9999963326026768,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors (no bound for this dtype)": {
+       "value": true,
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "B-S4 change from Heretic's means (no bound for this dtype)": {
+       "value": 1.7031161259229022e-07,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums (no bound for this dtype)": {
+       "value": true,
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 4.021032822072866e-07,
+     "direction_cosine_per_index": [
+      0.0,
+      0.9999963326026768,
+      0.9999999999995351,
+      0.9999999999994393,
+      0.9999999999995057
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.2612211580854525e-06,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.6231630351832099e-06,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.470602642345383e-06,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.5407017957396338e-06,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.5225164289512958e-06
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.427251023274499e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.7031161259229022e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 9.610853076068577e-08,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.2362555127811653e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.41846476694707e-07
+     },
+     "base_logits_max_abs_diff": 2.6226043701171875e-06,
+     "kl_ide": 0.0012960631866008043,
+     "kl_heretic": 0.0012960140593349934,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     }
+    },
+    "full": {
+     "checks": {
+      "B-S1 token ids (no bound for this dtype)": {
+       "value": true,
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 4.021032822072866e-07,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.9999963326026768,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors (no bound for this dtype)": {
+       "value": true,
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "B-S4 change from Heretic's means (no bound for this dtype)": {
+       "value": 7.450276252378199e-07,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums (no bound for this dtype)": {
+       "value": true,
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      },
+      "B-S4 replica input is the IDE's change": {
+       "pass": true,
+       "bound": 1e-06,
+       "tensors": 5,
+       "worst": 1.3540700958011973e-07,
+       "errors": []
+      },
+      "B-S4 replica of Heretic's randomized approximation (no bound for this dtype)": {
+       "tensors": 5,
+       "errors": [],
+       "worst_replica_vs_heretic": 8.151236344396166e-07,
+       "worst_replica_vs_ide": 5.094820631280449e-07,
+       "worst_ide_vs_heretic": 7.450276252378199e-07,
+       "worst_tail": 0.9306178489023429,
+       "smallest_sigma_r_over_sigma_1": 0.08103176021543165,
+       "worst_exact_truncation_vs_ide": 1.3540700958011973e-07,
+       "worst_replica_of_heretic_formula_vs_heretic": 1.1728389192246582e-06,
+       "replicas_bit_equal": 0,
+       "torch": "2.15.0",
+       "run_torch": "2.14.1",
+       "device": "cpu",
+       "run_device": "cpu"
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 4.021032822072866e-07,
+     "direction_cosine_per_index": [
+      0.0,
+      0.9999963326026768,
+      0.9999999999995351,
+      0.9999999999994393,
+      0.9999999999995057
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.563643846581358e-06,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.7197214685390556e-06,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.4707088663026143e-06,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.6028310997693543e-06,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.7932225403335907e-06
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.450276252378199e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.242436472395468e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 4.13493345664564e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5162476255721955e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 5.868608551450449e-07
+     },
+     "base_logits_max_abs_diff": 2.6226043701171875e-06,
+     "kl_ide": 0.0010889091063290834,
+     "kl_heretic": 0.001088926219381392,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     },
+     "replica": {
+      "worst_replica_vs_heretic": 8.151236344396166e-07,
+      "worst_replica_vs_ide": 5.094820631280449e-07
+     }
+    }
+   }
+  },
+  "float32_all": {
+   "dtype": "float32",
+   "expert_modules": "all",
+   "pass": true,
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+   },
+   "modes": {
+    "none": {
+     "checks": {
+      "B-S1 token ids (no bound for this dtype)": {
+       "value": true,
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 4.021032822072866e-07,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.9999963326026768,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors (no bound for this dtype)": {
+       "value": false,
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 24,
+       "only_heretic": [],
+       "only_ide": [
+        "model.language_model.layers.0.mlp.experts.0.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.1.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.2.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.3.down_proj.weight",
+        "model.language_model.layers.1.mlp.experts.0.down_proj.weight"
+       ],
+       "tensors_changed_in_one_only": 8
+      },
+      "B-S4 change from Heretic's means (no bound for this dtype)": {
+       "value": 1.7031161259229022e-07,
+       "tensors": 13,
+       "changed_in_one_only": 8
+      },
+      "B-S4 rounded sums (no bound for this dtype)": {
+       "value": true,
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 4.021032822072866e-07,
+     "direction_cosine_per_index": [
+      0.0,
+      0.9999963326026768,
+      0.9999999999995351,
+      0.9999999999994393,
+      0.9999999999995057
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 8,
+     "changed_by_ide_only": [
+      "model.language_model.layers.2.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.3.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.3.down_proj.weight"
+     ],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.2612211580854525e-06,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.6231630351832099e-06,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.470602642345383e-06,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.5407017957396338e-06,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.5225164289512958e-06
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.427251023274499e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.7031161259229022e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 9.610853076068577e-08,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.2362555127811653e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.41846476694707e-07
+     },
+     "base_logits_max_abs_diff": 2.6226043701171875e-06,
+     "kl_ide": 0.0014946053270250559,
+     "kl_heretic": 0.0012960140593349934,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     }
+    },
+    "full": {
+     "checks": {
+      "B-S1 token ids (no bound for this dtype)": {
+       "value": true,
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 4.021032822072866e-07,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.9999963326026768,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors (no bound for this dtype)": {
+       "value": false,
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 24,
+       "only_heretic": [],
+       "only_ide": [
+        "model.language_model.layers.0.mlp.experts.0.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.1.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.2.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.3.down_proj.weight",
+        "model.language_model.layers.1.mlp.experts.0.down_proj.weight"
+       ],
+       "tensors_changed_in_one_only": 8
+      },
+      "B-S4 change from Heretic's means (no bound for this dtype)": {
+       "value": 7.450276252378199e-07,
+       "tensors": 13,
+       "changed_in_one_only": 8
+      },
+      "B-S4 rounded sums (no bound for this dtype)": {
+       "value": true,
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      },
+      "B-S4 replica input is the IDE's change": {
+       "pass": true,
+       "bound": 1e-06,
+       "tensors": 5,
+       "worst": 1.3540700958011973e-07,
+       "errors": []
+      },
+      "B-S4 replica of Heretic's randomized approximation (no bound for this dtype)": {
+       "tensors": 5,
+       "errors": [],
+       "worst_replica_vs_heretic": 8.151236344396166e-07,
+       "worst_replica_vs_ide": 5.094820631280449e-07,
+       "worst_ide_vs_heretic": 7.450276252378199e-07,
+       "worst_tail": 0.9306178489023429,
+       "smallest_sigma_r_over_sigma_1": 0.08103176021543165,
+       "worst_exact_truncation_vs_ide": 1.3540700958011973e-07,
+       "worst_replica_of_heretic_formula_vs_heretic": 1.1728389192246582e-06,
+       "replicas_bit_equal": 0,
+       "torch": "2.15.0",
+       "run_torch": "2.14.1",
+       "device": "cpu",
+       "run_device": "cpu"
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 4.021032822072866e-07,
+     "direction_cosine_per_index": [
+      0.0,
+      0.9999963326026768,
+      0.9999999999995351,
+      0.9999999999994393,
+      0.9999999999995057
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 8,
+     "changed_by_ide_only": [
+      "model.language_model.layers.2.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.3.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.3.down_proj.weight"
+     ],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.563643846581358e-06,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.7197214685390556e-06,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.4707088663026143e-06,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.6028310997693543e-06,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.7932225403335907e-06
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.450276252378199e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.242436472395468e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 4.13493345664564e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5162476255721955e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 5.868608551450449e-07
+     },
+     "base_logits_max_abs_diff": 2.6226043701171875e-06,
+     "kl_ide": 0.0011585752945393324,
+     "kl_heretic": 0.001088926219381392,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     },
+     "replica": {
+      "worst_replica_vs_heretic": 8.151236344396166e-07,
+      "worst_replica_vs_ide": 5.094820631280449e-07
+     }
+    }
+   }
+  },
+  "bfloat16_shared": {
+   "dtype": "bfloat16",
+   "expert_modules": "shared",
+   "pass": true,
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+   },
+   "modes": {
+    "none": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": true,
+       "value": true,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": true,
+       "value": 1.66902312175225e-07,
+       "bound": 1e-06,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums": {
+       "pass": true,
+       "value": true,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.6177754034348193e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.5749223740584965e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.0589059544298552e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.66902312175225e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.4879364231655787e-07
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.6177754034348193e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.5749223740584965e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.0589059544298552e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.66902312175225e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.4879364231655787e-07
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.0013622507685795426,
+     "kl_heretic": 0.001362251816317439,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     }
+    },
+    "full": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": true,
+       "value": true,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": true,
+       "value": 8.776766784262915e-07,
+       "bound": 0.0004,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums": {
+       "pass": true,
+       "value": true,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      },
+      "B-S4 replica input is the IDE's change": {
+       "pass": true,
+       "bound": 1e-06,
+       "tensors": 5,
+       "worst": 1.481659122521209e-07,
+       "errors": []
+      },
+      "B-S4 replica of Heretic's randomized approximation": {
+       "note": "reported only: this interpreter's torch 2.15.0 is not the run's 2.14.1; the replica's agreement is stated under the run's own torch",
+       "tensors": 5,
+       "errors": [],
+       "worst_replica_vs_heretic": 1.0222740041090047e-06,
+       "worst_replica_vs_ide": 6.878810930816531e-07,
+       "worst_ide_vs_heretic": 8.776766784262915e-07,
+       "worst_tail": 0.9500014638324136,
+       "smallest_sigma_r_over_sigma_1": 0.08073179996644213,
+       "worst_exact_truncation_vs_ide": 1.481659122521209e-07,
+       "worst_replica_of_heretic_formula_vs_heretic": 9.024841169515008e-07,
+       "replicas_bit_equal": 0,
+       "torch": "2.15.0",
+       "run_torch": "2.14.1",
+       "device": "cpu",
+       "run_device": "cpu"
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.0591870721999e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.0747827081643554e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 8.776766784262915e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5777246413269263e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 3.3914299987121826e-07
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.0591870721999e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.0747827081643554e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 8.776766784262915e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5777246413269263e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 3.3914299987121826e-07
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.001137809013016522,
+     "kl_heretic": 0.0011378079652786255,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     },
+     "replica": {
+      "worst_replica_vs_heretic": 1.0222740041090047e-06,
+      "worst_replica_vs_ide": 6.878810930816531e-07
+     }
+    }
+   }
+  },
+  "bfloat16_all": {
+   "dtype": "bfloat16",
+   "expert_modules": "all",
+   "pass": false,
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+   },
+   "modes": {
+    "none": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": false,
+       "value": false,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 24,
+       "only_heretic": [],
+       "only_ide": [
+        "model.language_model.layers.0.mlp.experts.0.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.1.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.2.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.3.down_proj.weight",
+        "model.language_model.layers.1.mlp.experts.0.down_proj.weight"
+       ],
+       "tensors_changed_in_one_only": 8
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": false,
+       "value": 1.66902312175225e-07,
+       "bound": 1e-06,
+       "tensors": 13,
+       "changed_in_one_only": 8
+      },
+      "B-S4 rounded sums": {
+       "pass": true,
+       "value": true,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 8,
+     "changed_by_ide_only": [
+      "model.language_model.layers.2.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.3.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.3.down_proj.weight"
+     ],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.6177754034348193e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.5749223740584965e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.0589059544298552e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.66902312175225e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.4879364231655787e-07
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 1.6177754034348193e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 1.5749223740584965e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 1.0589059544298552e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 1.66902312175225e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 1.4879364231655787e-07
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.0015896826516836882,
+     "kl_heretic": 0.001362251816317439,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     }
+    },
+    "full": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": false,
+       "value": false,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 24,
+       "only_heretic": [],
+       "only_ide": [
+        "model.language_model.layers.0.mlp.experts.0.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.1.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.2.down_proj.weight",
+        "model.language_model.layers.0.mlp.experts.3.down_proj.weight",
+        "model.language_model.layers.1.mlp.experts.0.down_proj.weight"
+       ],
+       "tensors_changed_in_one_only": 8
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": false,
+       "value": 8.776766784262915e-07,
+       "bound": 0.0004,
+       "tensors": 13,
+       "changed_in_one_only": 8
+      },
+      "B-S4 rounded sums": {
+       "pass": true,
+       "value": true,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 0,
+       "elements": 3584,
+       "equal": 3584,
+       "one_step": 0,
+       "more_than_one": 0,
+       "max_steps": 0,
+       "differing": 0,
+       "outside": 0,
+       "max_abs_difference": 0.0,
+       "max_abs_difference_in_median_steps": 0.0,
+       "max_excess": 0.0,
+       "largest_abs_over_median": null,
+       "tensors_outside_names": [],
+       "worst_one_step_fraction": 0.0,
+       "worst_differing_fraction": 0.0
+      },
+      "B-S4 replica input is the IDE's change": {
+       "pass": true,
+       "bound": 1e-06,
+       "tensors": 5,
+       "worst": 1.481659122521209e-07,
+       "errors": []
+      },
+      "B-S4 replica of Heretic's randomized approximation": {
+       "note": "reported only: this interpreter's torch 2.15.0 is not the run's 2.14.1; the replica's agreement is stated under the run's own torch",
+       "tensors": 5,
+       "errors": [],
+       "worst_replica_vs_heretic": 1.0222740041090047e-06,
+       "worst_replica_vs_ide": 6.878810930816531e-07,
+       "worst_ide_vs_heretic": 8.776766784262915e-07,
+       "worst_tail": 0.9500014638324136,
+       "smallest_sigma_r_over_sigma_1": 0.08073179996644213,
+       "worst_exact_truncation_vs_ide": 1.481659122521209e-07,
+       "worst_replica_of_heretic_formula_vs_heretic": 9.024841169515008e-07,
+       "replicas_bit_equal": 0,
+       "torch": "2.15.0",
+       "run_torch": "2.14.1",
+       "device": "cpu",
+       "run_device": "cpu"
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 8,
+     "changed_by_ide_only": [
+      "model.language_model.layers.2.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.2.mlp.experts.3.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.0.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.1.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.2.down_proj.weight",
+      "model.language_model.layers.3.mlp.experts.3.down_proj.weight"
+     ],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.0591870721999e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.0747827081643554e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 8.776766784262915e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5777246413269263e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 3.3914299987121826e-07
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 7.0591870721999e-07,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 4.0747827081643554e-07,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 8.776766784262915e-07,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 4.5777246413269263e-07,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 3.3914299987121826e-07
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.001229617279022932,
+     "kl_heretic": 0.0011378079652786255,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     },
+     "replica": {
+      "worst_replica_vs_heretic": 1.0222740041090047e-06,
+      "worst_replica_vs_ide": 6.878810930816531e-07
+     }
+    }
+   }
+  },
+  "bfloat16_on_the_float32_checkpoint_shared": {
+   "dtype": "bfloat16",
+   "expert_modules": "shared",
+   "pass": false,
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+   },
+   "modes": {
+    "none": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": true,
+       "value": true,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": false,
+       "value": 0.002898509188770508,
+       "bound": 1e-06,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums": {
+       "pass": false,
+       "value": false,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 5,
+       "elements": 3584,
+       "equal": 3259,
+       "one_step": 262,
+       "more_than_one": 63,
+       "max_steps": 39,
+       "differing": 325,
+       "outside": 0,
+       "max_abs_difference": 0.0009765625,
+       "max_abs_difference_in_median_steps": 2.0,
+       "max_excess": 1.0,
+       "largest_abs_over_median": 0.3304093567251462,
+       "tensors_outside_names": [
+        "model.language_model.layers.1.linear_attn.out_proj.weight",
+        "model.language_model.layers.2.linear_attn.out_proj.weight",
+        "model.language_model.layers.2.mlp.shared_expert.down_proj.weight",
+        "model.language_model.layers.3.mlp.shared_expert.down_proj.weight",
+        "model.language_model.layers.3.self_attn.o_proj.weight"
+       ],
+       "worst_one_step_fraction": 0.09375,
+       "worst_differing_fraction": 0.13671875
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 0.0015716282431194656,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 0.0021756531806863596,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 0.0009593535127965521,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 0.002898509188770508,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 0.0017220968131740043
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 0.0015716282431194656,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 0.0021756531806863596,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 0.0009593535127965521,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 0.002898509188770508,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 0.0017220968131740043
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.0014015963533893228,
+     "kl_heretic": 0.001362251816317439,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     }
+    },
+    "full": {
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "5/5",
+        "bad": "5/5",
+        "kl": "5/5"
+       }
+      },
+      "B-S2 mean residuals": {
+       "worst_relative": 0.0,
+       "expected_below": 0.02
+      },
+      "B-S3 directions": {
+       "min_cosine_1_to_n": 0.0,
+       "expected_at_least": 0.99
+      },
+      "C4-1 modules and tensors": {
+       "pass": true,
+       "value": true,
+       "bound": "equal sets",
+       "heretic_modules": 8,
+       "heretic_unmatched": 0,
+       "ide_modules": 8,
+       "only_heretic": [],
+       "only_ide": [],
+       "tensors_changed_in_one_only": 0
+      },
+      "C4-4 refusals of the IDE's own edit": {
+       "pass": true,
+       "value": 0,
+       "bound": 2,
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 5
+      },
+      "B-S4 change from Heretic's means": {
+       "pass": false,
+       "value": 0.002106872969874332,
+       "bound": 0.0004,
+       "tensors": 5,
+       "changed_in_one_only": 0
+      },
+      "B-S4 rounded sums": {
+       "pass": false,
+       "value": false,
+       "bound": {
+        "max_difference_in_allowed_steps": 1,
+        "differing_fraction": 0.01
+       },
+       "tensors": 5,
+       "tensors_outside": 5,
+       "elements": 3584,
+       "equal": 3280,
+       "one_step": 246,
+       "more_than_one": 58,
+       "max_steps": 133,
+       "differing": 304,
+       "outside": 0,
+       "max_abs_difference": 0.001953125,
+       "max_abs_difference_in_median_steps": 4.0,
+       "max_excess": 1.0,
+       "largest_abs_over_median": 0.16812865497076024,
+       "tensors_outside_names": [
+        "model.language_model.layers.1.linear_attn.out_proj.weight",
+        "model.language_model.layers.2.linear_attn.out_proj.weight",
+        "model.language_model.layers.2.mlp.shared_expert.down_proj.weight",
+        "model.language_model.layers.3.mlp.shared_expert.down_proj.weight",
+        "model.language_model.layers.3.self_attn.o_proj.weight"
+       ],
+       "worst_one_step_fraction": 0.11328125,
+       "worst_differing_fraction": 0.14453125
+      },
+      "B-S4 replica input is the IDE's change": {
+       "pass": true,
+       "bound": 1e-06,
+       "tensors": 5,
+       "worst": 1.876401335080887e-07,
+       "errors": []
+      },
+      "B-S4 replica of Heretic's randomized approximation": {
+       "note": "reported only: this interpreter's torch 2.15.0 is not the run's 2.14.1; the replica's agreement is stated under the run's own torch",
+       "tensors": 5,
+       "errors": [],
+       "worst_replica_vs_heretic": 0.0021068387295079005,
+       "worst_replica_vs_ide": 6.457946304803983e-07,
+       "worst_ide_vs_heretic": 0.002106872969874332,
+       "worst_tail": 0.9497418254481581,
+       "smallest_sigma_r_over_sigma_1": 0.0806985742297951,
+       "worst_exact_truncation_vs_ide": 1.876401335080887e-07,
+       "worst_replica_of_heretic_formula_vs_heretic": 0.0021068597561718872,
+       "replicas_bit_equal": 0,
+       "torch": "2.15.0",
+       "run_torch": "2.14.1",
+       "device": "cpu",
+       "run_device": "cpu"
+      }
+     },
+     "tokens_identical": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     },
+     "mean_residuals_worst_relative": 0.0,
+     "direction_cosine_per_index": [
+      0.0,
+      0.0,
+      0.9999999999999993,
+      0.9999999999999967,
+      0.9999999999999994
+     ],
+     "tensors_changed_in_both": 5,
+     "tensors_changed_in_one_only": 0,
+     "changed_by_ide_only": [],
+     "change_rel_diff_own_measurement": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 0.0016425457529241094,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 0.0020392443148973247,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 0.001536949031911218,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 0.002106872969874332,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 0.0016083541809362844
+     },
+     "change_rel_diff_from_heretic_means": {
+      "model.language_model.layers.1.linear_attn.out_proj.weight": 0.0016425457529241094,
+      "model.language_model.layers.2.linear_attn.out_proj.weight": 0.0020392443148973247,
+      "model.language_model.layers.2.mlp.shared_expert.down_proj.weight": 0.001536949031911218,
+      "model.language_model.layers.3.mlp.shared_expert.down_proj.weight": 0.002106872969874332,
+      "model.language_model.layers.3.self_attn.o_proj.weight": 0.0016083541809362844
+     },
+     "base_logits_max_abs_diff": 0.0,
+     "kl_ide": 0.001118756365031004,
+     "kl_heretic": 0.0011378079652786255,
+     "parameters": {
+      "direction_index": 1.2069336544668483,
+      "weight_distributions": {
+       "attn.o_proj": {
+        "max_weight": 1.0083807092572148,
+        "max_weight_position": 2.5814828333843423,
+        "min_weight": 0.34530913911934585,
+        "min_weight_distance": 1.6408164052906626
+       },
+       "mlp.down_proj": {
+        "max_weight": 1.249549987617015,
+        "max_weight_position": 2.888120938566884,
+        "min_weight": 0.8034856611854909,
+        "min_weight_distance": 1.749734957312501
+       }
+      }
+     },
+     "replica": {
+      "worst_replica_vs_heretic": 0.0021068387295079005,
+      "worst_replica_vs_ide": 6.457946304803983e-07
+     }
+    }
+   }
+  }
+ },
+ "iii_ara": {
+  "qwen3_5_moe_heretic_ara": {
+   "float32 batch_size 1": "IndexError: too many indices for tensor of dimension 2",
+   "float32 batch_size 5": "IndexError: too many indices for tensor of dimension 2",
+   "bfloat16 batch_size 1": "IndexError: too many indices for tensor of dimension 2",
+   "where": "ARA.init -> get_module_io_batched -> get_module_io: the forward hook of layer 0 mlp.shared_expert.down_proj, inputs[0][:, -1, :] on a 2-D tensor"
+  },
+  "qwen3_moe_float32_shared": {
+   "dtype": "float32",
+   "expert_modules": "shared",
+   "pass": true,
+   "checks": {
+    "B-S1 token ids (no bound for this dtype)": {
+     "value": true,
+     "counts": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     }
+    },
+    "B-S2 mean residuals": {
+     "good_rel_worst": 1.726706742360501e-07,
+     "bad_rel_worst": 1.4000144529638756e-07,
+     "expected_below": 0.02
+    },
+    "C4-2 module inputs and outputs": {
+     "worst_input_rel": 2.581542158629476e-07,
+     "worst_output_rel": 3.189471033936815e-07,
+     "captured_by_both": 2,
+     "ide_modules": 4,
+     "expected_order": 0.00390625
+    },
+    "B-S6 consistency check (no bound for this dtype)": {
+     "value": [
+      1.3785434103249465e-07,
+      1.261395209668016e-07,
+      1.28285505780754e-07,
+      1.3781298294478016e-07
+     ],
+     "modules": 2,
+     "smallest": 1.261395209668016e-07,
+     "largest": 1.3785434103249465e-07
+    },
+    "C4-3 objective reduction (no bound for this dtype)": {
+     "value": 0.012211206046970907,
+     "matrices": 2,
+     "worst": 0.024422412093941814
+    }
+   },
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_worst": 1.726706742360501e-07,
+    "bad_rel_worst": 1.4000144529638756e-07
+   },
+   "parameters": {
+    "start_layer_index": 0,
+    "end_layer_index": 2,
+    "preserve_good_behavior_weight": 0.7203244934421581,
+    "steer_bad_behavior_weight": 0.00010010539860510496,
+    "overcorrect_relative_weight": 0.39303234442139173,
+    "neighbor_count": 1,
+    "preserve_row_magnitudes": true,
+    "lora_rank": 4,
+    "n_optimization_steps": 5,
+    "learning_rate": 1.0,
+    "max_iter": 20,
+    "history_size": 10,
+    "seed": 1,
+    "expert_modules": "shared"
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 6.258487701416016e-07,
+    "base_logits_scale": 1.844873309135437,
+    "kl_ide": 0.00857183150947094,
+    "kl_heretic": 0.0073991878889501095,
+    "refusals_heretic": 0.0,
+    "kl_ide_from_heretic_io": 0.00937240943312645
+   },
+   "weights": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 0.36067005908484134,
+     "change_over_weight": 0.29636650194881925,
+     "ide_change_over_weight": 0.30025502293663764,
+     "max_abs_diff": 0.07020869851112366,
+     "elements": 1024,
+     "elements_that_differ": 1024
+    }
+   ]
+  },
+  "qwen3_moe_float32_fit_check": {
+   "torch": "2.14.1",
+   "run_torch": "2.14.1",
+   "device": "cpu",
+   "ide_device": "cpu",
+   "run_device": "cpu",
+   "checks": {},
+   "pass": true,
+   "b_s5_reported": null
+  },
+  "qwen3_moe_bfloat16_shared": {
+   "dtype": "bfloat16",
+   "expert_modules": "shared",
+   "pass": true,
+   "checks": {
+    "B-S1 token ids": {
+     "pass": true,
+     "value": true,
+     "bound": "identical",
+     "counts": {
+      "good": "5/5",
+      "bad": "5/5",
+      "kl": "5/5"
+     }
+    },
+    "B-S2 mean residuals": {
+     "good_rel_worst": 0.0,
+     "bad_rel_worst": 0.0,
+     "expected_below": 0.02
+    },
+    "C4-2 module inputs and outputs": {
+     "worst_input_rel": 0.0,
+     "worst_output_rel": 0.0,
+     "captured_by_both": 2,
+     "ide_modules": 4,
+     "expected_order": 0.00390625
+    },
+    "B-S6 consistency check": {
+     "pass": true,
+     "value": [
+      0.0016436644509846786,
+      0.0017893181761767928,
+      0.001809641995644135,
+      0.0016702038079726492
+     ],
+     "bound": [
+      0.0,
+      0.005
+     ],
+     "modules": 2,
+     "smallest": 0.0016436644509846786,
+     "largest": 0.001809641995644135
+    },
+    "C4-5 refusals of the IDE's own fit": {
+     "ide": 0,
+     "heretic": 0,
+     "prompts": 5
+    },
+    "C4-3 objective reduction": {
+     "pass": true,
+     "value": 0.05375172358915031,
+     "bound": 0.1,
+     "matrices": 2,
+     "worst": 0.10750344717830063
+    }
+   },
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_worst": 0.0,
+    "bad_rel_worst": 0.0
+   },
+   "parameters": {
+    "start_layer_index": 0,
+    "end_layer_index": 2,
+    "preserve_good_behavior_weight": 0.7203244934421581,
+    "steer_bad_behavior_weight": 0.00010010539860510496,
+    "overcorrect_relative_weight": 0.39303234442139173,
+    "neighbor_count": 1,
+    "preserve_row_magnitudes": true,
+    "lora_rank": 4,
+    "n_optimization_steps": 5,
+    "learning_rate": 1.0,
+    "max_iter": 20,
+    "history_size": 10,
+    "seed": 1,
+    "expert_modules": "shared"
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 0.0,
+    "base_logits_scale": 1.8515625,
+    "kl_ide": 0.008631441742181778,
+    "kl_heretic": 0.00709096435457468,
+    "refusals_heretic": 0.0,
+    "kl_ide_from_heretic_io": 0.008631441742181778
+   },
+   "weights": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 0.28338035291497715,
+     "change_over_weight": 0.29380878217548245,
+     "ide_change_over_weight": 0.30584542916929713,
+     "max_abs_diff": 0.051083456724882126,
+     "elements": 1024,
+     "elements_that_differ": 1024,
+     "rounded": {
+      "elements": 1024,
+      "equal": 23,
+      "one_step": 45,
+      "more_than_one": 956,
+      "max_steps": 30809,
+      "median_abs": 0.08203125,
+      "step_at_median": 0.00048828125,
+      "max_abs_difference": 0.05126953125,
+      "max_abs_difference_in_median_steps": 105.0,
+      "differing": 1001,
+      "largest_abs_over_median": 4.880952380952381,
+      "outside": 942,
+      "max_excess": 105.0
+     }
+    }
+   ]
+  },
+  "qwen3_moe_bfloat16_fit_check": {
+   "torch": "2.14.1",
+   "run_torch": "2.14.1",
+   "device": "cpu",
+   "ide_device": "cpu",
+   "run_device": "cpu",
+   "checks": {
+    "q3moe-ara-s1-bf16": {
+     "B-S5 IDE fit from Heretic's captures": {
+      "pass": true,
+      "modules": 2,
+      "not_equal": [],
+      "factors_equal": 2,
+      "ide_product_rel_worst": 0.0,
+      "ide_product_rel_median": 0.0,
+      "replica_product_rel_worst": 0.0,
+      "replica_product_rel_median": 0.0,
+      "replica_factors_equal": 2,
+      "per_module": [
+       {
+        "tensor": "model.layers.0.self_attn.o_proj.weight",
+        "ide_product_rel_heretic": 0.0,
+        "replica_product_rel_heretic": 0.0
+       },
+       {
+        "tensor": "model.layers.1.self_attn.o_proj.weight",
+        "ide_product_rel_heretic": 0.0,
+        "replica_product_rel_heretic": 0.0
+       }
+      ]
+     }
+    }
+   },
+   "pass": true,
+   "b_s5_reported": null
+  }
+ }
+}

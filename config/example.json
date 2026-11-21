@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "defaults": {
+    "swap_growth_mib": 64,
+    "compression_growth_mib": 1024
+  },
+  "profiles": {
+    "packed-cpu": {
+      "backend": "cpu",
+      "cpu_bridge": "./native/libwsp-packed.so",
+      "model_roots": [
+        "./models"
+      ],
+      "root": "./workspaces",
+      "context": 8192,
+      "new_tokens": 2048,
+      "resident_seconds": 14400
+    },
+    "packed-metal": {
+      "backend": "metal",
+      "cpu_bridge": "./native/libwsp-packed.dylib",
+      "metal_bridge": "./native/libwsp-metal.dylib",
+      "model_roots": [
+        "./models"
+      ],
+      "root": "./workspaces",
+      "context": 8192,
+      "new_tokens": 2048,
+      "resident_seconds": 14400
+    }
+  }
+}

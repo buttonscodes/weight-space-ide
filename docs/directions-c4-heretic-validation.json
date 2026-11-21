@@ -1,0 +1,5162 @@
+{
+ "date": "2026-11-19",
+ "what": "Plan item C4: behaviour directions on the largest model both tools run here, Qwen/Qwen3.5-4B (hybrid: 8 full-attention and 24 linear-attention layers, 4,659,865,088 parameters, vocabulary 248,320), both tools in bfloat16 on the Apple GPU (mps), one prompt at a time, 64 + 64 measured prompts, 32 per score, 30 new tokens, 4 trials",
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "own_environment": {
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0"
+  },
+  "second_environment": {
+   "torch": "2.15.0",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0",
+   "why": "row_normalization full cannot run on mps under torch 2.14.1: torch.svd_lowrank takes 12.5 s a call at [896, 896] and did not return within 170 s at this model's shapes; the same packages with torch 2.15.0, Heretic's source unchanged"
+  },
+  "device": "mps",
+  "batch_size": 1
+ },
+ "ide": {
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  },
+  "device": "mps (WSP_DEVICE), in process"
+ },
+ "settings_of_both_tools": {
+  "HF_DEACTIVATE_ASYNC_LOAD": "1 (a threaded load ended Heretic's process with a segmentation fault in torch's mps copy kernel)",
+  "LOAD_GIB_PER_S": "1.5 with scripts/load_pacing on PYTHONPATH (the guard ends a run that grows by more than 4 GiB between two samples; unpaced, the weights reach the GPU in about two seconds)"
+ },
+ "memory_guard": "python -m wsp.memory_guard with its default limits for every model process (reservation 16 GiB); no limit was changed; model-free checks under a footprint cap of 8 GiB",
+ "bounds": "written before the runs in docs/DIRECTIONS.md and the scripts' docstrings; a stage outside its bound is reported as failed and no bound was moved. Two checks had their scope corrected after their first use on a GPU run (bit equality of the ARA fit, and the replica of Heretic's randomized approximation, are asserted on the device Heretic computed on)",
+ "timing_rule": {
+  "cpu_probe_heretic_seconds": 1735.6,
+  "decision": "mps",
+  "mps_probe_heretic_seconds": 65.5,
+  "planned_counts_on_mps_hours_by_the_rule": 0.284,
+  "counts": "planned, not halved"
+ },
+ "guard_ended": {
+  "runaway growth during the load, before the pacing": [
+   "t0-heretic-2",
+   "t0-heretic-3"
+  ],
+  "budget of 16 GiB, before the fixes of this slice": [
+   "i1-none",
+   "i2",
+   "i2-2"
+  ],
+  "budget, repeats with memory marks made to find the cause": [
+   "i1-none-marks",
+   "i1-none-sampler",
+   "i2-stage-marks",
+   "i2-marks"
+  ],
+  "memory compression while another workload was starting": [
+   "i3-2"
+  ]
+ },
+ "runs": {
+  "t0-heretic-4": {
+   "what": "Heretic's timing probe on mps (8 + 8 prompts, 1 ARA trial)",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 10.73,
+    "least_available_gib": 43.6,
+    "seconds": 65.5,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "t0-ide": {
+   "what": "the IDE's timing probe on mps",
+   "tree": "464124b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 9.08,
+    "least_available_gib": 39.9,
+    "seconds": 13.5,
+    "returncode": 0,
+    "violation": null
+   },
+   "seconds_per_measured_prompt": 0.3486087291239528,
+   "seconds_per_generated_token": 0.037552661378867924,
+   "checks": []
+  },
+  "h1-none": {
+   "what": "Heretic: directional ablation, row_normalization none, 4 trials, adapter export",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "note": "baseline 32 of 32 refusals; trials 32/32 at KL 0.0040, 0.0056, 0.0023, 0.0021; trial 4 exported",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 10.78,
+    "least_available_gib": 43.4,
+    "seconds": 349.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h2": {
+   "what": "Heretic: ARA, 4 trials, adapter export",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "note": "baseline 32 of 32 refusals; trials 6/32 at KL 0.0482, 0.1212 at 0/32, 1.6808 at 0/32, 0.2504 at 5/32; trial 2 exported",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 11.06,
+    "least_available_gib": 43.9,
+    "seconds": 508.1,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h1-full-t215": {
+   "what": "Heretic: directional ablation, row_normalization full (its default), 4 trials, adapter export",
+   "tree": "3222c0f",
+   "interpreter": "Heretic's source and packages under torch 2.15.0",
+   "note": "baseline 32 of 32 refusals; trials 32/32 at KL 0.0044, 0.0056, 0.0018, 0.0026; trial 3 exported",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 10.76,
+    "least_available_gib": 53.3,
+    "seconds": 313.9,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "dump-abl-none": {
+   "what": "Heretic's dump of the none run (its merged model from the adapter)",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 9.83,
+    "least_available_gib": 40.4,
+    "seconds": 343.0,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "dump-ara": {
+   "what": "Heretic's dump of the ARA run",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 10.22,
+    "least_available_gib": 39.9,
+    "seconds": 373.9,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "dump-abl-full-t215": {
+   "what": "Heretic's dump of the full run",
+   "tree": "3222c0f",
+   "interpreter": "Heretic's source and packages under torch 2.15.0",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 9.86,
+    "least_available_gib": 54.1,
+    "seconds": 304.8,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "i1-none-4": {
+   "what": "the IDE against Heretic's none run: measurement, weights, behaviour",
+   "tree": "3222c0f",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 4,
+    "fail": 1,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 12.87,
+    "least_available_gib": 46.8,
+    "seconds": 89.4,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999151399162122,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "none",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 64,
+      "heretic_unmatched": 0,
+      "ide_modules": 64,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "none",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 0,
+      "bound": 2,
+      "ide": 32,
+      "heretic": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "fail",
+     "numbers": {
+      "value": 1.1470543322965032e-06,
+      "bound": 1e-06,
+      "tensors": 29,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S4 rounded sums",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": {
+       "max_difference_in_allowed_steps": 1,
+       "differing_fraction": 0.01
+      },
+      "tensors": 29,
+      "tensors_outside": 0,
+      "elements": 304087040,
+      "equal": 304081740,
+      "one_step": 5010,
+      "more_than_one": 290,
+      "max_steps": 408,
+      "differing": 5300,
+      "outside": 0,
+      "max_abs_difference": 0.000244140625,
+      "max_abs_difference_in_median_steps": 4.0,
+      "max_excess": 1.0,
+      "largest_abs_over_median": 2.911300339958159e-05,
+      "tensors_outside_names": [],
+      "worst_one_step_fraction": 2.7751922607421876e-05,
+      "worst_differing_fraction": 2.9468536376953124e-05
+     }
+    }
+   ]
+  },
+  "i2-4": {
+   "what": "the IDE against Heretic's ARA run: captures, fit, behaviour",
+   "tree": "3222c0f",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "reported": 3
+   },
+   "guard": {
+    "peak_footprint_gib": 14.45,
+    "least_available_gib": 46.9,
+    "seconds": 195.7,
+    "returncode": 0,
+    "violation": null
+   },
+   "timing_seconds": {
+    "ara": {
+     "heretic_versions": {
+      "heretic-llm": "2.2.0.dev0",
+      "torch": "2.14.1",
+      "transformers": "5.18.0",
+      "peft": "0.21.2",
+      "optuna": "5.0.0",
+      "tokenizers": "0.23.2"
+     },
+     "heretic_dtype": "torch.bfloat16",
+     "heretic_device": "mps:0",
+     "timing": {
+      "measure_seconds": 19.00140166701749,
+      "fit_own_seconds": 62.80253629107028,
+      "fitted_shapes": {
+       "4096x2560": 11,
+       "9216x2560": 11
+      },
+      "refusal_score_seconds": 32.14969562494662,
+      "fit_heretic_captures_seconds": 46.02736458403524
+     },
+     "heretic_export": "adapter",
+     "matched_by": "module names",
+     "tokens": {
+      "good": {
+       "prompts": 64,
+       "identical": 64
+      },
+      "bad": {
+       "prompts": 64,
+       "identical": 64
+      },
+      "kl": {
+       "prompts": 32,
+       "identical": 32
+      }
+     },
+     "means": {
+      "good_rel_worst": 0.004497287185878018,
+      "bad_rel_worst": 0.005793585627086751
+     },
+     "module_io": [
+      {
+       "layer": 0,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 9.815255024135033e-07,
+       "good_y_rel": 1.4084215648849319e-05,
+       "bad_x_rel": 6.596585418800555e-08,
+       "bad_y_rel": 1.4707113196769414e-05
+      },
+      {
+       "layer": 0,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.0002249279719107131,
+       "good_y_rel": 0.00036618486185149927,
+       "bad_x_rel": 0.0001955035702795245,
+       "bad_y_rel": 0.00032796470356405725
+      },
+      {
+       "layer": 1,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.0011068576275903245,
+       "good_y_rel": 0.001339809653654432,
+       "bad_x_rel": 0.0012198148294987755,
+       "bad_y_rel": 0.0015519502659274123
+      },
+      {
+       "layer": 1,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.002492173129719264,
+       "good_y_rel": 0.002602681992475119,
+       "bad_x_rel": 0.002664561313838416,
+       "bad_y_rel": 0.002752062318261846
+      },
+      {
+       "layer": 2,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.004128211980757814,
+       "good_y_rel": 0.004363388321499763,
+       "bad_x_rel": 0.004197727463788577,
+       "bad_y_rel": 0.004175336670513447
+      },
+      {
+       "layer": 2,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.0059626326760002495,
+       "good_y_rel": 0.004957179000221215,
+       "bad_x_rel": 0.006098906836092148,
+       "bad_y_rel": 0.00518901293823981
+      },
+      {
+       "layer": 3,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.006723169487069352,
+       "good_y_rel": 0.006513988948842532,
+       "bad_x_rel": 0.0064268235508902856,
+       "bad_y_rel": 0.00627841392132813
+      },
+      {
+       "layer": 3,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.010212750544782503,
+       "good_y_rel": 0.00988181178879467,
+       "bad_x_rel": 0.009815314090042245,
+       "bad_y_rel": 0.00955876797319479
+      },
+      {
+       "layer": 4,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.010261103062795499,
+       "good_y_rel": 0.010631754380770035,
+       "bad_x_rel": 0.010022373400921943,
+       "bad_y_rel": 0.010282097438562152
+      },
+      {
+       "layer": 4,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.012544505790602501,
+       "good_y_rel": 0.012175828113329974,
+       "bad_x_rel": 0.012453364647569232,
+       "bad_y_rel": 0.012108626664013616
+      },
+      {
+       "layer": 5,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.012264121506103788,
+       "good_y_rel": 0.013007364094349352,
+       "bad_x_rel": 0.012089887278834532,
+       "bad_y_rel": 0.012913984178033827
+      },
+      {
+       "layer": 5,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.014046512620544724,
+       "good_y_rel": 0.014166944717392436,
+       "bad_x_rel": 0.014298296946594386,
+       "bad_y_rel": 0.014469473048408003
+      },
+      {
+       "layer": 6,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.014688070565189011,
+       "good_y_rel": 0.01625743668020203,
+       "bad_x_rel": 0.014400033818335167,
+       "bad_y_rel": 0.016110004344950156
+      },
+      {
+       "layer": 6,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01625569338796318,
+       "good_y_rel": 0.015936840591019266,
+       "bad_x_rel": 0.01619468822530173,
+       "bad_y_rel": 0.01609261435944785
+      },
+      {
+       "layer": 7,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.012096809544985947,
+       "good_y_rel": 0.013747928273390032,
+       "bad_x_rel": 0.011818336731905197,
+       "bad_y_rel": 0.013636847605275183
+      },
+      {
+       "layer": 7,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.018003438356928893,
+       "good_y_rel": 0.018479009069412196,
+       "bad_x_rel": 0.017958609029737643,
+       "bad_y_rel": 0.018540583910637752
+      },
+      {
+       "layer": 8,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017062449956068287,
+       "good_y_rel": 0.017714688752840924,
+       "bad_x_rel": 0.01733388001174884,
+       "bad_y_rel": 0.01731328671595668
+      },
+      {
+       "layer": 8,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.019203244266390782,
+       "good_y_rel": 0.019338157651661223,
+       "bad_x_rel": 0.018980467193029656,
+       "bad_y_rel": 0.019021878454226475
+      },
+      {
+       "layer": 9,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.015938918016341497,
+       "good_y_rel": 0.016121461918191343,
+       "bad_x_rel": 0.016263322336757563,
+       "bad_y_rel": 0.016028089280036618
+      },
+      {
+       "layer": 9,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020427921789106046,
+       "good_y_rel": 0.020316952890825093,
+       "bad_x_rel": 0.020095264845369384,
+       "bad_y_rel": 0.01950111681592229
+      },
+      {
+       "layer": 10,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01862948379507203,
+       "good_y_rel": 0.019742174717570653,
+       "bad_x_rel": 0.017113210182640084,
+       "bad_y_rel": 0.017393790082730468
+      },
+      {
+       "layer": 10,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017990890743035493,
+       "good_y_rel": 0.018140942382619575,
+       "bad_x_rel": 0.01690302099028309,
+       "bad_y_rel": 0.017262433957916618
+      },
+      {
+       "layer": 11,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.013357060225204474,
+       "good_y_rel": 0.015590522423801973,
+       "bad_x_rel": 0.0122223113080479,
+       "bad_y_rel": 0.01551682920541006
+      },
+      {
+       "layer": 11,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.018993111557469237,
+       "good_y_rel": 0.018886869385624665,
+       "bad_x_rel": 0.017558654787031204,
+       "bad_y_rel": 0.01767162392267896
+      },
+      {
+       "layer": 12,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020054262633303937,
+       "good_y_rel": 0.02143221527488717,
+       "bad_x_rel": 0.01977129538871193,
+       "bad_y_rel": 0.0215231960009546
+      },
+      {
+       "layer": 12,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.018708534728574564,
+       "good_y_rel": 0.01981797733706054,
+       "bad_x_rel": 0.019930018272276518,
+       "bad_y_rel": 0.020708947914558202
+      },
+      {
+       "layer": 13,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.02205611607316007,
+       "good_y_rel": 0.023951717051839516,
+       "bad_x_rel": 0.022591592004219188,
+       "bad_y_rel": 0.024338722105893936
+      },
+      {
+       "layer": 13,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020467057334848524,
+       "good_y_rel": 0.020924920822060072,
+       "bad_x_rel": 0.02209392653888502,
+       "bad_y_rel": 0.023019004790847897
+      },
+      {
+       "layer": 14,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.02262300352578461,
+       "good_y_rel": 0.024240124260241188,
+       "bad_x_rel": 0.022847462276546913,
+       "bad_y_rel": 0.023954593127210905
+      },
+      {
+       "layer": 14,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.019796588820785853,
+       "good_y_rel": 0.019713915072959057,
+       "bad_x_rel": 0.022076978543783356,
+       "bad_y_rel": 0.02244179010281614
+      },
+      {
+       "layer": 15,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01210288186356829,
+       "good_y_rel": 0.013957685487930544,
+       "bad_x_rel": 0.012790039428995415,
+       "bad_y_rel": 0.0158783002037672
+      },
+      {
+       "layer": 15,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01721488807710857,
+       "good_y_rel": 0.017887103523833825,
+       "bad_x_rel": 0.02148928143265309,
+       "bad_y_rel": 0.021945146088220097
+      },
+      {
+       "layer": 16,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.022809532411808407,
+       "good_y_rel": 0.024064379696124474,
+       "bad_x_rel": 0.025251029767864884,
+       "bad_y_rel": 0.02714237264953316
+      },
+      {
+       "layer": 16,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.019527046075702603,
+       "good_y_rel": 0.02018874765615088,
+       "bad_x_rel": 0.023550561978608196,
+       "bad_y_rel": 0.02407442469642758
+      },
+      {
+       "layer": 17,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020856528445792867,
+       "good_y_rel": 0.023840015246515186,
+       "bad_x_rel": 0.02510197374043304,
+       "bad_y_rel": 0.029565864543951416
+      },
+      {
+       "layer": 17,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01917177200487145,
+       "good_y_rel": 0.01986218475479192,
+       "bad_x_rel": 0.02306419917985125,
+       "bad_y_rel": 0.023900875880178467
+      },
+      {
+       "layer": 18,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01975461480566663,
+       "good_y_rel": 0.022135540157663003,
+       "bad_x_rel": 0.02198878455761844,
+       "bad_y_rel": 0.02332426297594913
+      },
+      {
+       "layer": 18,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017714902753855212,
+       "good_y_rel": 0.0179363472559333,
+       "bad_x_rel": 0.02146663896277577,
+       "bad_y_rel": 0.021958675517736833
+      },
+      {
+       "layer": 19,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.012079814874716939,
+       "good_y_rel": 0.013291055243314313,
+       "bad_x_rel": 0.013765082963418813,
+       "bad_y_rel": 0.015385595621409325
+      },
+      {
+       "layer": 19,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.015870711984069003,
+       "good_y_rel": 0.016198224661599744,
+       "bad_x_rel": 0.01776981223768147,
+       "bad_y_rel": 0.01858811157403989
+      },
+      {
+       "layer": 20,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.014059166279003703,
+       "good_y_rel": 0.01585508085809738,
+       "bad_x_rel": 0.020531525157593298,
+       "bad_y_rel": 0.02210177016198798
+      },
+      {
+       "layer": 20,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01626325810864083,
+       "good_y_rel": 0.016637448246549356,
+       "bad_x_rel": 0.018476536181068832,
+       "bad_y_rel": 0.018245969125921486
+      },
+      {
+       "layer": 21,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.018744678930636086,
+       "good_y_rel": 0.019762676693377543,
+       "bad_x_rel": 0.021220555273165357,
+       "bad_y_rel": 0.021596307415284836
+      },
+      {
+       "layer": 21,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.016892804163316566,
+       "good_y_rel": 0.017070210304319978,
+       "bad_x_rel": 0.01866566328710906,
+       "bad_y_rel": 0.019429420650070448
+      },
+      {
+       "layer": 22,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020365345197674904,
+       "good_y_rel": 0.021591669962282838,
+       "bad_x_rel": 0.021223801721602185,
+       "bad_y_rel": 0.02225113677917046
+      },
+      {
+       "layer": 22,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.014872042201573744,
+       "good_y_rel": 0.014010525366165115,
+       "bad_x_rel": 0.01688799522003614,
+       "bad_y_rel": 0.015980671207862975
+      },
+      {
+       "layer": 23,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.013542679054634773,
+       "good_y_rel": 0.01546675406021601,
+       "bad_x_rel": 0.01479224926023361,
+       "bad_y_rel": 0.017045241631688763
+      },
+      {
+       "layer": 23,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.016799548100927993,
+       "good_y_rel": 0.016856834463056684,
+       "bad_x_rel": 0.019223831516724108,
+       "bad_y_rel": 0.01908720220513595
+      },
+      {
+       "layer": 24,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.022471286100853513,
+       "good_y_rel": 0.023846099911373427,
+       "bad_x_rel": 0.025330013451645927,
+       "bad_y_rel": 0.026980880328265358
+      },
+      {
+       "layer": 24,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017394410369512607,
+       "good_y_rel": 0.017643959104241793,
+       "bad_x_rel": 0.019826699095889033,
+       "bad_y_rel": 0.020378226408523128
+      },
+      {
+       "layer": 25,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.021378218851241606,
+       "good_y_rel": 0.021762720081787687,
+       "bad_x_rel": 0.026730084855177055,
+       "bad_y_rel": 0.028460558703428646
+      },
+      {
+       "layer": 25,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01656839756639563,
+       "good_y_rel": 0.017096047669356986,
+       "bad_x_rel": 0.018259871846965457,
+       "bad_y_rel": 0.01905066422579393
+      },
+      {
+       "layer": 26,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.021450767447486047,
+       "good_y_rel": 0.019970659825584217,
+       "bad_x_rel": 0.024433615078326632,
+       "bad_y_rel": 0.02433276041572976
+      },
+      {
+       "layer": 26,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.010746924741543165,
+       "good_y_rel": 0.010118783524658764,
+       "bad_x_rel": 0.011146560498526015,
+       "bad_y_rel": 0.010145716453124265
+      },
+      {
+       "layer": 27,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.010349960433149917,
+       "good_y_rel": 0.010409311511204661,
+       "bad_x_rel": 0.01020106986202544,
+       "bad_y_rel": 0.010167199816498615
+      },
+      {
+       "layer": 27,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017433332098232612,
+       "good_y_rel": 0.015174667614447832,
+       "bad_x_rel": 0.018649706701253845,
+       "bad_y_rel": 0.01587991083264421
+      },
+      {
+       "layer": 28,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.031365479993038424,
+       "good_y_rel": 0.027692344718267408,
+       "bad_x_rel": 0.044004773442083735,
+       "bad_y_rel": 0.04178034126575717
+      },
+      {
+       "layer": 28,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01893701511099125,
+       "good_y_rel": 0.018834399963084142,
+       "bad_x_rel": 0.022437838067483402,
+       "bad_y_rel": 0.02311637095337628
+      },
+      {
+       "layer": 29,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.02726799622276164,
+       "good_y_rel": 0.02949690133161828,
+       "bad_x_rel": 0.04429783906535097,
+       "bad_y_rel": 0.04823140833860536
+      },
+      {
+       "layer": 29,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.017749249262822314,
+       "good_y_rel": 0.01736989994765449,
+       "bad_x_rel": 0.02438379764896189,
+       "bad_y_rel": 0.024673776942269018
+      },
+      {
+       "layer": 30,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "linear_attn.out_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.03452762553020257,
+       "good_y_rel": 0.03505046581926622,
+       "bad_x_rel": 0.049409506308626165,
+       "bad_y_rel": 0.05333336628576182
+      },
+      {
+       "layer": 30,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.022793926035419142,
+       "good_y_rel": 0.021799462068886173,
+       "bad_x_rel": 0.03446553686982421,
+       "bad_y_rel": 0.033410658800485216
+      },
+      {
+       "layer": 31,
+       "component": "attn.o_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "self_attn.o_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.01729036082289254,
+       "good_y_rel": 0.01900218432500861,
+       "bad_x_rel": 0.028201010356958444,
+       "bad_y_rel": 0.03175516200808906
+      },
+      {
+       "layer": 31,
+       "component": "mlp.down_proj",
+       "ide_captured": true,
+       "heretic_modules": 1,
+       "module": "mlp.down_proj",
+       "heretic_index": 0,
+       "good_x_rel": 0.020955826463757522,
+       "good_y_rel": 0.014378637191881304,
+       "bad_x_rel": 0.032461518820865315,
+       "bad_y_rel": 0.021944799028860488
+      }
+     ],
+     "parameters": {
+      "start_layer_index": 16,
+      "end_layer_index": 27,
+      "preserve_good_behavior_weight": 0.7489066375339118,
+      "steer_bad_behavior_weight": 0.041141439521771406,
+      "overcorrect_relative_weight": 0.9720292520526561,
+      "neighbor_count": 15,
+      "preserve_row_magnitudes": true,
+      "lora_rank": 50,
+      "n_optimization_steps": 5,
+      "learning_rate": 1.0,
+      "max_iter": 20,
+      "history_size": 10,
+      "seed": 12345
+     },
+     "adapter": {
+      "r": 50,
+      "lora_alpha": 50,
+      "modules": 64,
+      "dtypes": [
+       "F32"
+      ],
+      "unmatched_modules": []
+     },
+     "weights": {
+      "changed": [
+       {
+        "tensor": "model.language_model.layers.16.linear_attn.out_proj.weight",
+        "rel_diff": 0.3099139597665071,
+        "change_over_weight": 0.09183924901404725,
+        "ide_change_over_weight": 0.08604821529506021,
+        "max_abs_diff": 0.03962334990501404,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1207835,
+         "one_step": 1953307,
+         "more_than_one": 7324618,
+         "max_steps": 30814,
+         "median_abs": 0.007171630859375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.03955078125,
+         "max_abs_difference_in_median_steps": 1296.0,
+         "differing": 9277925,
+         "largest_abs_over_median": 46.297872340425535,
+         "outside": 6978137,
+         "max_excess": 456.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.16.mlp.down_proj.weight",
+        "rel_diff": 0.2221395508417151,
+        "change_over_weight": 0.06889946320290745,
+        "ide_change_over_weight": 0.06592080593941077,
+        "max_abs_diff": 0.00702096801251173,
+        "elements": 23592960,
+        "elements_that_differ": 23592956,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 3910295,
+         "one_step": 5684310,
+         "more_than_one": 13998355,
+         "max_steps": 30345,
+         "median_abs": 0.00543212890625,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.00702667236328125,
+         "max_abs_difference_in_median_steps": 230.25,
+         "differing": 19682665,
+         "largest_abs_over_median": 34.157303370786515,
+         "outside": 12253420,
+         "max_excess": 230.25
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.17.linear_attn.out_proj.weight",
+        "rel_diff": 0.3614114887767136,
+        "change_over_weight": 0.10086717622512467,
+        "ide_change_over_weight": 0.11278203938433823,
+        "max_abs_diff": 0.03616780787706375,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 734166,
+         "one_step": 1343378,
+         "more_than_one": 8408216,
+         "max_steps": 30787,
+         "median_abs": 0.007354736328125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.036376953125,
+         "max_abs_difference_in_median_steps": 1192.0,
+         "differing": 9751594,
+         "largest_abs_over_median": 40.63070539419087,
+         "outside": 8204583,
+         "max_excess": 448.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.17.mlp.down_proj.weight",
+        "rel_diff": 0.26383826294100676,
+        "change_over_weight": 0.06368279787341666,
+        "ide_change_over_weight": 0.06680651031694931,
+        "max_abs_diff": 0.005142362788319588,
+        "elements": 23592960,
+        "elements_that_differ": 23592958,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 3547942,
+         "one_step": 5364808,
+         "more_than_one": 14680210,
+         "max_steps": 30177,
+         "median_abs": 0.0054931640625,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.004302978515625,
+         "max_abs_difference_in_median_steps": 141.0,
+         "differing": 20045018,
+         "largest_abs_over_median": 62.93333333333333,
+         "outside": 13126323,
+         "max_excess": 133.875
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.18.linear_attn.out_proj.weight",
+        "rel_diff": 0.19615479335434843,
+        "change_over_weight": 0.10261049792116914,
+        "ide_change_over_weight": 0.10927391311948852,
+        "max_abs_diff": 0.015986178070306778,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1372285,
+         "one_step": 2165510,
+         "more_than_one": 6947965,
+         "max_steps": 30504,
+         "median_abs": 0.00726318359375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.015869140625,
+         "max_abs_difference_in_median_steps": 520.0,
+         "differing": 9113475,
+         "largest_abs_over_median": 51.36134453781513,
+         "outside": 6578302,
+         "max_excess": 303.5
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.18.mlp.down_proj.weight",
+        "rel_diff": 0.1749702395042817,
+        "change_over_weight": 0.06415661478705435,
+        "ide_change_over_weight": 0.06664588451207512,
+        "max_abs_diff": 0.006675664335489273,
+        "elements": 23592960,
+        "elements_that_differ": 23592956,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 5299150,
+         "one_step": 6629069,
+         "more_than_one": 11664741,
+         "max_steps": 30157,
+         "median_abs": 0.0054931640625,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.0068359375,
+         "max_abs_difference_in_median_steps": 224.0,
+         "differing": 18293810,
+         "largest_abs_over_median": 43.2,
+         "outside": 9525309,
+         "max_excess": 154.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+        "rel_diff": 0.1372334237846838,
+        "change_over_weight": 0.06231831757381327,
+        "ide_change_over_weight": 0.060727893145915535,
+        "max_abs_diff": 0.0034774094820022583,
+        "elements": 23592960,
+        "elements_that_differ": 23592959,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 6007034,
+         "one_step": 7108300,
+         "more_than_one": 10477626,
+         "max_steps": 30143,
+         "median_abs": 0.0057373046875,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.00390625,
+         "max_abs_difference_in_median_steps": 128.0,
+         "differing": 17585926,
+         "largest_abs_over_median": 59.234042553191486,
+         "outside": 8211010,
+         "max_excess": 112.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.19.self_attn.o_proj.weight",
+        "rel_diff": 0.1487555608766992,
+        "change_over_weight": 0.1276219542537213,
+        "ide_change_over_weight": 0.12733564988638718,
+        "max_abs_diff": 0.010722767561674118,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1414665,
+         "one_step": 2207214,
+         "more_than_one": 6863881,
+         "max_steps": 30255,
+         "median_abs": 0.00830078125,
+         "step_at_median": 6.103515625e-05,
+         "max_abs_difference": 0.0106201171875,
+         "max_abs_difference_in_median_steps": 174.0,
+         "differing": 9071095,
+         "largest_abs_over_median": 22.470588235294116,
+         "outside": 5903261,
+         "max_excess": 119.5
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.20.linear_attn.out_proj.weight",
+        "rel_diff": 1.102547269885067,
+        "change_over_weight": 0.10786123770798327,
+        "ide_change_over_weight": 0.17553852896896402,
+        "max_abs_diff": 0.0426565445959568,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 351757,
+         "one_step": 654000,
+         "more_than_one": 9480003,
+         "max_steps": 30912,
+         "median_abs": 0.00726318359375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.0428466796875,
+         "max_abs_difference_in_median_steps": 1404.0,
+         "differing": 10134003,
+         "largest_abs_over_median": 50.8235294117647,
+         "outside": 9392206,
+         "max_excess": 478.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.20.mlp.down_proj.weight",
+        "rel_diff": 0.23280880920128477,
+        "change_over_weight": 0.06371234314221381,
+        "ide_change_over_weight": 0.0625123602148826,
+        "max_abs_diff": 0.005549056455492973,
+        "elements": 23592960,
+        "elements_that_differ": 23592959,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 4009770,
+         "one_step": 5832149,
+         "more_than_one": 13751041,
+         "max_steps": 30171,
+         "median_abs": 0.00567626953125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.0054931640625,
+         "max_abs_difference_in_median_steps": 180.0,
+         "differing": 19583190,
+         "largest_abs_over_median": 55.39784946236559,
+         "outside": 12128718,
+         "max_excess": 148.5
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.21.linear_attn.out_proj.weight",
+        "rel_diff": 0.4106834776570653,
+        "change_over_weight": 0.1022878288083544,
+        "ide_change_over_weight": 0.10009074428315365,
+        "max_abs_diff": 0.06654131412506104,
+        "elements": 10485760,
+        "elements_that_differ": 10485758,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 892596,
+         "one_step": 1549606,
+         "more_than_one": 8043558,
+         "max_steps": 31239,
+         "median_abs": 0.00732421875,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.066650390625,
+         "max_abs_difference_in_median_steps": 2184.0,
+         "differing": 9593164,
+         "largest_abs_over_median": 49.333333333333336,
+         "outside": 7826138,
+         "max_excess": 441.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.21.mlp.down_proj.weight",
+        "rel_diff": 0.1615520722875975,
+        "change_over_weight": 0.06409195892318112,
+        "ide_change_over_weight": 0.0649429304189955,
+        "max_abs_diff": 0.0031443098559975624,
+        "elements": 23592960,
+        "elements_that_differ": 23592957,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 5141751,
+         "one_step": 6727801,
+         "more_than_one": 11723408,
+         "max_steps": 29940,
+         "median_abs": 0.00567626953125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.003173828125,
+         "max_abs_difference_in_median_steps": 104.0,
+         "differing": 18451209,
+         "largest_abs_over_median": 11.096774193548388,
+         "outside": 9706811,
+         "max_excess": 80.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.22.linear_attn.out_proj.weight",
+        "rel_diff": 0.1842154844972042,
+        "change_over_weight": 0.08064034742350752,
+        "ide_change_over_weight": 0.0810178009024254,
+        "max_abs_diff": 0.026949839666485786,
+        "elements": 10485760,
+        "elements_that_differ": 10485758,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1915236,
+         "one_step": 2671262,
+         "more_than_one": 5899262,
+         "max_steps": 30392,
+         "median_abs": 0.007659912109375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.027099609375,
+         "max_abs_difference_in_median_steps": 888.0,
+         "differing": 8570524,
+         "largest_abs_over_median": 27.410358565737052,
+         "outside": 5461718,
+         "max_excess": 243.25
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.22.mlp.down_proj.weight",
+        "rel_diff": 0.18674825962816274,
+        "change_over_weight": 0.06920959353761959,
+        "ide_change_over_weight": 0.0654217804543543,
+        "max_abs_diff": 0.010489393025636673,
+        "elements": 23592960,
+        "elements_that_differ": 23592957,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 4637077,
+         "one_step": 6264725,
+         "more_than_one": 12691158,
+         "max_steps": 30328,
+         "median_abs": 0.005645751953125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.010498046875,
+         "max_abs_difference_in_median_steps": 344.0,
+         "differing": 18955883,
+         "largest_abs_over_median": 72.3027027027027,
+         "outside": 10859150,
+         "max_excess": 188.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.23.mlp.down_proj.weight",
+        "rel_diff": 0.18051606487689112,
+        "change_over_weight": 0.05082911682407521,
+        "ide_change_over_weight": 0.05381508849877952,
+        "max_abs_diff": 0.005021383985877037,
+        "elements": 23592960,
+        "elements_that_differ": 23592958,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 5938285,
+         "one_step": 7058816,
+         "more_than_one": 10595859,
+         "max_steps": 30257,
+         "median_abs": 0.00579833984375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.0050048828125,
+         "max_abs_difference_in_median_steps": 164.0,
+         "differing": 17654675,
+         "largest_abs_over_median": 16.842105263157894,
+         "outside": 8386985,
+         "max_excess": 152.5
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.23.self_attn.o_proj.weight",
+        "rel_diff": 0.10466220661640573,
+        "change_over_weight": 0.11023924609084362,
+        "ide_change_over_weight": 0.10973458554146519,
+        "max_abs_diff": 0.026182547211647034,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 2252158,
+         "one_step": 2918627,
+         "more_than_one": 5314975,
+         "max_steps": 30374,
+         "median_abs": 0.00860595703125,
+         "step_at_median": 6.103515625e-05,
+         "max_abs_difference": 0.0263671875,
+         "max_abs_difference_in_median_steps": 432.0,
+         "differing": 8233602,
+         "largest_abs_over_median": 45.39007092198582,
+         "outside": 3974423,
+         "max_excess": 133.671875
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.24.linear_attn.out_proj.weight",
+        "rel_diff": 0.1798315732943256,
+        "change_over_weight": 0.0976432276793781,
+        "ide_change_over_weight": 0.0945285918566005,
+        "max_abs_diff": 0.013901133090257645,
+        "elements": 10485760,
+        "elements_that_differ": 10485756,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1787550,
+         "one_step": 2528532,
+         "more_than_one": 6169678,
+         "max_steps": 30383,
+         "median_abs": 0.007354736328125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.01385498046875,
+         "max_abs_difference_in_median_steps": 454.0,
+         "differing": 8698210,
+         "largest_abs_over_median": 48.863070539419084,
+         "outside": 5737699,
+         "max_excess": 220.5
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.24.mlp.down_proj.weight",
+        "rel_diff": 0.08874270214004404,
+        "change_over_weight": 0.05662213542106136,
+        "ide_change_over_weight": 0.056041486892238986,
+        "max_abs_diff": 0.0017052628099918365,
+        "elements": 23592960,
+        "elements_that_differ": 23592958,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 8965373,
+         "one_step": 7637165,
+         "more_than_one": 6990422,
+         "max_steps": 29677,
+         "median_abs": 0.00579833984375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.001708984375,
+         "max_abs_difference_in_median_steps": 56.0,
+         "differing": 14627587,
+         "largest_abs_over_median": 7.326315789473684,
+         "outside": 4130728,
+         "max_excess": 54.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.25.linear_attn.out_proj.weight",
+        "rel_diff": 0.22299068282820264,
+        "change_over_weight": 0.09608584113456319,
+        "ide_change_over_weight": 0.09430320034155404,
+        "max_abs_diff": 0.009658283554017544,
+        "elements": 10485760,
+        "elements_that_differ": 10485757,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1318623,
+         "one_step": 2106644,
+         "more_than_one": 7060493,
+         "max_steps": 30373,
+         "median_abs": 0.007568359375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.0096435546875,
+         "max_abs_difference_in_median_steps": 316.0,
+         "differing": 9167137,
+         "largest_abs_over_median": 17.677419354838708,
+         "outside": 6756008,
+         "max_excess": 218.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.25.mlp.down_proj.weight",
+        "rel_diff": 0.13066865721952223,
+        "change_over_weight": 0.06132776563619774,
+        "ide_change_over_weight": 0.06424029894394363,
+        "max_abs_diff": 0.004550669342279434,
+        "elements": 23592960,
+        "elements_that_differ": 23592955,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 7107895,
+         "one_step": 7413130,
+         "more_than_one": 9071935,
+         "max_steps": 30095,
+         "median_abs": 0.005859375,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.004638671875,
+         "max_abs_difference_in_median_steps": 152.0,
+         "differing": 16485065,
+         "largest_abs_over_median": 12.916666666666666,
+         "outside": 6584921,
+         "max_excess": 122.25
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.26.linear_attn.out_proj.weight",
+        "rel_diff": 0.257577865845888,
+        "change_over_weight": 0.09810915685190967,
+        "ide_change_over_weight": 0.10191761139218286,
+        "max_abs_diff": 0.019930098205804825,
+        "elements": 10485760,
+        "elements_that_differ": 10485760,
+        "rounded": {
+         "elements": 10485760,
+         "equal": 1199361,
+         "one_step": 1962426,
+         "more_than_one": 7323973,
+         "max_steps": 30530,
+         "median_abs": 0.007781982421875,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.02001953125,
+         "max_abs_difference_in_median_steps": 656.0,
+         "differing": 9286399,
+         "largest_abs_over_median": 62.996078431372545,
+         "outside": 7063131,
+         "max_excess": 336.0
+        }
+       },
+       {
+        "tensor": "model.language_model.layers.26.mlp.down_proj.weight",
+        "rel_diff": 2.4802462622213177,
+        "change_over_weight": 0.09724198215719788,
+        "ide_change_over_weight": 0.2705268486604617,
+        "max_abs_diff": 0.37854206562042236,
+        "elements": 23592960,
+        "elements_that_differ": 23592960,
+        "rounded": {
+         "elements": 23592960,
+         "equal": 630556,
+         "one_step": 1113545,
+         "more_than_one": 21848859,
+         "max_steps": 31501,
+         "median_abs": 0.0059814453125,
+         "step_at_median": 3.0517578125e-05,
+         "max_abs_difference": 0.3828125,
+         "max_abs_difference_in_median_steps": 12544.0,
+         "differing": 22962404,
+         "largest_abs_over_median": 210.28571428571428,
+         "outside": 21612086,
+         "max_excess": 504.0
+        }
+       }
+      ],
+      "unchanged_in_both": 716,
+      "changed_in_one_only": 0,
+      "ide_stored_values": 10137600,
+      "ide_output": "  L20 attn.o_proj: loss 0.0963766 -> -0.109854, scale 0.855756..1.00069, mismatch good 0.00166 bad 0.00166\n  L20 mlp.down_proj: loss 0.229095 -> -0.217354, scale 0.985947..1.00075, mismatch good 0.00166 bad 0.00167\n  L21 attn.o_proj: loss 0.107768 -> -0.107652, scale 0.95434..1.00126, mismatch good 0.00166 bad 0.00165\n  L21 mlp.down_proj: loss 0.260026 -> -0.241806, scale 0.983785..1.00077, mismatch good 0.00166 bad 0.00166\n  L22 attn.o_proj: loss 0.126099 -> -0.130034, scale 0.970357..1.00211, mismatch good 0.00167 bad 0.00166\n  L22 mlp.down_proj: loss 0.328206 -> -0.396196, scale 0.982282..1.00774, mismatch good 0.00164 bad 0.00165\n  L23 attn.o_proj: loss 0.0721869 -> -0.0832446, scale 0.946062..1.00526, mismatch good 0.00166 bad 0.00169\n  L23 mlp.down_proj: loss 0.271161 -> -0.268568, scale 0.990907..1.00106, mismatch good 0.00166 bad 0.00168\n  L24 attn.o_proj: loss 0.155428 -> -0.166184, scale 0.958447..1.00206, mismatch good 0.00165 bad 0.00166\n  L24 mlp.down_proj: loss 0.276284 -> -0.284905, scale 0.989289..1.00083, mismatch good 0.00166 bad 0.00166\n  L25 attn.o_proj: loss 0.108504 -> -0.125819, scale 0.966235..1.00218, mismatch good 0.00162 bad 0.00163\n  L25 mlp.down_proj: loss 0.259759 -> -0.262763, scale 0.983732..1.00085, mismatch good 0.00166 bad 0.00165\n  L26 attn.o_proj: loss 0.0869641 -> -0.0979356, scale 0.932211..1.00168, mismatch good 0.00169 bad 0.00166\n  L26 mlp.down_proj: loss 0.271533 -> -0.419057, scale 0.709204..1.00049, mismatch good 0.00165 bad 0.0017"
+     },
+     "consistency": [
+      {
+       "layer": 16,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016589038683139763,
+       "mismatch_bad": 0.001647887848136745,
+       "loss_before": 0.06776154786348343,
+       "loss_after": -0.0800122320652008,
+       "scale_min": 0.972727358341217,
+       "scale_max": 1.0026094913482666
+      },
+      {
+       "layer": 16,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016526966784794297,
+       "mismatch_bad": 0.0016562650453514811,
+       "loss_before": 0.11950220912694931,
+       "loss_after": -0.1354561150074005,
+       "scale_min": 0.982014000415802,
+       "scale_max": 1.0007659196853638
+      },
+      {
+       "layer": 17,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016477538658402082,
+       "mismatch_bad": 0.0016560961031836607,
+       "loss_before": 0.07320670783519745,
+       "loss_after": -0.07711698859930038,
+       "scale_min": 0.8832976222038269,
+       "scale_max": 1.0022616386413574
+      },
+      {
+       "layer": 17,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.001659018335939548,
+       "mismatch_bad": 0.0016551021743428562,
+       "loss_before": 0.14043404161930084,
+       "loss_after": -0.15112391114234924,
+       "scale_min": 0.9863978028297424,
+       "scale_max": 1.000946044921875
+      },
+      {
+       "layer": 18,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016545463389988405,
+       "mismatch_bad": 0.0016624969887109942,
+       "loss_before": 0.09362786263227463,
+       "loss_after": -0.10358276963233948,
+       "scale_min": 0.959688127040863,
+       "scale_max": 1.0016077756881714
+      },
+      {
+       "layer": 18,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016626725381630716,
+       "mismatch_bad": 0.0016603526351011751,
+       "loss_before": 0.17332954704761505,
+       "loss_after": -0.186923548579216,
+       "scale_min": 0.9753824472427368,
+       "scale_max": 1.0008774995803833
+      },
+      {
+       "layer": 19,
+       "component": "attn.o_proj",
+       "module": "self_attn.o_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016746897211006755,
+       "mismatch_bad": 0.001663459820392722,
+       "loss_before": 0.12643180787563324,
+       "loss_after": -0.11173640191555023,
+       "scale_min": 0.8125847578048706,
+       "scale_max": 1.0012999773025513
+      },
+      {
+       "layer": 19,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016569174157253872,
+       "mismatch_bad": 0.001661829133898621,
+       "loss_before": 0.236613929271698,
+       "loss_after": -0.25106438994407654,
+       "scale_min": 0.9872163534164429,
+       "scale_max": 1.0011208057403564
+      },
+      {
+       "layer": 20,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016636126786201636,
+       "mismatch_bad": 0.0016644093700246805,
+       "loss_before": 0.09637662768363953,
+       "loss_after": -0.10985356569290161,
+       "scale_min": 0.8557561039924622,
+       "scale_max": 1.0006864070892334
+      },
+      {
+       "layer": 20,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016595376869685177,
+       "mismatch_bad": 0.0016666571216919764,
+       "loss_before": 0.2290954291820526,
+       "loss_after": -0.21735446155071259,
+       "scale_min": 0.9859468340873718,
+       "scale_max": 1.00075101852417
+      },
+      {
+       "layer": 21,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016572443940706665,
+       "mismatch_bad": 0.0016487159027286447,
+       "loss_before": 0.10776827484369278,
+       "loss_after": -0.10765225440263748,
+       "scale_min": 0.9543398022651672,
+       "scale_max": 1.0012601613998413
+      },
+      {
+       "layer": 21,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016614495017036998,
+       "mismatch_bad": 0.0016593874018299211,
+       "loss_before": 0.2600260376930237,
+       "loss_after": -0.24180610477924347,
+       "scale_min": 0.9837853312492371,
+       "scale_max": 1.0007712841033936
+      },
+      {
+       "layer": 22,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016666527694726367,
+       "mismatch_bad": 0.0016562373567738623,
+       "loss_before": 0.12609852850437164,
+       "loss_after": -0.13003359735012054,
+       "scale_min": 0.9703571796417236,
+       "scale_max": 1.0021109580993652
+      },
+      {
+       "layer": 22,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016442673311397144,
+       "mismatch_bad": 0.001652114446665487,
+       "loss_before": 0.32820627093315125,
+       "loss_after": -0.3961959481239319,
+       "scale_min": 0.9822819828987122,
+       "scale_max": 1.0077390670776367
+      },
+      {
+       "layer": 23,
+       "component": "attn.o_proj",
+       "module": "self_attn.o_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.001663275642204612,
+       "mismatch_bad": 0.0016878900381112872,
+       "loss_before": 0.07218693941831589,
+       "loss_after": -0.08324455469846725,
+       "scale_min": 0.9460619688034058,
+       "scale_max": 1.0052605867385864
+      },
+      {
+       "layer": 23,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.0016625004484215721,
+       "mismatch_bad": 0.0016771688041268692,
+       "loss_before": 0.2711612582206726,
+       "loss_after": -0.26856839656829834,
+       "scale_min": 0.9909066557884216,
+       "scale_max": 1.0010608434677124
+      },
+      {
+       "layer": 24,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.0016548447404709334,
+       "mismatch_bad": 0.0016607230107960422,
+       "loss_before": 0.15542817115783691,
+       "loss_after": -0.166183739900589,
+       "scale_min": 0.9584468007087708,
+       "scale_max": 1.0020637512207031
+      },
+      {
+       "layer": 24,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.001658743590506151,
+       "mismatch_bad": 0.0016579237769309546,
+       "loss_before": 0.27628397941589355,
+       "loss_after": -0.2849050760269165,
+       "scale_min": 0.9892885088920593,
+       "scale_max": 1.0008265972137451
+      },
+      {
+       "layer": 25,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.001624379234014705,
+       "mismatch_bad": 0.0016325933336691987,
+       "loss_before": 0.10850445181131363,
+       "loss_after": -0.12581852078437805,
+       "scale_min": 0.9662354588508606,
+       "scale_max": 1.0021814107894897
+      },
+      {
+       "layer": 25,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.001658267263656716,
+       "mismatch_bad": 0.0016504310890232308,
+       "loss_before": 0.25975915789604187,
+       "loss_after": -0.26276320219039917,
+       "scale_min": 0.9837316274642944,
+       "scale_max": 1.0008515119552612
+      },
+      {
+       "layer": 26,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "views": 1,
+       "d_in": 4096,
+       "stored": 332800,
+       "scratch": 264407040,
+       "skipped": null,
+       "mismatch_good": 0.001689086994893395,
+       "mismatch_bad": 0.0016606141335454726,
+       "loss_before": 0.08696408569812775,
+       "loss_after": -0.09793557226657867,
+       "scale_min": 0.9322111010551453,
+       "scale_max": 1.001684546470642
+      },
+      {
+       "layer": 26,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "views": 1,
+       "d_in": 9216,
+       "stored": 588800,
+       "scratch": 555223040,
+       "skipped": null,
+       "mismatch_good": 0.001652537215055784,
+       "mismatch_bad": 0.001697579541307484,
+       "loss_before": 0.27153322100639343,
+       "loss_after": -0.4190565049648285,
+       "scale_min": 0.709204375743866,
+       "scale_max": 1.000490665435791
+      }
+     ],
+     "behaviour": {
+      "base_logits_max_abs_diff": 0.3671875,
+      "base_logits_scale": 25.875,
+      "kl_ide": 0.09917763620615005,
+      "kl_heretic": 0.1211579218506813,
+      "refusals_heretic": 0.0,
+      "kl_ide_from_heretic_io": 0.09974505007266998
+     },
+     "weights_from_heretic_io": [
+      {
+       "tensor": "model.language_model.layers.16.linear_attn.out_proj.weight",
+       "rel_diff": 2.085869265268939,
+       "change_over_weight": 0.09183924901404725,
+       "ide_change_over_weight": 0.21017257117189578,
+       "max_abs_diff": 0.08785375952720642,
+       "elements": 10485760,
+       "elements_that_differ": 10485758,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 216182,
+        "one_step": 422748,
+        "more_than_one": 9846830,
+        "max_steps": 31277,
+        "median_abs": 0.007171630859375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.087646484375,
+        "max_abs_difference_in_median_steps": 2872.0,
+        "differing": 10269578,
+        "largest_abs_over_median": 46.297872340425535,
+        "outside": 9778541,
+        "max_excess": 501.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.16.mlp.down_proj.weight",
+       "rel_diff": 0.1796005797073996,
+       "change_over_weight": 0.06889946320290745,
+       "ide_change_over_weight": 0.06389130754588045,
+       "max_abs_diff": 0.005972257815301418,
+       "elements": 23592960,
+       "elements_that_differ": 23592958,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 4717310,
+        "one_step": 6316789,
+        "more_than_one": 12558861,
+        "max_steps": 30159,
+        "median_abs": 0.00543212890625,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.005977630615234375,
+        "max_abs_difference_in_median_steps": 195.875,
+        "differing": 18875650,
+        "largest_abs_over_median": 34.157303370786515,
+        "outside": 10510598,
+        "max_excess": 195.875
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.17.linear_attn.out_proj.weight",
+       "rel_diff": 0.1779876694569846,
+       "change_over_weight": 0.10086717622512467,
+       "ide_change_over_weight": 0.10536945260930261,
+       "max_abs_diff": 0.011862337589263916,
+       "elements": 10485760,
+       "elements_that_differ": 10485756,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1484165,
+        "one_step": 2292766,
+        "more_than_one": 6708829,
+        "max_steps": 30555,
+        "median_abs": 0.007354736328125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.01171875,
+        "max_abs_difference_in_median_steps": 384.0,
+        "differing": 9001595,
+        "largest_abs_over_median": 40.365145228215766,
+        "outside": 6308235,
+        "max_excess": 347.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.17.mlp.down_proj.weight",
+       "rel_diff": 0.154753259058563,
+       "change_over_weight": 0.06368279787341666,
+       "ide_change_over_weight": 0.06359409311337186,
+       "max_abs_diff": 0.00727769173681736,
+       "elements": 23592960,
+       "elements_that_differ": 23592960,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 5391379,
+        "one_step": 6862938,
+        "more_than_one": 11338643,
+        "max_steps": 30088,
+        "median_abs": 0.0054931640625,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.005859375,
+        "max_abs_difference_in_median_steps": 192.0,
+        "differing": 18201581,
+        "largest_abs_over_median": 62.93333333333333,
+        "outside": 9079062,
+        "max_excess": 111.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.18.linear_attn.out_proj.weight",
+       "rel_diff": 0.15312135687854497,
+       "change_over_weight": 0.10261049792116914,
+       "ide_change_over_weight": 0.10595271440137254,
+       "max_abs_diff": 0.01558530330657959,
+       "elements": 10485760,
+       "elements_that_differ": 10485757,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1646959,
+        "one_step": 2467739,
+        "more_than_one": 6371062,
+        "max_steps": 30446,
+        "median_abs": 0.00726318359375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.015625,
+        "max_abs_difference_in_median_steps": 512.0,
+        "differing": 8838801,
+        "largest_abs_over_median": 29.310924369747898,
+        "outside": 5929511,
+        "max_excess": 253.5
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.18.mlp.down_proj.weight",
+       "rel_diff": 0.17618712111740098,
+       "change_over_weight": 0.06415661478705435,
+       "ide_change_over_weight": 0.06399534451594996,
+       "max_abs_diff": 0.005647232756018639,
+       "elements": 23592960,
+       "elements_that_differ": 23592957,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 5334143,
+        "one_step": 6495788,
+        "more_than_one": 11763029,
+        "max_steps": 30107,
+        "median_abs": 0.0054931640625,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.00567626953125,
+        "max_abs_difference_in_median_steps": 186.0,
+        "differing": 18258817,
+        "largest_abs_over_median": 22.044444444444444,
+        "outside": 9658447,
+        "max_excess": 134.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+       "rel_diff": 0.17443730786104936,
+       "change_over_weight": 0.06231831757381327,
+       "ide_change_over_weight": 0.06441391251528843,
+       "max_abs_diff": 0.005247653461992741,
+       "elements": 23592960,
+       "elements_that_differ": 23592957,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 4685794,
+        "one_step": 6441593,
+        "more_than_one": 12465573,
+        "max_steps": 30182,
+        "median_abs": 0.0057373046875,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0052490234375,
+        "max_abs_difference_in_median_steps": 172.0,
+        "differing": 18907166,
+        "largest_abs_over_median": 35.06382978723404,
+        "outside": 10638657,
+        "max_excess": 135.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.19.self_attn.o_proj.weight",
+       "rel_diff": 0.35642237303972135,
+       "change_over_weight": 0.1276219542537213,
+       "ide_change_over_weight": 0.1393425874477324,
+       "max_abs_diff": 0.022168226540088654,
+       "elements": 10485760,
+       "elements_that_differ": 10485760,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 736497,
+        "one_step": 1298796,
+        "more_than_one": 8450467,
+        "max_steps": 30677,
+        "median_abs": 0.00830078125,
+        "step_at_median": 6.103515625e-05,
+        "max_abs_difference": 0.0224609375,
+        "max_abs_difference_in_median_steps": 368.0,
+        "differing": 9749263,
+        "largest_abs_over_median": 38.35294117647059,
+        "outside": 7929115,
+        "max_excess": 244.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.20.linear_attn.out_proj.weight",
+       "rel_diff": 0.7568668010772667,
+       "change_over_weight": 0.10786123770798327,
+       "ide_change_over_weight": 0.14628416655166854,
+       "max_abs_diff": 0.028707854449748993,
+       "elements": 10485760,
+       "elements_that_differ": 10485760,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 469151,
+        "one_step": 857908,
+        "more_than_one": 9158701,
+        "max_steps": 30769,
+        "median_abs": 0.00726318359375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.029052734375,
+        "max_abs_difference_in_median_steps": 952.0,
+        "differing": 10016609,
+        "largest_abs_over_median": 50.8235294117647,
+        "outside": 9041909,
+        "max_excess": 491.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.20.mlp.down_proj.weight",
+       "rel_diff": 0.3131259062825211,
+       "change_over_weight": 0.06371234314221381,
+       "ide_change_over_weight": 0.06922011731183939,
+       "max_abs_diff": 0.0050847227685153484,
+       "elements": 23592960,
+       "elements_that_differ": 23592959,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 3270109,
+        "one_step": 4963865,
+        "more_than_one": 15358986,
+        "max_steps": 30137,
+        "median_abs": 0.00567626953125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.005096435546875,
+        "max_abs_difference_in_median_steps": 167.0,
+        "differing": 20322851,
+        "largest_abs_over_median": 28.387096774193548,
+        "outside": 14040791,
+        "max_excess": 117.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.21.linear_attn.out_proj.weight",
+       "rel_diff": 0.34048782406401046,
+       "change_over_weight": 0.1022878288083544,
+       "ide_change_over_weight": 0.10624730430210812,
+       "max_abs_diff": 0.03441958129405975,
+       "elements": 10485760,
+       "elements_that_differ": 10485760,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 846808,
+        "one_step": 1487062,
+        "more_than_one": 8151890,
+        "max_steps": 30815,
+        "median_abs": 0.00732421875,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.034423828125,
+        "max_abs_difference_in_median_steps": 1128.0,
+        "differing": 9638952,
+        "largest_abs_over_median": 49.333333333333336,
+        "outside": 7944440,
+        "max_excess": 430.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.21.mlp.down_proj.weight",
+       "rel_diff": 0.08208021941336467,
+       "change_over_weight": 0.06409195892318112,
+       "ide_change_over_weight": 0.06395222434632268,
+       "max_abs_diff": 0.0010964341927319765,
+       "elements": 23592960,
+       "elements_that_differ": 23592956,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 8153163,
+        "one_step": 7701094,
+        "more_than_one": 7738703,
+        "max_steps": 29628,
+        "median_abs": 0.00567626953125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0010986328125,
+        "max_abs_difference_in_median_steps": 36.0,
+        "differing": 15439797,
+        "largest_abs_over_median": 6.279569892473118,
+        "outside": 4887110,
+        "max_excess": 36.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.22.linear_attn.out_proj.weight",
+       "rel_diff": 0.31321496577525587,
+       "change_over_weight": 0.08064034742350752,
+       "ide_change_over_weight": 0.08916031032053823,
+       "max_abs_diff": 0.014440059661865234,
+       "elements": 10485760,
+       "elements_that_differ": 10485760,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1206845,
+        "one_step": 1971678,
+        "more_than_one": 7307237,
+        "max_steps": 30481,
+        "median_abs": 0.007659912109375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0146484375,
+        "max_abs_difference_in_median_steps": 480.0,
+        "differing": 9278915,
+        "largest_abs_over_median": 71.90438247011951,
+        "outside": 7032640,
+        "max_excess": 318.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.22.mlp.down_proj.weight",
+       "rel_diff": 0.17876512360845084,
+       "change_over_weight": 0.06920959353761959,
+       "ide_change_over_weight": 0.06930055575462203,
+       "max_abs_diff": 0.005021067336201668,
+       "elements": 23592960,
+       "elements_that_differ": 23592958,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 4719376,
+        "one_step": 6327159,
+        "more_than_one": 12546425,
+        "max_steps": 30234,
+        "median_abs": 0.005645751953125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0048828125,
+        "max_abs_difference_in_median_steps": 160.0,
+        "differing": 18873584,
+        "largest_abs_over_median": 39.78378378378378,
+        "outside": 10681390,
+        "max_excess": 147.75
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.23.mlp.down_proj.weight",
+       "rel_diff": 0.31455103743730967,
+       "change_over_weight": 0.05082911682407521,
+       "ide_change_over_weight": 0.05713082723758518,
+       "max_abs_diff": 0.00827171839773655,
+       "elements": 23592960,
+       "elements_that_differ": 23592959,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 4060635,
+        "one_step": 5818336,
+        "more_than_one": 13713989,
+        "max_steps": 30422,
+        "median_abs": 0.00579833984375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.00830078125,
+        "max_abs_difference_in_median_steps": 272.0,
+        "differing": 19532325,
+        "largest_abs_over_median": 77.81052631578947,
+        "outside": 12138145,
+        "max_excess": 264.5
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.23.self_attn.o_proj.weight",
+       "rel_diff": 0.22237334968209693,
+       "change_over_weight": 0.11023924609084362,
+       "ide_change_over_weight": 0.11092906629311781,
+       "max_abs_diff": 0.0289376899600029,
+       "elements": 10485760,
+       "elements_that_differ": 10485759,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1233360,
+        "one_step": 2030444,
+        "more_than_one": 7221956,
+        "max_steps": 30916,
+        "median_abs": 0.00860595703125,
+        "step_at_median": 6.103515625e-05,
+        "max_abs_difference": 0.029296875,
+        "max_abs_difference_in_median_steps": 480.0,
+        "differing": 9252400,
+        "largest_abs_over_median": 45.39007092198582,
+        "outside": 6431709,
+        "max_excess": 452.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.24.linear_attn.out_proj.weight",
+       "rel_diff": 0.11247730745299438,
+       "change_over_weight": 0.0976432276793781,
+       "ide_change_over_weight": 0.09596028061320329,
+       "max_abs_diff": 0.006151738576591015,
+       "elements": 10485760,
+       "elements_that_differ": 10485756,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 2414187,
+        "one_step": 2978114,
+        "more_than_one": 5093459,
+        "max_steps": 30219,
+        "median_abs": 0.007354736328125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0062255859375,
+        "max_abs_difference_in_median_steps": 204.0,
+        "differing": 8071573,
+        "largest_abs_over_median": 16.66390041493776,
+        "outside": 4501676,
+        "max_excess": 158.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.24.mlp.down_proj.weight",
+       "rel_diff": 0.08837138449375043,
+       "change_over_weight": 0.05662213542106136,
+       "ide_change_over_weight": 0.057396776745679896,
+       "max_abs_diff": 0.0022822741884738207,
+       "elements": 23592960,
+       "elements_that_differ": 23592952,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 9173262,
+        "one_step": 7710598,
+        "more_than_one": 6709100,
+        "max_steps": 29848,
+        "median_abs": 0.00579833984375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.00225830078125,
+        "max_abs_difference_in_median_steps": 74.0,
+        "differing": 14419698,
+        "largest_abs_over_median": 8.16842105263158,
+        "outside": 3751280,
+        "max_excess": 65.5
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.25.linear_attn.out_proj.weight",
+       "rel_diff": 0.23396387998212723,
+       "change_over_weight": 0.09608584113456319,
+       "ide_change_over_weight": 0.0957026563449833,
+       "max_abs_diff": 0.013429836370050907,
+       "elements": 10485760,
+       "elements_that_differ": 10485760,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1260822,
+        "one_step": 2039650,
+        "more_than_one": 7185288,
+        "max_steps": 30380,
+        "median_abs": 0.007568359375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.013427734375,
+        "max_abs_difference_in_median_steps": 440.0,
+        "differing": 9224938,
+        "largest_abs_over_median": 68.12903225806451,
+        "outside": 6894190,
+        "max_excess": 221.5
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.25.mlp.down_proj.weight",
+       "rel_diff": 0.11296712740639454,
+       "change_over_weight": 0.06132776563619774,
+       "ide_change_over_weight": 0.06289860423389988,
+       "max_abs_diff": 0.00418509915471077,
+       "elements": 23592960,
+       "elements_that_differ": 23592956,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 7625325,
+        "one_step": 7513311,
+        "more_than_one": 8454324,
+        "max_steps": 30110,
+        "median_abs": 0.005859375,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.0042724609375,
+        "max_abs_difference_in_median_steps": 140.0,
+        "differing": 15967635,
+        "largest_abs_over_median": 10.625,
+        "outside": 5866452,
+        "max_excess": 115.5
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.26.linear_attn.out_proj.weight",
+       "rel_diff": 0.2597794877810554,
+       "change_over_weight": 0.09810915685190967,
+       "ide_change_over_weight": 0.10460103783594306,
+       "max_abs_diff": 0.01609744131565094,
+       "elements": 10485760,
+       "elements_that_differ": 10485759,
+       "rounded": {
+        "elements": 10485760,
+        "equal": 1175484,
+        "one_step": 1923165,
+        "more_than_one": 7387111,
+        "max_steps": 30682,
+        "median_abs": 0.007781982421875,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.01611328125,
+        "max_abs_difference_in_median_steps": 528.0,
+        "differing": 9310276,
+        "largest_abs_over_median": 62.996078431372545,
+        "outside": 7131601,
+        "max_excess": 474.0
+       }
+      },
+      {
+       "tensor": "model.language_model.layers.26.mlp.down_proj.weight",
+       "rel_diff": 2.8264383618614026,
+       "change_over_weight": 0.09724198215719788,
+       "ide_change_over_weight": 0.30646528237129295,
+       "max_abs_diff": 0.305581271648407,
+       "elements": 23592960,
+       "elements_that_differ": 23592960,
+       "rounded": {
+        "elements": 23592960,
+        "equal": 570496,
+        "one_step": 1017215,
+        "more_than_one": 22005249,
+        "max_steps": 31442,
+        "median_abs": 0.0059814453125,
+        "step_at_median": 3.0517578125e-05,
+        "max_abs_difference": 0.30859375,
+        "max_abs_difference_in_median_steps": 10112.0,
+        "differing": 23022464,
+        "largest_abs_over_median": 210.28571428571428,
+        "outside": 21789373,
+        "max_excess": 508.0
+       }
+      }
+     ],
+     "objective": [
+      {
+       "layer": 16,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.16.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.06768872213077617,
+        "preserve": 6.247161224770119e-09,
+        "steer": 1.6452685720055042
+       },
+       "heretic": {
+        "total": -0.07990266608471104,
+        "preserve": 5.51557409207068e-05,
+        "steer": -1.943149620296576
+       },
+       "ide": {
+        "total": -0.07992567349766738,
+        "preserve": 4.031669283883128e-05,
+        "steer": -1.943438729075739
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.06776130310340873,
+         "preserve": 6.22835138479033e-09,
+         "steer": 1.647032753997264
+        },
+        "ide": {
+         "total": -0.08001218786658978,
+         "preserve": 4.02452354935925e-05,
+         "steer": -1.9455402805782454
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.07961625261344919,
+        "preserve": 2.9503662584976935e-05,
+        "steer": -1.9357209914846871
+       }
+      },
+      {
+       "layer": 16,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.16.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.11964276059533999,
+        "preserve": 2.0363084194486866e-08,
+        "steer": 2.908083594935418
+       },
+       "heretic": {
+        "total": -0.13542206996180037,
+        "preserve": 6.125507977636506e-05,
+        "steer": -3.292737100896532
+       },
+       "ide": {
+        "total": -0.13539498301730768,
+        "preserve": 4.997811018279169e-05,
+        "steer": -3.291873437828695
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.11950208429009397,
+         "preserve": 2.0157606699105162e-08,
+         "steer": 2.9046642651064722
+        },
+        "ide": {
+         "total": -0.13545617272436045,
+         "preserve": 5.0079091561505996e-05,
+         "steer": -3.2933625770856025
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.1353568310168826,
+        "preserve": 5.753347630966445e-05,
+        "steer": -3.2910836322953596
+       }
+      },
+      {
+       "layer": 17,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.17.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.07325756199957653,
+        "preserve": 8.577394281135668e-09,
+        "steer": 1.7806269403174932
+       },
+       "heretic": {
+        "total": -0.07694451441077717,
+        "preserve": 2.5458606382527015e-05,
+        "steer": -1.8707070395373862
+       },
+       "ide": {
+        "total": -0.07704982534778959,
+        "preserve": 2.0041963139697137e-05,
+        "steer": -1.8731681682220334
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.07320654025065194,
+         "preserve": 8.466912613837717e-09,
+         "steer": 1.779386787644733
+        },
+        "ide": {
+         "total": -0.07711696688892132,
+         "preserve": 1.994132113078388e-05,
+         "steer": -1.8747983049027823
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.07690916571493116,
+        "preserve": 2.3112823906256765e-05,
+        "steer": -1.8698051394496886
+       }
+      },
+      {
+       "layer": 17,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.17.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.1405371416256324,
+        "preserve": 2.3084167946848776e-08,
+        "steer": 3.415950583434879
+       },
+       "heretic": {
+        "total": -0.15129149372867262,
+        "preserve": 4.936488816555337e-05,
+        "steer": -3.6782491128196977
+       },
+       "ide": {
+        "total": -0.15110570577016186,
+        "preserve": 5.621933700107212e-05,
+        "steer": -3.6738580507085725
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.14043350816354785,
+         "preserve": 2.304167493450323e-08,
+         "steer": 3.41343162854497
+        },
+        "ide": {
+         "total": -0.15112389583167535,
+         "preserve": 5.599100969961465e-05,
+         "steer": -3.67429602920158
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.15120796568674222,
+        "preserve": 4.5658466601145595e-05,
+        "steer": -3.67615137859735
+       }
+      },
+      {
+       "layer": 18,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.18.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.09371481694957806,
+        "preserve": 1.2846833747212085e-08,
+        "steer": 2.2778689423083165
+       },
+       "heretic": {
+        "total": -0.10348661983035441,
+        "preserve": 3.594164746944534e-05,
+        "steer": -2.5160407115538685
+       },
+       "ide": {
+        "total": -0.10347451369699234,
+        "preserve": 4.441878804958234e-05,
+        "steer": -2.515900766365241
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.09362762293374685,
+         "preserve": 1.2796840937637564e-08,
+         "steer": 2.275749571197222
+        },
+        "ide": {
+         "total": -0.10358274091774743,
+         "preserve": 4.4031421808843604e-05,
+         "steer": -2.5185243284199696
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.10353971023757076,
+        "preserve": 3.480892044997232e-05,
+        "steer": -2.5173105285811825
+       }
+      },
+      {
+       "layer": 18,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.18.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.1733578900138778,
+        "preserve": 3.998539907901576e-08,
+        "steer": 4.213704286569962
+       },
+       "heretic": {
+        "total": -0.18665335957698317,
+        "preserve": 4.276071040800563e-05,
+        "steer": -4.537648306108551
+       },
+       "ide": {
+        "total": -0.18668110311037583,
+        "preserve": 6.414557569925602e-05,
+        "steer": -4.53871192472425
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.1733300889493626,
+         "preserve": 4.04589477605429e-08,
+         "steer": 4.2130285343483065
+        },
+        "ide": {
+         "total": -0.18692360385393153,
+         "preserve": 6.411162918817606e-05,
+         "steer": -4.544605625178264
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.18668860286040642,
+        "preserve": 5.391870215973541e-05,
+        "steer": -4.538708054576627
+       }
+      },
+      {
+       "layer": 19,
+       "component": "attn.o_proj",
+       "module": "self_attn.o_proj",
+       "tensor": "model.language_model.layers.19.self_attn.o_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.12628162773859378,
+        "preserve": 3.259636554794197e-08,
+        "steer": 3.0694502864960036
+       },
+       "heretic": {
+        "total": -0.11159265197875079,
+        "preserve": 2.0377853494392364e-05,
+        "steer": -2.712785803944227
+       },
+       "ide": {
+        "total": -0.11153372319782767,
+        "preserve": 2.5607394150367527e-05,
+        "steer": -2.711448652306995
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.12643040342922113,
+         "preserve": 3.313750189871905e-08,
+         "steer": 3.0730664770594873
+        },
+        "ide": {
+         "total": -0.1117363369912355,
+         "preserve": 2.5418162048417026e-05,
+         "steer": -2.7163700181751853
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.11010970878437597,
+        "preserve": 1.9408110773917482e-05,
+        "steer": -2.6767231513394307
+       }
+      },
+      {
+       "layer": 19,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.23670454363258756,
+        "preserve": 5.6125014576217786e-08,
+        "steer": 5.753432654560648
+       },
+       "heretic": {
+        "total": -0.25078288666653853,
+        "preserve": 3.3798778419323504e-05,
+        "steer": -6.096242662177961
+       },
+       "ide": {
+        "total": -0.2507299539807954,
+        "preserve": 2.772266045078769e-05,
+        "steer": -6.094845454606023
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.23661387635382436,
+         "preserve": 5.571908409001119e-08,
+         "steer": 5.751228867434746
+        },
+        "ide": {
+         "total": -0.25106434059181926,
+         "preserve": 2.707334736130333e-05,
+         "steer": -6.102961367418569
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.2508301003575097,
+        "preserve": 3.926685048375211e-05,
+        "steer": -6.097489793222259
+       }
+      },
+      {
+       "layer": 20,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.20.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.09619108511987619,
+        "preserve": 2.5266012179785198e-08,
+        "steer": 2.338057863704287
+       },
+       "heretic": {
+        "total": -0.10953435027431024,
+        "preserve": 5.088806192517666e-05,
+        "steer": -2.6633112976922746
+       },
+       "ide": {
+        "total": -0.10935074595893654,
+        "preserve": 0.00012640670500432686,
+        "steer": -2.6602232214413952
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.09637568596306847,
+         "preserve": 2.5662755569543472e-08,
+         "steer": 2.342544837135803
+        },
+        "ide": {
+         "total": -0.10985352890244142,
+         "preserve": 0.0001275209879425601,
+         "steer": -2.6724643448256877
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.10940401141354711,
+        "preserve": 0.00010900812763348135,
+        "steer": -2.6612012024017506
+       }
+      },
+      {
+       "layer": 20,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.20.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.2288475459445456,
+        "preserve": 5.167673610624202e-08,
+        "steer": 5.56245746147002
+       },
+       "heretic": {
+        "total": -0.2171602063011749,
+        "preserve": 5.375666054948336e-05,
+        "steer": -5.279359875245323
+       },
+       "ide": {
+        "total": -0.21711052215292972,
+        "preserve": 6.640591021756258e-05,
+        "steer": -5.278382489872415
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.22909550477648302,
+         "preserve": 5.14935146294625e-08,
+         "steer": 5.5684844496365855
+        },
+        "ide": {
+         "total": -0.21735441837552888,
+         "preserve": 6.638040993939285e-05,
+         "steer": -5.284310263137192
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.21698252165273096,
+        "preserve": 2.8453695069995853e-05,
+        "steer": -5.2745804069154225
+       }
+      },
+      {
+       "layer": 21,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.21.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.10774200707445088,
+        "preserve": 1.6130981600543552e-08,
+        "steer": 2.6188192792047618
+       },
+       "heretic": {
+        "total": -0.10555129534044481,
+        "preserve": 2.9542970920484666e-05,
+        "steer": -2.566109049528805
+       },
+       "ide": {
+        "total": -0.1074242283778454,
+        "preserve": 3.521446467488237e-05,
+        "steer": -2.611736535551131
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.10776700844897281,
+         "preserve": 1.606544756499e-08,
+         "steer": 2.6194269736338196
+        },
+        "ide": {
+         "total": -0.1076523092337609,
+         "preserve": 3.5110336936398684e-05,
+         "steer": -2.6172784630240464
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.10703895205460348,
+        "preserve": 3.48309438292998e-05,
+        "steer": -2.60236487648838
+       }
+      },
+      {
+       "layer": 21,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.21.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.25979229412456983,
+        "preserve": 6.036230379177789e-08,
+        "steer": 6.314612515718169
+       },
+       "heretic": {
+        "total": -0.2412713223657155,
+        "preserve": 4.3528148275858e-05,
+        "steer": -5.86522794753413
+       },
+       "ide": {
+        "total": -0.2415381404365419,
+        "preserve": 5.6001374053787295e-05,
+        "steer": -5.871940385300359
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.2600246377166015,
+         "preserve": 6.089260761416962e-08,
+         "steer": 6.320259940737429
+        },
+        "ide": {
+         "total": -0.24180604519896917,
+         "preserve": 5.6257195202179535e-05,
+         "steer": -5.878456840526518
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.241280221917657,
+        "preserve": 4.540074309936888e-05,
+        "steer": -5.865478350795513
+       }
+      },
+      {
+       "layer": 22,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.22.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.12592317572886239,
+        "preserve": 1.531663459380263e-08,
+        "steer": 3.060737925601668
+       },
+       "heretic": {
+        "total": -0.13005521026349365,
+        "preserve": 3.520485075792345e-05,
+        "steer": -3.1618139015544777
+       },
+       "ide": {
+        "total": -0.1300126392090652,
+        "preserve": 3.3498941979027315e-05,
+        "steer": -3.160748099741374
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.12609957222443052,
+         "preserve": 1.5500757021662947e-08,
+         "steer": 3.065025484805431
+        },
+        "ide": {
+         "total": -0.1300335791923174,
+         "preserve": 3.367563470445801e-05,
+         "steer": -3.16126029158133
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.13010668992550561,
+        "preserve": 3.383768227490449e-05,
+        "steer": -3.1630402995864113
+       }
+      },
+      {
+       "layer": 22,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.22.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.3278359004848443,
+        "preserve": 1.4233171575072398e-07,
+        "steer": 7.968505664907326
+       },
+       "heretic": {
+        "total": -0.39639878152542896,
+        "preserve": 4.13028957093579e-05,
+        "steer": -9.635776437243784
+       },
+       "ide": {
+        "total": -0.39618057492681125,
+        "preserve": 7.803931000600247e-05,
+        "steer": -9.631141342888107
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.3282068657339211,
+         "preserve": 1.405321044202804e-07,
+         "steer": 7.977522524821074
+        },
+        "ide": {
+         "total": -0.39619582423836025,
+         "preserve": 7.826804096343386e-05,
+         "steer": -9.631516162288218
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.3962351458658394,
+        "preserve": 8.704983203396587e-05,
+        "steer": -9.632631786088329
+       }
+      },
+      {
+       "layer": 23,
+       "component": "attn.o_proj",
+       "module": "self_attn.o_proj",
+       "tensor": "model.language_model.layers.23.self_attn.o_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.07214802559593914,
+        "preserve": 3.3613988957458206e-08,
+        "steer": 1.7536576566315842
+       },
+       "heretic": {
+        "total": -0.08313889653892363,
+        "preserve": 4.7627452955276216e-05,
+        "steer": -2.021673670668621
+       },
+       "ide": {
+        "total": -0.0831672695315219,
+        "preserve": 4.842589654824896e-05,
+        "steer": -2.022377850022613
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.0721876594980088,
+         "preserve": 3.471007608197481e-08,
+         "steer": 1.7546209938814092
+        },
+        "ide": {
+         "total": -0.08324453104586814,
+         "preserve": 4.850327627710729e-05,
+         "steer": -2.0242572073187493
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.08333600622531398,
+        "preserve": 4.03354458228224e-05,
+        "steer": -2.0263319581781403
+       }
+      },
+      {
+       "layer": 23,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.23.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.27067317014798103,
+        "preserve": 7.227147354849006e-08,
+        "steer": 6.5790871483764874
+       },
+       "heretic": {
+        "total": -0.2682104439123284,
+        "preserve": 6.899077973003122e-05,
+        "steer": -6.5204843263502426
+       },
+       "ide": {
+        "total": -0.268223531301833,
+        "preserve": 6.696887393557209e-05,
+        "steer": -6.52076562838948
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.271157639784862,
+         "preserve": 7.145564242356499e-08,
+         "steer": 6.590862872646078
+        },
+        "ide": {
+         "total": -0.26856834733487894,
+         "preserve": 6.614280683458603e-05,
+         "steer": -6.529131825341068
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.2683910343978849,
+        "preserve": 5.44057845586512e-05,
+        "steer": -6.52460833581215
+       }
+      },
+      {
+       "layer": 24,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.24.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.1551656306456776,
+        "preserve": 3.435829349338674e-08,
+        "steer": 3.7715161821795844
+       },
+       "heretic": {
+        "total": -0.16593258969317706,
+        "preserve": 5.5701394899468785e-05,
+        "steer": -4.034236690957451
+       },
+       "ide": {
+        "total": -0.16602080195876484,
+        "preserve": 6.130130038004456e-05,
+        "steer": -4.036482749263769
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.15542699036911192,
+         "preserve": 3.41449813820014e-08,
+         "steer": 3.7778688982299515
+        },
+        "ide": {
+         "total": -0.1661837192398314,
+         "preserve": 6.194058268622243e-05,
+         "steer": -4.040454317729244
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.16597881451398475,
+        "preserve": 6.980675207271341e-05,
+        "steer": -4.0356170125281015
+       }
+      },
+      {
+       "layer": 24,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.24.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.2758496785139437,
+        "preserve": 6.718051718550439e-08,
+        "steer": 6.704909488060893
+       },
+       "heretic": {
+        "total": -0.2845540559239972,
+        "preserve": 3.330840571332041e-05,
+        "steer": -6.91708904982595
+       },
+       "ide": {
+        "total": -0.284546610593344,
+        "preserve": 3.6652373263523796e-05,
+        "steer": -6.916968951666611
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.2762816767385575,
+         "preserve": 6.705851618139631e-08,
+         "steer": 6.71540980892965
+        },
+        "ide": {
+         "total": -0.2849052350323384,
+         "preserve": 3.651136563219001e-05,
+         "steer": -6.925683251448309
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.284610990996117,
+        "preserve": 3.063682022929702e-05,
+        "steer": -6.918424304611797
+       }
+      },
+      {
+       "layer": 25,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.25.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.10825477991922992,
+        "preserve": 2.166124657178936e-08,
+        "steer": 2.631282836850953
+       },
+       "heretic": {
+        "total": -0.12577051576128348,
+        "preserve": 5.7958621225381585e-05,
+        "steer": -3.0580826247181436
+       },
+       "ide": {
+        "total": -0.1257350373250849,
+        "preserve": 4.972249519791872e-05,
+        "steer": -3.0570703478962287
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.1085025085751387,
+         "preserve": 2.164778634201256e-08,
+         "steer": 2.637304227178293
+        },
+        "ide": {
+         "total": -0.12581853297618253,
+         "preserve": 4.993452534926521e-05,
+         "steer": -3.059103685641766
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.12566322844887923,
+        "preserve": 5.730023185207874e-05,
+        "steer": -3.0554628723266664
+       }
+      },
+      {
+       "layer": 25,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.25.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.25949848926025504,
+        "preserve": 6.583621602339458e-08,
+        "steer": 6.307471079560873
+       },
+       "heretic": {
+        "total": -0.26273458518322546,
+        "preserve": 9.7494425891912e-05,
+        "steer": -6.38790480986512
+       },
+       "ide": {
+        "total": -0.262761358015934,
+        "preserve": 5.334058874954934e-05,
+        "steer": -6.387751818888791
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.25975831146161604,
+         "preserve": 6.557782754913098e-08,
+         "steer": 6.313786424815925
+        },
+        "ide": {
+         "total": -0.2627632405675923,
+         "preserve": 5.383122544316004e-05,
+         "steer": -6.387806508096581
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.2627150782908077,
+        "preserve": 7.345267908333579e-05,
+        "steer": -6.386993030486064
+       }
+      },
+      {
+       "layer": 26,
+       "component": "attn.o_proj",
+       "module": "linear_attn.out_proj",
+       "tensor": "model.language_model.layers.26.linear_attn.out_proj.weight",
+       "shape": [
+        2560,
+        4096
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.0869090509445681,
+        "preserve": 2.12930409801181e-08,
+        "steer": 2.1124451649796425
+       },
+       "heretic": {
+        "total": -0.09801168971662931,
+        "preserve": 4.594428830333209e-05,
+        "steer": -2.38314698850564
+       },
+       "ide": {
+        "total": -0.09801045691041659,
+        "preserve": 4.1901410738335295e-05,
+        "steer": -2.3830434300471754
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.0869630005529254,
+         "preserve": 2.1331651584009848e-08,
+         "steer": 2.1137564846628782
+        },
+        "ide": {
+         "total": -0.0979355784344287,
+         "preserve": 4.155561754270107e-05,
+         "steer": -2.3812171098289063
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.09803543417152018,
+        "preserve": 4.7673482050442026e-05,
+        "steer": -2.3837556074518105
+       }
+      },
+      {
+       "layer": 26,
+       "component": "mlp.down_proj",
+       "module": "mlp.down_proj",
+       "tensor": "model.language_model.layers.26.mlp.down_proj.weight",
+       "shape": [
+        2560,
+        9216
+       ],
+       "bias": false,
+       "start": {
+        "total": 0.27168372582657113,
+        "preserve": 5.0946620190982e-07,
+        "steer": 6.603642153556157
+       },
+       "heretic": {
+        "total": -0.42234091777222943,
+        "preserve": 0.000415857175110939,
+        "steer": -10.27315429124144
+       },
+       "ide": {
+        "total": -0.41899147558845196,
+        "preserve": 0.0035729512037442138,
+        "steer": -10.249210707305977
+       },
+       "own_captures": {
+        "start": {
+         "total": 0.2715489135300106,
+         "preserve": 4.4214834622564037e-07,
+         "steer": 6.600366578288542
+        },
+        "ide": {
+         "total": -0.41905643311019003,
+         "preserve": 0.0035860735716275265,
+         "steer": -10.251028459699072
+        }
+       },
+       "ide_from_heretic_io": {
+        "total": -0.4197548475091215,
+        "preserve": 0.0037508334998831924,
+        "steer": -10.271003555669324
+       }
+      }
+     ],
+     "objective_reduction": [
+      {
+       "tensor": "model.language_model.layers.16.linear_attn.out_proj.weight",
+       "heretic": 0.14759138821548723,
+       "ide": 0.14777349096999853,
+       "relative": 0.0012338304877614497
+      },
+      {
+       "tensor": "model.language_model.layers.16.mlp.down_proj.weight",
+       "heretic": 0.25506483055714035,
+       "ide": 0.2549582570144544,
+       "relative": 0.0004178292336625198
+      },
+      {
+       "tensor": "model.language_model.layers.17.linear_attn.out_proj.weight",
+       "heretic": 0.1502020764103537,
+       "ide": 0.15032350713957326,
+       "relative": 0.0008084490715547865
+      },
+      {
+       "tensor": "model.language_model.layers.17.mlp.down_proj.weight",
+       "heretic": 0.29182863535430503,
+       "ide": 0.29155740399522323,
+       "relative": 0.0009294199616583361
+      },
+      {
+       "tensor": "model.language_model.layers.18.linear_attn.out_proj.weight",
+       "heretic": 0.19720143677993246,
+       "ide": 0.19721036385149426,
+       "relative": 4.5268795742934355e-05
+      },
+      {
+       "tensor": "model.language_model.layers.18.mlp.down_proj.weight",
+       "heretic": 0.36001124959086095,
+       "ide": 0.3602536928032941,
+       "relative": 0.0006734323238751309
+      },
+      {
+       "tensor": "model.language_model.layers.19.self_attn.o_proj.weight",
+       "heretic": 0.23787427971734457,
+       "ide": 0.23816674042045663,
+       "relative": 0.0012294759377078556
+      },
+      {
+       "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+       "heretic": 0.4874874302991261,
+       "ide": 0.4876782169456436,
+       "relative": 0.0003913673146411926
+      },
+      {
+       "tensor": "model.language_model.layers.20.linear_attn.out_proj.weight",
+       "heretic": 0.20572543539418642,
+       "ide": 0.20622921486550988,
+       "relative": 0.0024487952613063153
+      },
+      {
+       "tensor": "model.language_model.layers.20.mlp.down_proj.weight",
+       "heretic": 0.44600775224572053,
+       "ide": 0.44644992315201193,
+       "relative": 0.0009913973559091593
+      },
+      {
+       "tensor": "model.language_model.layers.21.linear_attn.out_proj.weight",
+       "heretic": 0.2132933024148957,
+       "ide": 0.2154193176827337,
+       "relative": 0.009967566931391544
+      },
+      {
+       "tensor": "model.language_model.layers.21.mlp.down_proj.weight",
+       "heretic": 0.5010636164902853,
+       "ide": 0.5018306829155706,
+       "relative": 0.0015308763199736682
+      },
+      {
+       "tensor": "model.language_model.layers.22.linear_attn.out_proj.weight",
+       "heretic": 0.255978385992356,
+       "ide": 0.2561331514167479,
+       "relative": 0.0006046034855323028
+      },
+      {
+       "tensor": "model.language_model.layers.22.mlp.down_proj.weight",
+       "heretic": 0.7242346820102732,
+       "ide": 0.7244026899722813,
+       "relative": 0.00023198000065637105
+      },
+      {
+       "tensor": "model.language_model.layers.23.self_attn.o_proj.weight",
+       "heretic": 0.15528692213486278,
+       "ide": 0.15543219054387694,
+       "relative": 0.000935483857990294
+      },
+      {
+       "tensor": "model.language_model.layers.23.mlp.down_proj.weight",
+       "heretic": 0.5388836140603095,
+       "ide": 0.539725987119741,
+       "relative": 0.0015631818029953912
+      },
+      {
+       "tensor": "model.language_model.layers.24.linear_attn.out_proj.weight",
+       "heretic": 0.32109822033885466,
+       "ide": 0.32161070960894333,
+       "relative": 0.0015960514186215329
+      },
+      {
+       "tensor": "model.language_model.layers.24.mlp.down_proj.weight",
+       "heretic": 0.5604037344379409,
+       "ide": 0.5611869117708959,
+       "relative": 0.0013975234011251833
+      },
+      {
+       "tensor": "model.language_model.layers.25.linear_attn.out_proj.weight",
+       "heretic": 0.2340252956805134,
+       "ide": 0.23432104155132122,
+       "relative": 0.0012637346315398953
+      },
+      {
+       "tensor": "model.language_model.layers.25.mlp.down_proj.weight",
+       "heretic": 0.5222330744434804,
+       "ide": 0.5225215520292084,
+       "relative": 0.0005523924083807541
+      },
+      {
+       "tensor": "model.language_model.layers.26.linear_attn.out_proj.weight",
+       "heretic": 0.1849207406611974,
+       "ide": 0.1848985789873541,
+       "relative": 0.0001198441762890771
+      },
+      {
+       "tensor": "model.language_model.layers.26.mlp.down_proj.weight",
+       "heretic": 0.6940246435988006,
+       "ide": 0.6906053466402007,
+       "relative": 0.004926765915500398
+      }
+     ],
+     "checks": {
+      "B-S1 token ids": {
+       "pass": true,
+       "value": true,
+       "bound": "identical",
+       "counts": {
+        "good": "64/64",
+        "bad": "64/64",
+        "kl": "32/32"
+       }
+      },
+      "B-S2 mean residuals": {
+       "good_rel_worst": 0.004497287185878018,
+       "bad_rel_worst": 0.005793585627086751,
+       "expected_below": 0.02
+      },
+      "C4-2 module inputs and outputs": {
+       "worst_input_rel": 0.049409506308626165,
+       "worst_output_rel": 0.05333336628576182,
+       "captured_by_both": 64,
+       "ide_modules": 64,
+       "expected_order": 0.00390625
+      },
+      "B-S6 consistency check": {
+       "pass": true,
+       "value": [
+        0.0016589038683139763,
+        0.001647887848136745,
+        0.0016526966784794297,
+        0.0016562650453514811,
+        0.0016477538658402082,
+        0.0016560961031836607,
+        0.001659018335939548,
+        0.0016551021743428562,
+        0.0016545463389988405,
+        0.0016624969887109942,
+        0.0016626725381630716,
+        0.0016603526351011751,
+        0.0016746897211006755,
+        0.001663459820392722,
+        0.0016569174157253872,
+        0.001661829133898621,
+        0.0016636126786201636,
+        0.0016644093700246805,
+        0.0016595376869685177,
+        0.0016666571216919764,
+        0.0016572443940706665,
+        0.0016487159027286447,
+        0.0016614495017036998,
+        0.0016593874018299211,
+        0.0016666527694726367,
+        0.0016562373567738623,
+        0.0016442673311397144,
+        0.001652114446665487,
+        0.001663275642204612,
+        0.0016878900381112872,
+        0.0016625004484215721,
+        0.0016771688041268692,
+        0.0016548447404709334,
+        0.0016607230107960422,
+        0.001658743590506151,
+        0.0016579237769309546,
+        0.001624379234014705,
+        0.0016325933336691987,
+        0.001658267263656716,
+        0.0016504310890232308,
+        0.001689086994893395,
+        0.0016606141335454726,
+        0.001652537215055784,
+        0.001697579541307484
+       ],
+       "bound": [
+        0.0,
+        0.005
+       ],
+       "modules": 22,
+       "smallest": 0.001624379234014705,
+       "largest": 0.001697579541307484
+      },
+      "C4-5 refusals of the IDE's own fit": {
+       "ide": 0,
+       "heretic": 0,
+       "prompts": 32
+      },
+      "C4-3 objective reduction": {
+       "pass": true,
+       "value": 0.0009634406069497267,
+       "bound": 0.1,
+       "matrices": 22,
+       "worst": 0.009967566931391544
+      }
+     }
+    }
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.004497287185878018,
+      "bad_rel_worst": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.049409506308626165,
+      "worst_output_rel": 0.05333336628576182,
+      "captured_by_both": 64,
+      "ide_modules": 64,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 22,
+      "smallest": 0.001624379234014705,
+      "largest": 0.001697579541307484
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-5 refusals of the IDE's own fit",
+     "status": "reported",
+     "numbers": {
+      "ide": 0,
+      "heretic": 0,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-3 objective reduction",
+     "status": "pass",
+     "numbers": {
+      "value": 0.0009634406069497267,
+      "bound": 0.1,
+      "matrices": 22,
+      "worst": 0.009967566931391544
+     }
+    }
+   ]
+  },
+  "i3-4": {
+   "what": "the scores: the none run and the ARA run",
+   "tree": "3222c0f",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 23,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 11.64,
+    "least_available_gib": 39.2,
+    "seconds": 813.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "</think>\n\n",
+      "heretic_prefix": "</think>\n\n"
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.96875,
+       "heretic": 126.03125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "pass",
+     "numbers": {
+      "trials": 4,
+      "outside": [],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 4,
+      "trials": 4
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 27,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 26,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.28125,
+       "heretic": 124.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.0017764463415801401,
+      "heretic": 0.002220015972852707,
+      "bound": 0.07340203612374048
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "</think>\n\n",
+      "heretic_prefix": "</think>\n\n"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.96875,
+       "heretic": 126.03125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 22,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.0,
+       "heretic": 0.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 22,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 127.875,
+       "heretic": 127.125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.11587793672515545,
+      "heretic": 0.1189485564827919,
+      "bound": 0.5372847786660547
+     }
+    }
+   ]
+  },
+  "i1-full-t215-5": {
+   "what": "the IDE against Heretic's full run, the replica on mps",
+   "tree": "33d95b2",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 5,
+    "fail": 2,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 13.33,
+    "least_available_gib": 48.9,
+    "seconds": 376.9,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 4.3348480939649995e-06,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999999999921902,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 64,
+      "heretic_unmatched": 0,
+      "ide_modules": 64,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 0,
+      "bound": 2,
+      "ide": 32,
+      "heretic": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "pass",
+     "numbers": {
+      "value": 6.905383715992332e-05,
+      "bound": 0.0004,
+      "tensors": 43,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 rounded sums",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": {
+       "max_difference_in_allowed_steps": 1,
+       "differing_fraction": 0.01
+      },
+      "tensors": 43,
+      "tensors_outside": 0,
+      "elements": 713031680,
+      "equal": 713020718,
+      "one_step": 10396,
+      "more_than_one": 566,
+      "max_steps": 320,
+      "differing": 10962,
+      "outside": 0,
+      "max_abs_difference": 0.000244140625,
+      "max_abs_difference_in_median_steps": 8.0,
+      "max_excess": 1.0,
+      "largest_abs_over_median": 0.015953256302521007,
+      "tensors_outside_names": [],
+      "worst_one_step_fraction": 0.00014553070068359374,
+      "worst_differing_fraction": 0.0001560211181640625
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "fail",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 43,
+      "worst": 1.0264412603634858e-06,
+      "errors": []
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 replica of Heretic's randomized approximation",
+     "status": "fail",
+     "numbers": {
+      "bound": {
+       "replica_vs_heretic": 1e-05
+      },
+      "tensors": 43,
+      "errors": [],
+      "worst_replica_vs_heretic": 3.856317700317675e-06,
+      "worst_replica_vs_ide": 6.904785429769952e-05,
+      "worst_ide_vs_heretic": 6.905383715992332e-05,
+      "worst_tail": 0.9962004989073455,
+      "smallest_sigma_r_over_sigma_1": 0.0066788678023309515,
+      "worst_exact_truncation_vs_ide": 1.0264412603634858e-06,
+      "worst_replica_of_heretic_formula_vs_heretic": 1.5595149781781054e-06,
+      "replicas_bit_equal": 0,
+      "torch": "2.15.0",
+      "run_torch": "2.15.0",
+      "device": "mps",
+      "run_device": "mps"
+     }
+    }
+   ]
+  },
+  "i3-t215-4": {
+   "what": "the scores: the full run",
+   "tree": "3222c0f",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 11,
+    "fail": 1,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 11.56,
+    "least_available_gib": 44.5,
+    "seconds": 719.4,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "</think>\n\n",
+      "heretic_prefix": "</think>\n\n"
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.96875,
+       "heretic": 124.96875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "fail",
+     "numbers": {
+      "trials": 4,
+      "outside": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 4,
+      "trials": 4
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.4375,
+       "heretic": 124.4375,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.001768719374695138,
+      "heretic": 0.0017687195213511586,
+      "bound": 2.7687195213511585e-06
+     }
+    }
+   ]
+  },
+  "fit-heretic-4": {
+   "what": "the ARA fit from Heretic's captures, on mps (model-free)",
+   "tree": "3222c0f",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 1
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "device of the fits",
+     "status": "reported",
+     "numbers": {
+      "device": "mps",
+      "ide_device": "mps",
+      "run_device": "mps",
+      "ide_device_note": "wsp.directions_ara.fit ran on mps unchanged"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "pass",
+     "numbers": {
+      "modules": 22,
+      "not_equal": [],
+      "factors_equal": 22,
+      "ide_product_rel_worst": 0.0,
+      "ide_product_rel_median": 0.0,
+      "replica_product_rel_worst": 0.0,
+      "replica_product_rel_median": 0.0,
+      "replica_factors_equal": 22
+     }
+    }
+   ]
+  },
+  "fit-ide-4": {
+   "what": "the same under the IDE's torch (reported: another torch than the run's)",
+   "tree": "3222c0f",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 2
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "device of the fits",
+     "status": "reported",
+     "numbers": {
+      "device": "mps",
+      "ide_device": "mps",
+      "run_device": "mps",
+      "ide_device_note": "wsp.directions_ara.fit ran on mps unchanged"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "reported",
+     "numbers": "reported only: this interpreter's torch 2.15.0 is not the run's 2.14.1; bit equality is stated under the run's own torch"
+    }
+   ]
+  },
+  "replica-full-mps": {
+   "what": "the replica of Heretic's randomized rank 3 on mps, standalone (model-free)",
+   "tree": "33d95b2",
+   "interpreter": "Heretic's source and packages under torch 2.15.0",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "abl-full-t215",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "fail",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 43,
+      "worst": 1.0264412603634858e-06,
+      "errors": []
+     }
+    },
+    {
+     "label": "abl-full-t215",
+     "stage": "B-S4 replica of Heretic's randomized approximation",
+     "status": "fail",
+     "numbers": {
+      "bound": {
+       "replica_vs_heretic": 1e-05
+      },
+      "tensors": 43,
+      "errors": [],
+      "worst_replica_vs_heretic": 3.856317700317675e-06,
+      "worst_replica_vs_ide": 6.904785429769952e-05,
+      "worst_ide_vs_heretic": 6.905383715992332e-05,
+      "worst_tail": 0.9962004989073455,
+      "smallest_sigma_r_over_sigma_1": 0.0066788678023309515,
+      "worst_exact_truncation_vs_ide": 1.0264412603634858e-06,
+      "worst_replica_of_heretic_formula_vs_heretic": 1.5595149781781054e-06,
+      "replicas_bit_equal": 0,
+      "torch": "2.15.0",
+      "run_torch": "2.15.0",
+      "device": "mps",
+      "run_device": "mps"
+     }
+    }
+   ]
+  },
+  "replica-full-cpu": {
+   "what": "the same replica on the CPU (reported: another device than the run's)",
+   "tree": "33d95b2",
+   "interpreter": "Heretic's source and packages under torch 2.15.0",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "abl-full-t215",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "fail",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 43,
+      "worst": 1.0264412603634858e-06,
+      "errors": []
+     }
+    }
+   ]
+  },
+  "i1-none": {
+   "what": "first run, ended by the guard at its budget during the commit's drift measurement",
+   "tree": "464124b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 16.5,
+    "least_available_gib": 39.5,
+    "seconds": 46.1,
+    "returncode": -15,
+    "violation": "process-tree memory exceeds budget"
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999151399162122,
+      "expected_at_least": 0.99
+     }
+    }
+   ]
+  },
+  "i2": {
+   "what": "first run, ended by the guard at its budget",
+   "tree": "464124b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 17.62,
+    "least_available_gib": 38.6,
+    "seconds": 92.9,
+    "returncode": -15,
+    "violation": "process-tree memory exceeds budget"
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.004497287185878018,
+      "bad_rel_worst": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.049409506308626165,
+      "worst_output_rel": 0.05333336628576182,
+      "captured_by_both": 64,
+      "ide_modules": 64,
+      "expected_order": 0.00390625
+     }
+    }
+   ]
+  },
+  "i3": {
+   "what": "first run: the scores refused a response that ended with the end-of-text token (the id is under text_config)",
+   "tree": "464124b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 9.14,
+    "least_available_gib": 41.0,
+    "seconds": 158.2,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "</think>\n\n",
+      "heretic_prefix": "</think>\n\n"
+     }
+    }
+   ]
+  },
+  "i1-none-2": {
+   "what": "second run, after the first drift change: complete",
+   "tree": "e9b7b3b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 4,
+    "fail": 1,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 14.32,
+    "least_available_gib": 40.7,
+    "seconds": 89.4,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999151399162122,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "none",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 64,
+      "heretic_unmatched": 0,
+      "ide_modules": 64,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "none",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 0,
+      "bound": 2,
+      "ide": 32,
+      "heretic": 32,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "fail",
+     "numbers": {
+      "value": 1.1470543322965032e-06,
+      "bound": 1e-06,
+      "tensors": 29,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "none",
+     "stage": "B-S4 rounded sums",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": {
+       "max_difference_in_allowed_steps": 1,
+       "differing_fraction": 0.01
+      },
+      "tensors": 29,
+      "tensors_outside": 0,
+      "elements": 304087040,
+      "equal": 304081740,
+      "one_step": 5010,
+      "more_than_one": 290,
+      "max_steps": 408,
+      "differing": 5300,
+      "outside": 0,
+      "max_abs_difference": 0.000244140625,
+      "max_abs_difference_in_median_steps": 4.0,
+      "max_excess": 1.0,
+      "largest_abs_over_median": 2.911300339958159e-05,
+      "tensors_outside_names": [],
+      "worst_one_step_fraction": 2.7751922607421876e-05,
+      "worst_differing_fraction": 2.9468536376953124e-05
+     }
+    }
+   ]
+  },
+  "i2-2": {
+   "what": "second run, ended by the guard at its budget",
+   "tree": "e9b7b3b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 16.41,
+    "least_available_gib": 40.3,
+    "seconds": 100.1,
+    "returncode": -15,
+    "violation": "process-tree memory exceeds budget"
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.004497287185878018,
+      "bad_rel_worst": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.049409506308626165,
+      "worst_output_rel": 0.05333336628576182,
+      "captured_by_both": 64,
+      "ide_modules": 64,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 22,
+      "smallest": 0.001624379234014705,
+      "largest": 0.001697579541307484
+     }
+    }
+   ]
+  },
+  "i3-2": {
+   "what": "second run, ended by the guard for memory compression while scoring Heretic's merged model",
+   "tree": "e9b7b3b",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 7,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 11.5,
+    "least_available_gib": 39.4,
+    "seconds": 475.5,
+    "returncode": -15,
+    "violation": "material compression growth"
+   },
+   "checks": [
+    {
+     "label": "none",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32",
+      "prefix_test_with": "32/32"
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "</think>\n\n",
+      "heretic_prefix": "</think>\n\n"
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 1.0,
+       "heretic": 1.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 124.96875,
+       "heretic": 126.03125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "pass",
+     "numbers": {
+      "trials": 4,
+      "outside": [],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "none",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 4,
+      "trials": 4
+     }
+    }
+   ]
+  },
+  "i2-3": {
+   "what": "third run, after the second drift change: complete, 0.06 GiB under the budget",
+   "tree": "0ed4e71",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "reported": 3
+   },
+   "guard": {
+    "peak_footprint_gib": 15.94,
+    "least_available_gib": 46.1,
+    "seconds": 194.6,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.004497287185878018,
+      "bad_rel_worst": 0.005793585627086751,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.049409506308626165,
+      "worst_output_rel": 0.05333336628576182,
+      "captured_by_both": 64,
+      "ide_modules": 64,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 22,
+      "smallest": 0.001624379234014705,
+      "largest": 0.001697579541307484
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-5 refusals of the IDE's own fit",
+     "status": "reported",
+     "numbers": {
+      "ide": 0,
+      "heretic": 0,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-3 objective reduction",
+     "status": "pass",
+     "numbers": {
+      "value": 0.0009634406069497267,
+      "bound": 0.1,
+      "matrices": 22,
+      "worst": 0.009967566931391544
+     }
+    }
+   ]
+  },
+  "fit-heretic": {
+   "what": "first fit check, on the CPU: 0 of 22 equal to a fit Heretic made on mps",
+   "tree": "464124b",
+   "interpreter": "Heretic's own environment (torch 2.14.1)",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "fail",
+     "numbers": {
+      "modules": 22,
+      "not_equal": [
+       "model.language_model.layers.16.linear_attn.out_proj.weight",
+       "model.language_model.layers.16.mlp.down_proj.weight",
+       "model.language_model.layers.17.linear_attn.out_proj.weight",
+       "model.language_model.layers.17.mlp.down_proj.weight",
+       "model.language_model.layers.18.linear_attn.out_proj.weight"
+      ],
+      "factors_equal": 0
+     }
+    }
+   ]
+  }
+ },
+ "totals_of_the_final_runs": {
+  "pass": 47,
+  "fail": 7,
+  "reported": 12
+ }
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weight-space programming IDE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main id="shell">
+  <aside id="left">
+    <div class="pane-title">Explorer <span class="pane-sub" id="level-legend"></span></div>
+    <div id="tree" class="scroll"></div>
+    <div class="pane-title">Groups</div>
+    <div id="groups"></div>
+  </aside>
+  <section id="center">
+    <nav id="tabs"></nav>
+    <div id="view" class="scroll"></div>
+    <div id="console"></div>
+  </section>
+  <aside id="right">
+    <div class="pane-title">Inspector</div>
+    <div id="inspector" class="scroll"></div>
+    <div class="pane-title">Patches <span class="pane-sub">current = base + Σ strength · Δ</span></div>
+    <div id="patches" class="scroll"></div>
+  </aside>
+</main>
+<script type="module" src="js/app.js?inspection=1"></script>
+</body>
+</html>

@@ -1,0 +1,1864 @@
+{
+ "slice": "F4 rendering alignment with Heretic",
+ "bound": "ids identical for every prompt of every prompt set after the change; before it each altered fixture differs in at least one set",
+ "heretic_commit": "64e9991",
+ "fixtures_from": "tiny-random/qwen2.5 at 7a6a3128ee4137a248d6d1582824592b87a81647, tokenizer and template files changed only (scripts/heretic_compare_prompt_ids.py make-fixture)",
+ "prompt_ids": {
+  "none": {
+   "heretic_supports_system_role": true,
+   "response_prefix": "Sure,",
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2"
+   },
+   "before": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 263,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 178,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 147,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 183,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 127,
+     "error": null
+    }
+   },
+   "before_ok": true,
+   "after": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 263,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 178,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 147,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 183,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 127,
+     "error": null
+    }
+   },
+   "after_ok": true,
+   "rendering": {
+    "version": 2,
+    "same_as_version_1": true
+   },
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "fixture_bites": false,
+   "pass": true
+  },
+  "bos": {
+   "heretic_supports_system_role": true,
+   "response_prefix": "Sure,",
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2"
+   },
+   "before": {
+    "good": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 273,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 188,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 157,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 193,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 0,
+     "prompts": 4,
+     "tokens": 135,
+     "error": null
+    }
+   },
+   "before_ok": false,
+   "after": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 273,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 188,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 157,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 193,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 135,
+     "error": null
+    }
+   },
+   "after_ok": true,
+   "rendering": {
+    "version": 2,
+    "same_as_version_1": false
+   },
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "fixture_bites": true,
+   "pass": true
+  },
+  "date": {
+   "heretic_supports_system_role": true,
+   "response_prefix": "Sure,",
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2"
+   },
+   "before": {
+    "good": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 328,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 243,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 212,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 248,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 0,
+     "prompts": 4,
+     "tokens": 179,
+     "error": null
+    }
+   },
+   "before_ok": false,
+   "after": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 328,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 243,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 212,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 248,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 179,
+     "error": null
+    }
+   },
+   "after_ok": true,
+   "rendering": {
+    "version": 2,
+    "same_as_version_1": false
+   },
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "fixture_bites": true,
+   "pass": true
+  },
+  "system-raises": {
+   "heretic_supports_system_role": false,
+   "response_prefix": "Sure,",
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2"
+   },
+   "before": {
+    "good": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 343,
+     "error": "TemplateError: System role not supported"
+    },
+    "bad": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 258,
+     "error": "TemplateError: System role not supported"
+    },
+    "kl": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 227,
+     "error": "TemplateError: System role not supported"
+    },
+    "refusal": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 263,
+     "error": "TemplateError: System role not supported"
+    },
+    "prefix": {
+     "prompts_equal": 0,
+     "prompts": 4,
+     "tokens": 191,
+     "error": "TemplateError: System role not supported"
+    }
+   },
+   "before_ok": false,
+   "after": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 343,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 258,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 227,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 263,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 191,
+     "error": null
+    }
+   },
+   "after_ok": true,
+   "rendering": {
+    "version": 2,
+    "same_as_version_1": false
+   },
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "fixture_bites": true,
+   "pass": true
+  },
+  "system-drops": {
+   "heretic_supports_system_role": false,
+   "response_prefix": "Sure,",
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2"
+   },
+   "before": {
+    "good": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 343,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 258,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 227,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 0,
+     "prompts": 5,
+     "tokens": 263,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 0,
+     "prompts": 4,
+     "tokens": 191,
+     "error": null
+    }
+   },
+   "before_ok": false,
+   "after": {
+    "good": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 343,
+     "error": null
+    },
+    "bad": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 258,
+     "error": null
+    },
+    "kl": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 227,
+     "error": null
+    },
+    "refusal": {
+     "prompts_equal": 5,
+     "prompts": 5,
+     "tokens": 263,
+     "error": null
+    },
+    "prefix": {
+     "prompts_equal": 4,
+     "prompts": 4,
+     "tokens": 191,
+     "error": null
+    }
+   },
+   "after_ok": true,
+   "rendering": {
+    "version": 2,
+    "same_as_version_1": false
+   },
+   "ide_versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "tokenizers": "0.23.3"
+   },
+   "fixture_bites": true,
+   "pass": true
+  }
+ },
+ "end_to_end_bos_fixture": {
+  "script": "scripts/heretic_compare.py none=<Heretic run, adapter export, row_normalization none>",
+  "runs": {
+   "float32": {
+    "model": {
+     "layers": 4,
+     "d_model": 8,
+     "tensors": 51,
+     "parameters": 2462792
+    },
+    "ide_versions": {
+     "torch": "2.15.0",
+     "transformers": "5.22.2",
+     "tokenizers": "0.23.3",
+     "safetensors": "0.8.0"
+    },
+    "dtype": "float32",
+    "bounds": {
+     "B-S1 token ids": null,
+     "B-S2 mean residuals": null,
+     "B-S3 directions": null,
+     "B-S4 change from Heretic's means": null,
+     "B-S4 rounded sums": null,
+     "B-S4 replica of Heretic's randomized approximation": null,
+     "C4-1 modules and tensors": null,
+     "C4-4 refusals of the IDE's own edit": null
+    },
+    "expected": {
+     "B-S2 mean residuals": {
+      "relative_below": 0.02
+     },
+     "B-S3 directions": {
+      "cosine_at_least": 0.99
+     }
+    },
+    "runner": {
+     "class": "HFRunner",
+     "dtype": "torch.float32",
+     "device": "cpu"
+    },
+    "modes": {
+     "none": {
+      "heretic_versions": {
+       "heretic-llm": "2.2.0.dev0",
+       "torch": "2.14.1",
+       "transformers": "5.18.0",
+       "peft": "0.21.2",
+       "optuna": "5.0.0",
+       "tokenizers": "0.23.2"
+      },
+      "heretic_dtype": "torch.float32",
+      "heretic_device": "cpu",
+      "heretic_export": "adapter",
+      "tokens": {
+       "good": {
+        "prompts": 5,
+        "identical": 5,
+        "lengths_ide": [
+         32,
+         37,
+         34,
+         41,
+         38
+        ],
+        "lengths_heretic": [
+         32,
+         37,
+         34,
+         41,
+         38
+        ]
+       },
+       "bad": {
+        "prompts": 5,
+        "identical": 5,
+        "lengths_ide": [
+         33,
+         33,
+         34,
+         31,
+         32
+        ],
+        "lengths_heretic": [
+         33,
+         33,
+         34,
+         31,
+         32
+        ]
+       },
+       "kl": {
+        "prompts": 5,
+        "identical": 5
+       }
+      },
+      "means": {
+       "good_rel_per_index": [
+        0.0,
+        1.8648432016813875e-07,
+        1.667758837746038e-07,
+        1.5710451165129915e-07,
+        3.2082528516459e-07
+       ],
+       "bad_rel_per_index": [
+        0.0,
+        4.3998278982415246e-08,
+        1.2695568738883436e-07,
+        1.1639643753240703e-07,
+        2.2001918153253118e-07
+       ],
+       "good_max_abs": 3.5762786865234375e-07,
+       "bad_max_abs": 1.7881393432617188e-07,
+       "typical_norm": 1.4927617311477661
+      },
+      "directions": {
+       "cosine_per_index": [
+        0.0,
+        0.9999999999960126,
+        0.9999999999705058,
+        0.9999999999589732,
+        0.9999999999293685
+       ],
+       "max_abs": 8.925795555114746e-06
+      },
+      "parameters": {
+       "direction_index": 1.4758782175156417,
+       "weight_distributions": {
+        "attn.o_proj": {
+         "max_weight": 0.9431921949871278,
+         "max_weight_position": 2.481270034898024,
+         "min_weight": 0.5617131156159574,
+         "min_weight_distance": 1.7716116157884971
+        },
+        "mlp.down_proj": {
+         "max_weight": 0.8930599195252491,
+         "max_weight_position": 2.698687965040694,
+         "min_weight": 0.5836770562669782,
+         "min_weight_distance": 1.598171847417019
+        }
+       }
+      },
+      "adapter": {
+       "r": 1,
+       "lora_alpha": 1,
+       "modules": 8,
+       "dtypes": [
+        "F32"
+       ],
+       "unmatched_modules": []
+      },
+      "weights": {
+       "changed": [
+        {
+         "tensor": "model.layers.1.self_attn.o_proj.weight",
+         "rel_diff": 1.1464356371120884e-05,
+         "change_over_weight": 0.22548503561979713,
+         "ide_change_over_weight": 0.22548493538036485,
+         "max_abs_diff": 2.60770320892334e-06,
+         "elements": 2048,
+         "elements_that_differ": 2045
+        },
+        {
+         "tensor": "model.layers.2.mlp.down_proj.weight",
+         "rel_diff": 1.1493816661039512e-05,
+         "change_over_weight": 0.2530720967868076,
+         "ide_change_over_weight": 0.2530720544458925,
+         "max_abs_diff": 3.5353004932403564e-06,
+         "elements": 256,
+         "elements_that_differ": 256
+        },
+        {
+         "tensor": "model.layers.2.self_attn.o_proj.weight",
+         "rel_diff": 1.1610187123662608e-05,
+         "change_over_weight": 0.2916143689646562,
+         "ide_change_over_weight": 0.2916145996999107,
+         "max_abs_diff": 3.4905970096588135e-06,
+         "elements": 2048,
+         "elements_that_differ": 2043
+        },
+        {
+         "tensor": "model.layers.3.mlp.down_proj.weight",
+         "rel_diff": 1.0770375957112766e-05,
+         "change_over_weight": 0.30938369218795203,
+         "ide_change_over_weight": 0.3093836072295918,
+         "max_abs_diff": 2.5797635316848755e-06,
+         "elements": 256,
+         "elements_that_differ": 255
+        },
+        {
+         "tensor": "model.layers.3.self_attn.o_proj.weight",
+         "rel_diff": 1.1648055472684539e-05,
+         "change_over_weight": 0.293311870940271,
+         "ide_change_over_weight": 0.29331182984459603,
+         "max_abs_diff": 3.125518560409546e-06,
+         "elements": 2048,
+         "elements_that_differ": 2042
+        }
+       ],
+       "unchanged_in_both": 46,
+       "changed_in_one_only": 0,
+       "ide_stored_values": 872,
+       "ide_output": "ablate_direction('oracle'): 5 components in 3 layers, 872 values stored, row_normalization none, 3 skipped"
+      },
+      "behaviour": {
+       "base_logits_max_abs_diff": 2.2351741790771484e-07,
+       "base_logits_scale": 0.314319372177124,
+       "kl_ide": 0.0006342007545754313,
+       "kl_heretic": 0.0006341994157992303,
+       "refusals_heretic": 0.0
+      },
+      "weights_from_heretic_means": [
+       {
+        "tensor": "model.layers.1.self_attn.o_proj.weight",
+        "rel_diff": 1.1913493250412911e-07,
+        "change_over_weight": 0.22548503561979713,
+        "ide_change_over_weight": 0.22548502806556284,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "elements": 2048,
+        "elements_that_differ": 1715,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1328125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.mlp.down_proj.weight",
+        "rel_diff": 1.3621834696612188e-07,
+        "change_over_weight": 0.2530720967868076,
+        "ide_change_over_weight": 0.25307208151560173,
+        "max_abs_diff": 4.470348358154297e-08,
+        "elements": 256,
+        "elements_that_differ": 218,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.14453125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.self_attn.o_proj.weight",
+        "rel_diff": 1.2276717088471785e-07,
+        "change_over_weight": 0.2916143689646562,
+        "ide_change_over_weight": 0.29161434949357284,
+        "max_abs_diff": 3.725290298461914e-08,
+        "elements": 2048,
+        "elements_that_differ": 1675,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.12890625,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.mlp.down_proj.weight",
+        "rel_diff": 1.358097183951016e-07,
+        "change_over_weight": 0.30938369218795203,
+        "ide_change_over_weight": 0.3093836657023102,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "elements": 256,
+        "elements_that_differ": 218,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1328125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.self_attn.o_proj.weight",
+        "rel_diff": 1.3757099761846235e-07,
+        "change_over_weight": 0.293311870940271,
+        "ide_change_over_weight": 0.2933118468710345,
+        "max_abs_diff": 5.960464477539063e-08,
+        "elements": 2048,
+        "elements_that_differ": 1688,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       }
+      ],
+      "difference_over_mean": [
+       0.042360760271549225,
+       0.023374974727630615,
+       0.0212844330817461,
+       0.03400612249970436
+      ],
+      "checks": {
+       "B-S1 token ids (no bound for this dtype)": {
+        "value": true,
+        "counts": {
+         "good": "5/5",
+         "bad": "5/5",
+         "kl": "5/5"
+        }
+       },
+       "B-S2 mean residuals": {
+        "worst_relative": 3.2082528516459e-07,
+        "expected_below": 0.02
+       },
+       "B-S3 directions": {
+        "min_cosine_1_to_n": 0.9999999999293685,
+        "expected_at_least": 0.99
+       },
+       "C4-1 modules and tensors (no bound for this dtype)": {
+        "value": true,
+        "heretic_modules": 8,
+        "heretic_unmatched": 0,
+        "ide_modules": 8,
+        "only_heretic": [],
+        "only_ide": [],
+        "tensors_changed_in_one_only": 0
+       },
+       "B-S4 change from Heretic's means (no bound for this dtype)": {
+        "value": 1.3757099761846235e-07,
+        "tensors": 5,
+        "changed_in_one_only": 0
+       },
+       "B-S4 rounded sums (no bound for this dtype)": {
+        "value": true,
+        "tensors": 5,
+        "tensors_outside": 0,
+        "elements": 6656,
+        "equal": 6656,
+        "one_step": 0,
+        "more_than_one": 0,
+        "max_steps": 0,
+        "differing": 0,
+        "outside": 0,
+        "max_abs_difference": 0.0,
+        "max_abs_difference_in_median_steps": 0.0,
+        "max_excess": 0.0,
+        "largest_abs_over_median": null,
+        "tensors_outside_names": [],
+        "worst_one_step_fraction": 0.0,
+        "worst_differing_fraction": 0.0,
+        "per_tensor": [
+         {
+          "tensor": "model.layers.1.self_attn.o_proj.weight",
+          "median_abs": 0.1328125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.mlp.down_proj.weight",
+          "median_abs": 0.14453125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.self_attn.o_proj.weight",
+          "median_abs": 0.12890625,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.mlp.down_proj.weight",
+          "median_abs": 0.1328125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.self_attn.o_proj.weight",
+          "median_abs": 0.125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         }
+        ]
+       }
+      }
+     }
+    },
+    "pass": true
+   },
+   "bfloat16": {
+    "model": {
+     "layers": 4,
+     "d_model": 8,
+     "tensors": 51,
+     "parameters": 2462792
+    },
+    "ide_versions": {
+     "torch": "2.15.0",
+     "transformers": "5.22.2",
+     "tokenizers": "0.23.3",
+     "safetensors": "0.8.0"
+    },
+    "dtype": "bfloat16",
+    "bounds": {
+     "B-S1 token ids": "identical",
+     "B-S2 mean residuals": null,
+     "B-S3 directions": null,
+     "B-S4 change from Heretic's means": {
+      "none": 1e-06,
+      "pre": 1e-06,
+      "full": 0.0004
+     },
+     "B-S4 rounded sums": {
+      "max_difference_in_allowed_steps": 1,
+      "differing_fraction": 0.01
+     },
+     "B-S4 replica of Heretic's randomized approximation": {
+      "replica_vs_heretic": 1e-05
+     },
+     "C4-1 modules and tensors": "equal sets",
+     "C4-4 refusals of the IDE's own edit": 2
+    },
+    "expected": {
+     "B-S2 mean residuals": {
+      "relative_below": 0.02
+     },
+     "B-S3 directions": {
+      "cosine_at_least": 0.99
+     }
+    },
+    "runner": {
+     "class": "HFRunner",
+     "dtype": "torch.bfloat16",
+     "device": "cpu"
+    },
+    "modes": {
+     "none": {
+      "heretic_versions": {
+       "heretic-llm": "2.2.0.dev0",
+       "torch": "2.14.1",
+       "transformers": "5.18.0",
+       "peft": "0.21.2",
+       "optuna": "5.0.0",
+       "tokenizers": "0.23.2"
+      },
+      "heretic_dtype": "torch.bfloat16",
+      "heretic_device": "cpu",
+      "heretic_export": "adapter",
+      "tokens": {
+       "good": {
+        "prompts": 5,
+        "identical": 5,
+        "lengths_ide": [
+         32,
+         37,
+         34,
+         41,
+         38
+        ],
+        "lengths_heretic": [
+         32,
+         37,
+         34,
+         41,
+         38
+        ]
+       },
+       "bad": {
+        "prompts": 5,
+        "identical": 5,
+        "lengths_ide": [
+         33,
+         33,
+         34,
+         31,
+         32
+        ],
+        "lengths_heretic": [
+         33,
+         33,
+         34,
+         31,
+         32
+        ]
+       },
+       "kl": {
+        "prompts": 5,
+        "identical": 5
+       }
+      },
+      "means": {
+       "good_rel_per_index": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+       ],
+       "bad_rel_per_index": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+       ],
+       "good_max_abs": 0.0,
+       "bad_max_abs": 0.0,
+       "typical_norm": 1.4925665855407715
+      },
+      "directions": {
+       "cosine_per_index": [
+        0.0,
+        0.9999999999999988,
+        0.9999999999999993,
+        0.9999999999999982,
+        0.9999999999999996
+       ],
+       "max_abs": 5.960464477539063e-08
+      },
+      "parameters": {
+       "direction_index": 1.4758782175156417,
+       "weight_distributions": {
+        "attn.o_proj": {
+         "max_weight": 0.9431921949871278,
+         "max_weight_position": 2.481270034898024,
+         "min_weight": 0.5617131156159574,
+         "min_weight_distance": 1.7716116157884971
+        },
+        "mlp.down_proj": {
+         "max_weight": 0.8930599195252491,
+         "max_weight_position": 2.698687965040694,
+         "min_weight": 0.5836770562669782,
+         "min_weight_distance": 1.598171847417019
+        }
+       }
+      },
+      "adapter": {
+       "r": 1,
+       "lora_alpha": 1,
+       "modules": 8,
+       "dtypes": [
+        "F32"
+       ],
+       "unmatched_modules": []
+      },
+      "weights": {
+       "changed": [
+        {
+         "tensor": "model.layers.1.self_attn.o_proj.weight",
+         "rel_diff": 1.350854570546106e-07,
+         "change_over_weight": 0.22660282133856183,
+         "ide_change_over_weight": 0.22660280553730508,
+         "max_abs_diff": 4.470348358154297e-08,
+         "elements": 2048,
+         "elements_that_differ": 1673
+        },
+        {
+         "tensor": "model.layers.2.mlp.down_proj.weight",
+         "rel_diff": 1.2504866508976498e-07,
+         "change_over_weight": 0.2491307815927037,
+         "ide_change_over_weight": 0.24913077548690896,
+         "max_abs_diff": 3.725290298461914e-08,
+         "elements": 256,
+         "elements_that_differ": 207
+        },
+        {
+         "tensor": "model.layers.2.self_attn.o_proj.weight",
+         "rel_diff": 1.2440367286092747e-07,
+         "change_over_weight": 0.294365214908103,
+         "ide_change_over_weight": 0.2943652018790979,
+         "max_abs_diff": 5.960464477539063e-08,
+         "elements": 2048,
+         "elements_that_differ": 1658
+        },
+        {
+         "tensor": "model.layers.3.mlp.down_proj.weight",
+         "rel_diff": 1.3718939515305653e-07,
+         "change_over_weight": 0.3138907185049036,
+         "ide_change_over_weight": 0.3138906901355644,
+         "max_abs_diff": 2.9802322387695312e-08,
+         "elements": 256,
+         "elements_that_differ": 208
+        },
+        {
+         "tensor": "model.layers.3.self_attn.o_proj.weight",
+         "rel_diff": 1.307795685728663e-07,
+         "change_over_weight": 0.2893191514371907,
+         "ide_change_over_weight": 0.28931913406302445,
+         "max_abs_diff": 5.960464477539063e-08,
+         "elements": 2048,
+         "elements_that_differ": 1634
+        }
+       ],
+       "unchanged_in_both": 46,
+       "changed_in_one_only": 0,
+       "ide_stored_values": 872,
+       "ide_output": "ablate_direction('oracle'): 5 components in 3 layers, 872 values stored, row_normalization none, 3 skipped"
+      },
+      "behaviour": {
+       "base_logits_max_abs_diff": 0.0,
+       "base_logits_scale": 0.314453125,
+       "kl_ide": 0.00042721000500023365,
+       "kl_heretic": 0.00042721000500023365,
+       "refusals_heretic": 0.0,
+       "refusals_ide_count": 0,
+       "refusals_heretic_count": 0
+      },
+      "weights_from_heretic_means": [
+       {
+        "tensor": "model.layers.1.self_attn.o_proj.weight",
+        "rel_diff": 1.350854570546106e-07,
+        "change_over_weight": 0.22660282133856183,
+        "ide_change_over_weight": 0.22660280553730508,
+        "max_abs_diff": 4.470348358154297e-08,
+        "elements": 2048,
+        "elements_that_differ": 1673,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1318359375,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.mlp.down_proj.weight",
+        "rel_diff": 1.2504866508976498e-07,
+        "change_over_weight": 0.2491307815927037,
+        "ide_change_over_weight": 0.24913077548690896,
+        "max_abs_diff": 3.725290298461914e-08,
+        "elements": 256,
+        "elements_that_differ": 207,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1416015625,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.self_attn.o_proj.weight",
+        "rel_diff": 1.2440367286092747e-07,
+        "change_over_weight": 0.294365214908103,
+        "ide_change_over_weight": 0.2943652018790979,
+        "max_abs_diff": 5.960464477539063e-08,
+        "elements": 2048,
+        "elements_that_differ": 1658,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1279296875,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.mlp.down_proj.weight",
+        "rel_diff": 1.3718939515305653e-07,
+        "change_over_weight": 0.3138907185049036,
+        "ide_change_over_weight": 0.3138906901355644,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "elements": 256,
+        "elements_that_differ": 208,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.13671875,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.self_attn.o_proj.weight",
+        "rel_diff": 1.307795685728663e-07,
+        "change_over_weight": 0.2893191514371907,
+        "ide_change_over_weight": 0.28931913406302445,
+        "max_abs_diff": 5.960464477539063e-08,
+        "elements": 2048,
+        "elements_that_differ": 1634,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       }
+      ],
+      "difference_over_mean": [
+       0.04263075813651085,
+       0.023961925879120827,
+       0.022431708872318268,
+       0.037306513637304306
+      ],
+      "checks": {
+       "B-S1 token ids": {
+        "pass": true,
+        "value": true,
+        "bound": "identical",
+        "counts": {
+         "good": "5/5",
+         "bad": "5/5",
+         "kl": "5/5"
+        }
+       },
+       "B-S2 mean residuals": {
+        "worst_relative": 0.0,
+        "expected_below": 0.02
+       },
+       "B-S3 directions": {
+        "min_cosine_1_to_n": 0.9999999999999982,
+        "expected_at_least": 0.99
+       },
+       "C4-1 modules and tensors": {
+        "pass": true,
+        "value": true,
+        "bound": "equal sets",
+        "heretic_modules": 8,
+        "heretic_unmatched": 0,
+        "ide_modules": 8,
+        "only_heretic": [],
+        "only_ide": [],
+        "tensors_changed_in_one_only": 0
+       },
+       "C4-4 refusals of the IDE's own edit": {
+        "pass": true,
+        "value": 0,
+        "bound": 2,
+        "ide": 0,
+        "heretic": 0,
+        "prompts": 5
+       },
+       "B-S4 change from Heretic's means": {
+        "pass": true,
+        "value": 1.3718939515305653e-07,
+        "bound": 1e-06,
+        "tensors": 5,
+        "changed_in_one_only": 0
+       },
+       "B-S4 rounded sums": {
+        "pass": true,
+        "value": true,
+        "bound": {
+         "max_difference_in_allowed_steps": 1,
+         "differing_fraction": 0.01
+        },
+        "tensors": 5,
+        "tensors_outside": 0,
+        "elements": 6656,
+        "equal": 6656,
+        "one_step": 0,
+        "more_than_one": 0,
+        "max_steps": 0,
+        "differing": 0,
+        "outside": 0,
+        "max_abs_difference": 0.0,
+        "max_abs_difference_in_median_steps": 0.0,
+        "max_excess": 0.0,
+        "largest_abs_over_median": null,
+        "tensors_outside_names": [],
+        "worst_one_step_fraction": 0.0,
+        "worst_differing_fraction": 0.0,
+        "per_tensor": [
+         {
+          "tensor": "model.layers.1.self_attn.o_proj.weight",
+          "median_abs": 0.1318359375,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.mlp.down_proj.weight",
+          "median_abs": 0.1416015625,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.self_attn.o_proj.weight",
+          "median_abs": 0.1279296875,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.mlp.down_proj.weight",
+          "median_abs": 0.13671875,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.self_attn.o_proj.weight",
+          "median_abs": 0.125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         }
+        ]
+       }
+      }
+     }
+    },
+    "pass": true
+   },
+   "bfloat16_before_change": {
+    "model": {
+     "layers": 4,
+     "d_model": 8,
+     "tensors": 51,
+     "parameters": 2462792
+    },
+    "ide_versions": {
+     "torch": "2.15.0",
+     "transformers": "5.22.2",
+     "tokenizers": "0.23.3",
+     "safetensors": "0.8.0"
+    },
+    "dtype": "bfloat16",
+    "bounds": {
+     "B-S1 token ids": "identical",
+     "B-S2 mean residuals": null,
+     "B-S3 directions": null,
+     "B-S4 change from Heretic's means": {
+      "none": 1e-06,
+      "pre": 1e-06,
+      "full": 0.0004
+     },
+     "B-S4 rounded sums": {
+      "max_difference_in_allowed_steps": 1,
+      "differing_fraction": 0.01
+     },
+     "B-S4 replica of Heretic's randomized approximation": {
+      "replica_vs_heretic": 1e-05
+     },
+     "C4-1 modules and tensors": "equal sets",
+     "C4-4 refusals of the IDE's own edit": 2
+    },
+    "expected": {
+     "B-S2 mean residuals": {
+      "relative_below": 0.02
+     },
+     "B-S3 directions": {
+      "cosine_at_least": 0.99
+     }
+    },
+    "runner": {
+     "class": "HFRunner",
+     "dtype": "torch.bfloat16",
+     "device": "cpu"
+    },
+    "modes": {
+     "none": {
+      "heretic_versions": {
+       "heretic-llm": "2.2.0.dev0",
+       "torch": "2.14.1",
+       "transformers": "5.18.0",
+       "peft": "0.21.2",
+       "optuna": "5.0.0",
+       "tokenizers": "0.23.2"
+      },
+      "heretic_dtype": "torch.bfloat16",
+      "heretic_device": "cpu",
+      "heretic_export": "adapter",
+      "tokens": {
+       "good": {
+        "prompts": 5,
+        "identical": 0,
+        "lengths_ide": [
+         31,
+         36,
+         33,
+         40,
+         37
+        ],
+        "lengths_heretic": [
+         32,
+         37,
+         34,
+         41,
+         38
+        ]
+       },
+       "bad": {
+        "prompts": 5,
+        "identical": 0,
+        "lengths_ide": [
+         32,
+         32,
+         33,
+         30,
+         31
+        ],
+        "lengths_heretic": [
+         33,
+         33,
+         34,
+         31,
+         32
+        ]
+       },
+       "kl": {
+        "prompts": 5,
+        "identical": 0
+       }
+      },
+      "means": {
+       "good_rel_per_index": [
+        0.0,
+        0.014594610974776373,
+        0.013277677784193686,
+        0.018021542023864405,
+        0.019607402407382544
+       ],
+       "bad_rel_per_index": [
+        0.0,
+        0.017666286286477127,
+        0.016017353956428365,
+        0.020368396864583027,
+        0.016797766683085583
+       ],
+       "good_max_abs": 0.04374980926513672,
+       "bad_max_abs": 0.05312490463256836,
+       "typical_norm": 1.4925665855407715
+      },
+      "directions": {
+       "cosine_per_index": [
+        0.0,
+        0.9978409478494548,
+        0.9880381763373505,
+        0.9874558288230013,
+        0.9978869399595456
+       ],
+       "max_abs": 0.11193512380123138
+      },
+      "parameters": {
+       "direction_index": 1.4758782175156417,
+       "weight_distributions": {
+        "attn.o_proj": {
+         "max_weight": 0.9431921949871278,
+         "max_weight_position": 2.481270034898024,
+         "min_weight": 0.5617131156159574,
+         "min_weight_distance": 1.7716116157884971
+        },
+        "mlp.down_proj": {
+         "max_weight": 0.8930599195252491,
+         "max_weight_position": 2.698687965040694,
+         "min_weight": 0.5836770562669782,
+         "min_weight_distance": 1.598171847417019
+        }
+       }
+      },
+      "adapter": {
+       "r": 1,
+       "lora_alpha": 1,
+       "modules": 8,
+       "dtypes": [
+        "F32"
+       ],
+       "unmatched_modules": []
+      },
+      "weights": {
+       "changed": [
+        {
+         "tensor": "model.layers.1.self_attn.o_proj.weight",
+         "rel_diff": 0.21284205619320137,
+         "change_over_weight": 0.22660282133856183,
+         "ide_change_over_weight": 0.2254248890167063,
+         "max_abs_diff": 0.04524441063404083,
+         "elements": 2048,
+         "elements_that_differ": 2048
+        },
+        {
+         "tensor": "model.layers.2.mlp.down_proj.weight",
+         "rel_diff": 0.2280831481611167,
+         "change_over_weight": 0.2491307815927037,
+         "ide_change_over_weight": 0.24975097934368762,
+         "max_abs_diff": 0.059035271406173706,
+         "elements": 256,
+         "elements_that_differ": 256
+        },
+        {
+         "tensor": "model.layers.2.self_attn.o_proj.weight",
+         "rel_diff": 0.22201704170605413,
+         "change_over_weight": 0.294365214908103,
+         "ide_change_over_weight": 0.2917173075244606,
+         "max_abs_diff": 0.061023060232400894,
+         "elements": 2048,
+         "elements_that_differ": 2048
+        },
+        {
+         "tensor": "model.layers.3.mlp.down_proj.weight",
+         "rel_diff": 0.20911376782831664,
+         "change_over_weight": 0.3138907185049036,
+         "ide_change_over_weight": 0.31242311506577053,
+         "max_abs_diff": 0.044399283826351166,
+         "elements": 256,
+         "elements_that_differ": 256
+        },
+        {
+         "tensor": "model.layers.3.self_attn.o_proj.weight",
+         "rel_diff": 0.2260545028941548,
+         "change_over_weight": 0.2893191514371907,
+         "ide_change_over_weight": 0.29646895545110585,
+         "max_abs_diff": 0.05632606893777847,
+         "elements": 2048,
+         "elements_that_differ": 2048
+        }
+       ],
+       "unchanged_in_both": 46,
+       "changed_in_one_only": 0,
+       "ide_stored_values": 872,
+       "ide_output": "ablate_direction('oracle'): 5 components in 3 layers, 872 values stored, row_normalization none, 3 skipped"
+      },
+      "behaviour": {
+       "base_logits_max_abs_diff": 0.0087890625,
+       "base_logits_scale": 0.314453125,
+       "kl_ide": 0.0006563381175510585,
+       "kl_heretic": 0.00042721000500023365,
+       "refusals_heretic": 0.0,
+       "refusals_ide_count": 0,
+       "refusals_heretic_count": 0
+      },
+      "weights_from_heretic_means": [
+       {
+        "tensor": "model.layers.1.self_attn.o_proj.weight",
+        "rel_diff": 1.350854570546106e-07,
+        "change_over_weight": 0.22660282133856183,
+        "ide_change_over_weight": 0.22660280553730508,
+        "max_abs_diff": 4.470348358154297e-08,
+        "elements": 2048,
+        "elements_that_differ": 1673,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1318359375,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.mlp.down_proj.weight",
+        "rel_diff": 1.2504866508976498e-07,
+        "change_over_weight": 0.2491307815927037,
+        "ide_change_over_weight": 0.24913077548690896,
+        "max_abs_diff": 3.725290298461914e-08,
+        "elements": 256,
+        "elements_that_differ": 207,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1416015625,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.2.self_attn.o_proj.weight",
+        "rel_diff": 1.2440367286092747e-07,
+        "change_over_weight": 0.294365214908103,
+        "ide_change_over_weight": 0.2943652018790979,
+        "max_abs_diff": 5.960464477539063e-08,
+        "elements": 2048,
+        "elements_that_differ": 1658,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.1279296875,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.mlp.down_proj.weight",
+        "rel_diff": 1.3718939515305653e-07,
+        "change_over_weight": 0.3138907185049036,
+        "ide_change_over_weight": 0.3138906901355644,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "elements": 256,
+        "elements_that_differ": 208,
+        "rounded": {
+         "elements": 256,
+         "equal": 256,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.13671875,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       },
+       {
+        "tensor": "model.layers.3.self_attn.o_proj.weight",
+        "rel_diff": 1.307795685728663e-07,
+        "change_over_weight": 0.2893191514371907,
+        "ide_change_over_weight": 0.28931913406302445,
+        "max_abs_diff": 5.960464477539063e-08,
+        "elements": 2048,
+        "elements_that_differ": 1634,
+        "rounded": {
+         "elements": 2048,
+         "equal": 2048,
+         "one_step": 0,
+         "more_than_one": 0,
+         "max_steps": 0,
+         "median_abs": 0.125,
+         "step_at_median": 0.0009765625,
+         "max_abs_difference": 0.0,
+         "max_abs_difference_in_median_steps": 0.0,
+         "differing": 0,
+         "largest_abs_over_median": null,
+         "outside": 0,
+         "max_excess": 0.0
+        }
+       }
+      ],
+      "difference_over_mean": [
+       0.04263075813651085,
+       0.023961925879120827,
+       0.022431708872318268,
+       0.037306513637304306
+      ],
+      "checks": {
+       "B-S1 token ids": {
+        "pass": false,
+        "value": false,
+        "bound": "identical",
+        "counts": {
+         "good": "0/5",
+         "bad": "0/5",
+         "kl": "0/5"
+        }
+       },
+       "B-S2 mean residuals": {
+        "worst_relative": 0.020368396864583027,
+        "expected_below": 0.02
+       },
+       "B-S3 directions": {
+        "min_cosine_1_to_n": 0.9874558288230013,
+        "expected_at_least": 0.99
+       },
+       "C4-1 modules and tensors": {
+        "pass": true,
+        "value": true,
+        "bound": "equal sets",
+        "heretic_modules": 8,
+        "heretic_unmatched": 0,
+        "ide_modules": 8,
+        "only_heretic": [],
+        "only_ide": [],
+        "tensors_changed_in_one_only": 0
+       },
+       "C4-4 refusals of the IDE's own edit": {
+        "pass": true,
+        "value": 0,
+        "bound": 2,
+        "ide": 0,
+        "heretic": 0,
+        "prompts": 5
+       },
+       "B-S4 change from Heretic's means": {
+        "pass": true,
+        "value": 1.3718939515305653e-07,
+        "bound": 1e-06,
+        "tensors": 5,
+        "changed_in_one_only": 0
+       },
+       "B-S4 rounded sums": {
+        "pass": true,
+        "value": true,
+        "bound": {
+         "max_difference_in_allowed_steps": 1,
+         "differing_fraction": 0.01
+        },
+        "tensors": 5,
+        "tensors_outside": 0,
+        "elements": 6656,
+        "equal": 6656,
+        "one_step": 0,
+        "more_than_one": 0,
+        "max_steps": 0,
+        "differing": 0,
+        "outside": 0,
+        "max_abs_difference": 0.0,
+        "max_abs_difference_in_median_steps": 0.0,
+        "max_excess": 0.0,
+        "largest_abs_over_median": null,
+        "tensors_outside_names": [],
+        "worst_one_step_fraction": 0.0,
+        "worst_differing_fraction": 0.0,
+        "per_tensor": [
+         {
+          "tensor": "model.layers.1.self_attn.o_proj.weight",
+          "median_abs": 0.1318359375,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.mlp.down_proj.weight",
+          "median_abs": 0.1416015625,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.2.self_attn.o_proj.weight",
+          "median_abs": 0.1279296875,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.mlp.down_proj.weight",
+          "median_abs": 0.13671875,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         },
+         {
+          "tensor": "model.layers.3.self_attn.o_proj.weight",
+          "median_abs": 0.125,
+          "step_at_median": 0.0009765625,
+          "max_abs_difference": 0.0,
+          "max_abs_difference_in_median_steps": 0.0,
+          "differing": 0,
+          "more_than_one": 0,
+          "largest_abs_over_median": null,
+          "outside": 0,
+          "max_excess": 0.0
+         }
+        ]
+       }
+      }
+     }
+    },
+    "pass": false
+   }
+  }
+ }
+}

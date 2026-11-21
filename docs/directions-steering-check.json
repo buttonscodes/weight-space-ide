@@ -1,0 +1,411 @@
+{
+ "date": "2026-11-18",
+ "what": "Steering along a measured refusal direction on a real model: scripts/steer_direction_check.py, a behaviour check with criteria written before any run (Heretic has no steering, so nothing is compared with it)",
+ "model": "Qwen/Qwen2.5-0.5B-Instruct",
+ "runner": "HFRunner",
+ "dtype": "float32",
+ "device": "cpu",
+ "ide": {
+  "commit": "f5ed8ff",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  }
+ },
+ "prompts": {
+  "good": 64,
+  "bad": 64,
+  "kl": 32,
+  "refusal": 32,
+  "from": "a finished Heretic directional-ablation run on this model (its prompt sets, system prompt and scorer settings only)"
+ },
+ "rendering": {
+  "chat": true,
+  "system": "You are a helpful assistant.",
+  "prefix": null
+ },
+ "max_response_length": 30,
+ "measurement": {
+  "n_layers": 24,
+  "d_model": 896,
+  "tokens": {
+   "good": 1985,
+   "bad": 2031
+  },
+  "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+ },
+ "k_star": {
+  "index": 18,
+  "window": [
+   6,
+   18
+  ],
+  "ratios": {
+   "6": 0.11292985465797843,
+   "7": 0.13117251508724728,
+   "8": 0.11867885527436442,
+   "9": 0.11876200429623203,
+   "10": 0.13154786746745675,
+   "11": 0.19944821102002774,
+   "12": 0.20592821909353018,
+   "13": 0.2606264528107735,
+   "14": 0.283371223387575,
+   "15": 0.34514311429812816,
+   "16": 0.3883682121595186,
+   "17": 0.4388731372360059,
+   "18": 0.45178031935791374
+  },
+  "scale": 12.153441329424808
+ },
+ "configurations": {
+  "unsteered": {
+   "steer": null,
+   "refusals": [
+    30,
+    32
+   ],
+   "harmless_refusals": [
+    2,
+    32
+   ],
+   "kl": 0.0,
+   "mean_length": 133.53125,
+   "short": 0
+  },
+  "steer []": {
+   "steer": [],
+   "refusals": [
+    30,
+    32
+   ],
+   "harmless_refusals": [
+    2,
+    32
+   ],
+   "kl": 0.0,
+   "mean_length": 133.53125,
+   "short": 0
+  },
+  "dose -0.5": {
+   "steer": [
+    {
+     "addr": "direction:refusal@18",
+     "mode": "add",
+     "dose": -0.5,
+     "unit": "diff"
+    }
+   ],
+   "refusals": [
+    23,
+    32
+   ],
+   "harmless_refusals": [
+    0,
+    32
+   ],
+   "kl": 0.1981324568623677,
+   "mean_length": 132.75,
+   "short": 0,
+   "entries": [
+    {
+     "addr": "direction:refusal@18",
+     "dose": -0.5,
+     "unit": "diff",
+     "layer": 18,
+     "measurement_index": 18,
+     "orthogonalize_direction": true,
+     "scale": 12.153441329424808,
+     "norm": 6.076720657615364,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    }
+   ]
+  },
+  "dose -1": {
+   "steer": [
+    {
+     "addr": "direction:refusal@18",
+     "mode": "add",
+     "dose": -1.0,
+     "unit": "diff"
+    }
+   ],
+   "refusals": [
+    1,
+    32
+   ],
+   "harmless_refusals": [
+    0,
+    32
+   ],
+   "kl": 0.6834113739896566,
+   "mean_length": 132.09375,
+   "short": 0,
+   "entries": [
+    {
+     "addr": "direction:refusal@18",
+     "dose": -1.0,
+     "unit": "diff",
+     "layer": 18,
+     "measurement_index": 18,
+     "orthogonalize_direction": true,
+     "scale": 12.153441329424808,
+     "norm": 12.153441315230728,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    }
+   ]
+  },
+  "dose -2": {
+   "steer": [
+    {
+     "addr": "direction:refusal@18",
+     "mode": "add",
+     "dose": -2.0,
+     "unit": "diff"
+    }
+   ],
+   "refusals": [
+    0,
+    32
+   ],
+   "harmless_refusals": [
+    0,
+    32
+   ],
+   "kl": 2.3854718329384923,
+   "mean_length": 134.34375,
+   "short": 0,
+   "entries": [
+    {
+     "addr": "direction:refusal@18",
+     "dose": -2.0,
+     "unit": "diff",
+     "layer": 18,
+     "measurement_index": 18,
+     "orthogonalize_direction": true,
+     "scale": 12.153441329424808,
+     "norm": 24.306882630461455,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    }
+   ]
+  },
+  "dose +1": {
+   "steer": [
+    {
+     "addr": "direction:refusal@18",
+     "mode": "add",
+     "dose": 1.0,
+     "unit": "diff"
+    }
+   ],
+   "refusals": [
+    32,
+    32
+   ],
+   "harmless_refusals": [
+    27,
+    32
+   ],
+   "kl": 2.1200221171602607,
+   "mean_length": 138.9375,
+   "short": 0,
+   "entries": [
+    {
+     "addr": "direction:refusal@18",
+     "dose": 1.0,
+     "unit": "diff",
+     "layer": 18,
+     "measurement_index": 18,
+     "orthogonalize_direction": true,
+     "scale": 12.153441329424808,
+     "norm": 12.153441315230728,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    }
+   ]
+  },
+  "span": {
+   "steer": [
+    {
+     "addr": "direction:refusal@17",
+     "mode": "add",
+     "dose": -0.5,
+     "unit": "diff"
+    },
+    {
+     "addr": "direction:refusal@18",
+     "mode": "add",
+     "dose": -0.5,
+     "unit": "diff"
+    },
+    {
+     "addr": "direction:refusal@19",
+     "mode": "add",
+     "dose": -0.5,
+     "unit": "diff"
+    }
+   ],
+   "refusals": [
+    0,
+    32
+   ],
+   "harmless_refusals": [
+    0,
+    32
+   ],
+   "kl": 1.1676983493380249,
+   "mean_length": 133.0625,
+   "short": 0,
+   "entries": [
+    {
+     "addr": "direction:refusal@17",
+     "dose": -0.5,
+     "unit": "diff",
+     "layer": 17,
+     "measurement_index": 17,
+     "orthogonalize_direction": true,
+     "scale": 9.284360168210863,
+     "norm": 4.642180081878836,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    },
+    {
+     "addr": "direction:refusal@18",
+     "dose": -0.5,
+     "unit": "diff",
+     "layer": 18,
+     "measurement_index": 18,
+     "orthogonalize_direction": true,
+     "scale": 12.153441329424808,
+     "norm": 6.076720657615364,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    },
+    {
+     "addr": "direction:refusal@19",
+     "dose": -0.5,
+     "unit": "diff",
+     "layer": 19,
+     "measurement_index": 19,
+     "orthogonalize_direction": true,
+     "scale": 13.997519366720216,
+     "norm": 6.998759668828357,
+     "means_sha256": "c5e4967d21645608900f0ec9416c8e8b18587d5ba916767ac7323bd075d57044"
+    }
+   ]
+  }
+ },
+ "criteria": {
+  "B1": {
+   "bound": "R <= R0 - 8 with KL <= 0.3 for at least one dose of -0.5, -1, -2",
+   "doses": [
+    {
+     "dose": -0.5,
+     "refusals": 23,
+     "r0": 30,
+     "kl": 0.1981324568623677,
+     "refusals_ok": false,
+     "kl_ok": true,
+     "pass": false
+    },
+    {
+     "dose": -1.0,
+     "refusals": 1,
+     "r0": 30,
+     "kl": 0.6834113739896566,
+     "refusals_ok": true,
+     "kl_ok": false,
+     "pass": false
+    },
+    {
+     "dose": -2.0,
+     "refusals": 0,
+     "r0": 30,
+     "kl": 2.3854718329384923,
+     "refusals_ok": true,
+     "kl_ok": false,
+     "pass": false
+    }
+   ],
+   "pass": false
+  },
+  "B2": {
+   "bound": "H(+1) >= H0 + 4",
+   "h0": 2,
+   "h": 27,
+   "pass": true
+  },
+  "B3": {
+   "bound": "ws.version unchanged, no patch, snapshot weight files unchanged, steer [] equal to unsteered",
+   "checks": {
+    "version": {
+     "before": 1,
+     "after": 1,
+     "ok": true
+    },
+    "patches": {
+     "before": {
+      "version": 1,
+      "patches": 0,
+      "files": []
+     },
+     "after": {
+      "version": 1,
+      "patches": 0,
+      "files": []
+     },
+     "ok": true
+    },
+    "weight_files": {
+     "files": [
+      "model.safetensors"
+     ],
+     "before": {
+      "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+     },
+     "after": {
+      "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+     },
+     "ok": true
+    },
+    "steer_empty_equal": {
+     "keys": [
+      "candidate",
+      "datasets",
+      "done",
+      "generation",
+      "rendering",
+      "scores",
+      "seconds",
+      "state",
+      "total",
+      "version"
+     ],
+     "unsteered_keys": [
+      "candidate",
+      "datasets",
+      "done",
+      "generation",
+      "rendering",
+      "scores",
+      "seconds",
+      "state",
+      "total",
+      "version"
+     ],
+     "no_steering_key": true,
+     "ok": true
+    }
+   },
+   "pass": true
+  }
+ },
+ "pass": false,
+ "runs": "Run twice. The first run's script asserted the workspace version to be 0; a freshly opened workspace is at version 1 (1 before and 1 after), so the invariant was corrected to 'unchanged' and the check run again from the start. Every refusal count, KL, length, response and means hash of the second run equals the first's; this file holds the second run.",
+ "guard": {
+  "peak_footprint_gib": 2.4,
+  "least_available_gib": 45.3,
+  "seconds": 386.6,
+  "violation": null,
+  "returncode": 1,
+  "returncode_meaning": "1 because criterion B1 failed"
+ }
+}

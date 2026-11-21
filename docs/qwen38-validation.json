@@ -1,0 +1,1334 @@
+{
+  "status": "INCOMPLETE: supervised27B original/edit and exact companion passed; standalone gain preservation FAILED; browser not started",
+  "artifact": {
+    "parameters": 26895998464,
+    "mapped_tensors": 851,
+    "source_tensors": 851,
+    "materialized_parameter_bytes": 0,
+    "tensor_payload_reads": 0,
+    "forecast_context64": {
+      "weights": 19392690176,
+      "runtime": 2147483648,
+      "kv": 167772160,
+      "activations": 508559360,
+      "patches": 0,
+      "temporary": 1610612736,
+      "recurrent": 603979776,
+      "convolution": 10485760,
+      "total": 24441583616
+    },
+    "forecast_context128": {
+      "weights": 19392690176,
+      "runtime": 2147483648,
+      "kv": 335544320,
+      "activations": 1017118720,
+      "patches": 0,
+      "temporary": 1610612736,
+      "recurrent": 603979776,
+      "convolution": 10485760,
+      "total": 25117915136
+    },
+    "qualification": "Meta skeleton only; not inference validation",
+    "architecture": "qwen3_5_text"
+  },
+  "runs": {
+    "small-cpu-cache": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-cpu-cache/watchdog.jsonl",
+      "sha256": "e8c3acdc1879addf382de3da2f61952d35d26560d85b323d17cce50771f00d2c",
+      "baseline_available_gib": 49.99006652832031,
+      "minimum_available_gib": 46.32981872558594,
+      "peak_rss_gib": 3.723480224609375,
+      "peak_footprint_gib": 2.4793279618024826,
+      "peak_metal_gib": 0.0,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 141.76945812499616
+      }
+    },
+    "small-metal-full": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-metal-full/watchdog.jsonl",
+      "sha256": "b72754893d285899646296173ec8b4e69c50a44f15f0a74c67d850c3d9ffc43a",
+      "baseline_available_gib": 49.70698547363281,
+      "minimum_available_gib": 43.76173400878906,
+      "peak_rss_gib": 5.138458251953125,
+      "peak_footprint_gib": 4.746908009052277,
+      "peak_metal_gib": 0.4971923828125,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 277.91142995801056
+      }
+    },
+    "profile-metal": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/profile-metal/watchdog.jsonl",
+      "sha256": "a65fd7f7170cd5c7a2e2dfba3aa764988040007cd3eb0b106807a541f1d3d140",
+      "baseline_available_gib": 48.76170349121094,
+      "minimum_available_gib": 46.26426696777344,
+      "peak_rss_gib": 2.048248291015625,
+      "peak_footprint_gib": 1.8633291944861412,
+      "peak_metal_gib": 0.49664306640625,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 29.03522395901382
+      }
+    },
+    "small-metal-conv": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-metal-conv/watchdog.jsonl",
+      "sha256": "0286272fbfb6d1a41e99ca8e27c056729e9a0844b6c07181ed659dc289763ac7",
+      "baseline_available_gib": 46.75994873046875,
+      "minimum_available_gib": 42.678680419921875,
+      "peak_rss_gib": 5.4192047119140625,
+      "peak_footprint_gib": 5.114507719874382,
+      "peak_metal_gib": 0.49749755859375,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 97.35728020803072
+      }
+    },
+    "small-phases-final/original": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-phases-final/original/watchdog.jsonl",
+      "sha256": "f83259807b5e5f78a4c6fe4e5c6be21071614503b3bc75a091b049259ca59a54",
+      "baseline_available_gib": 49.67778015136719,
+      "minimum_available_gib": 45.843902587890625,
+      "peak_rss_gib": 2.5391082763671875,
+      "peak_footprint_gib": 2.2658874839544296,
+      "peak_metal_gib": 0.5263671875,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 56.3901120829978
+      }
+    },
+    "small-phases-final/companion": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-phases-final/companion/watchdog.jsonl",
+      "sha256": "94597b56d33bcc9e565fd4aa74c38de079002419a1730b4111258d8ae565df32",
+      "baseline_available_gib": 49.86024475097656,
+      "minimum_available_gib": 47.68241882324219,
+      "peak_rss_gib": 1.72991943359375,
+      "peak_footprint_gib": 1.6549402475357056,
+      "peak_metal_gib": 0.49664306640625,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 16.692140624974854
+      }
+    },
+    "small-phases-final/merged": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/small-phases-final/merged/watchdog.jsonl",
+      "sha256": "b970b56c42711a8eb7a82aa4d4bf92a97509b29f70af886c0c6f40dbb8516d5a",
+      "baseline_available_gib": 50.173797607421875,
+      "minimum_available_gib": 48.0704345703125,
+      "peak_rss_gib": 2.0692901611328125,
+      "peak_footprint_gib": 1.882158562541008,
+      "peak_metal_gib": 0.49639892578125,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 15.664413290971424
+      }
+    },
+    "browser-small": {
+      "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/browser-small/watchdog.jsonl",
+      "sha256": "13e5617f9785033144719ff6132924cf12b9e8ea35ca4fcd5109640607cdf04d",
+      "baseline_available_gib": 50.8485107421875,
+      "minimum_available_gib": 48.04423522949219,
+      "peak_rss_gib": 2.0440521240234375,
+      "peak_footprint_gib": 1.9225645959377289,
+      "peak_metal_gib": 0.4971923828125,
+      "swap_growth_bytes": 0,
+      "compression_growth_bytes": 245760,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 258.9431167499861
+      }
+    }
+  },
+  "small_staged": {
+    "model": "~/.cache/wsp-quantized-ide/models/qwen35/Qwen3.5-0.8B-Q4_K_M.gguf",
+    "sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+    "parameters": 752393024,
+    "tensor_types": [
+      "F32",
+      "Q4_K",
+      "Q5_K",
+      "Q6_K",
+      "Q8_0"
+    ],
+    "versions": {
+      "torch": "2.15.0",
+      "transformers": "5.22.2",
+      "gguf": "0.19.0",
+      "numpy": "2.5.4"
+    },
+    "completion": {
+      "ids": [
+        279,
+        6511,
+        314,
+        279
+      ],
+      "text": " the capital of the",
+      "seconds": 1.0939563330030069,
+      "tokens_per_second": 3.6564530770800023,
+      "prefill_seconds": 0.07820429204730317,
+      "decode_seconds": 0.19202283304184675,
+      "decode_steps": 3,
+      "cache_scope": "single generation call; discarded",
+      "prompt_tokens": 5
+    },
+    "overlay": {
+      "target_margin": 3.521007537841797,
+      "target_gain_vs_base": 0.6929426193237305,
+      "target_gain_overlay": 0.6929426193237305,
+      "preservation_kl": [
+        5.811802111566067e-06,
+        0.0,
+        2.962328835565131e-05
+      ],
+      "unrelated_top1_preserved": [
+        true,
+        true,
+        true
+      ],
+      "kl_vs_overlay": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_logit_error_vs_overlay": 0.0
+    },
+    "companion": {
+      "target_margin": 3.521007537841797,
+      "target_gain_vs_base": 0.6929426193237305,
+      "target_gain_overlay": 0.6929426193237305,
+      "preservation_kl": [
+        5.811802111566067e-06,
+        0.0,
+        2.962328835565131e-05
+      ],
+      "unrelated_top1_preserved": [
+        true,
+        true,
+        true
+      ],
+      "kl_vs_overlay": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_logit_error_vs_overlay": 0.0
+    },
+    "merged": {
+      "target_margin": 2.9878149032592773,
+      "target_gain_vs_base": 0.15974998474121094,
+      "target_gain_overlay": 0.6929426193237305,
+      "preservation_kl": [
+        2.893555210903287e-05,
+        1.8599861277834862e-06,
+        7.952720807224978e-06
+      ],
+      "unrelated_top1_preserved": [
+        true,
+        true,
+        true
+      ],
+      "kl_vs_overlay": [
+        0.004705476108938456,
+        2.1103289327584207e-05,
+        1.8463937294654897e-06,
+        1.437032096873736e-05
+      ],
+      "max_logit_error_vs_overlay": 0.27005672454833984
+    },
+    "merged_suite": {
+      "name": "supervised-locality",
+      "cases": [
+        {
+          "name": "France target",
+          "type": "next_token",
+          "prompt": "The capital of France is",
+          "got": "\u00b7the",
+          "pass": false,
+          "expect": [
+            "\u00b7Paris"
+          ],
+          "rank": 1,
+          "prob": 0.1147,
+          "value": -0.0462
+        },
+        {
+          "name": "preserve0",
+          "type": "preserve",
+          "prompt": "The capital of Germany is",
+          "value": 2.893555210903287e-05,
+          "max_kl": 0.01,
+          "top1_preserved": true,
+          "pass": true
+        },
+        {
+          "name": "preserve1",
+          "type": "preserve",
+          "prompt": "Water freezes at",
+          "value": 1.8599861277834862e-06,
+          "max_kl": 0.01,
+          "top1_preserved": true,
+          "pass": true
+        },
+        {
+          "name": "preserve2",
+          "type": "preserve",
+          "prompt": "A small bird flies over",
+          "value": 7.952720807224978e-06,
+          "max_kl": 0.01,
+          "top1_preserved": true,
+          "pass": true
+        }
+      ],
+      "passed": 3,
+      "total": 4,
+      "comparison_base": "original immutable GGUF logits, not exported checkpoint logits"
+    },
+    "overlay_suite": {
+      "name": "supervised-locality",
+      "passed": 4,
+      "total": 4,
+      "score": 1.0,
+      "cases": [
+        {
+          "name": "France target",
+          "type": "next_token",
+          "prompt": "The capital of France is",
+          "got": "\u00b7Paris",
+          "pass": true,
+          "expect": [
+            "\u00b7Paris"
+          ],
+          "rank": 0,
+          "prob": 0.1454,
+          "value": 0.2296
+        },
+        {
+          "name": "preserve0",
+          "type": "preserve",
+          "prompt": "The capital of Germany is",
+          "got": "\u00b7Berlin",
+          "pass": true,
+          "value": 1e-05,
+          "base": "\u00b7Berlin"
+        },
+        {
+          "name": "preserve1",
+          "type": "preserve",
+          "prompt": "Water freezes at",
+          "got": "\u00b7$",
+          "pass": true,
+          "value": -0.0,
+          "base": "\u00b7$"
+        },
+        {
+          "name": "preserve2",
+          "type": "preserve",
+          "prompt": "A small bird flies over",
+          "got": "\u00b7a",
+          "pass": true,
+          "value": 3e-05,
+          "base": "\u00b7a"
+        }
+      ]
+    }
+  },
+  "browser": {
+    "screenshot": "~/.cache/wsp-quantized-ide/qwen38/evidence/browser-small/chat.png",
+    "manual_four_token_run": true,
+    "chat_thinking_off": true,
+    "internal_edit": true,
+    "patch_toggle": true,
+    "capability_limits": true,
+    "compression_qualification": "240KiB growth, below historical1GiB material threshold; supervised27B stops on any growth"
+  },
+  "limitations": [
+    "Standalone same-scheme export failed required gain preservation:0.546856 overlay to0.009325 merged",
+    "Actual27B browser acceptance not performed; sequence stopped and permit revoked",
+    "Companion is faithful only with the exact immutable base and compatible pinned runtime",
+    "Vision/MTP/dflash/MoE unsupported",
+    "No original full-precision27B reference; dense/reference fidelity established on tiny scaled fixtures",
+    "Measured performance is short-context64total/4output only, not long-context usability",
+    "UI coarse suite and generic rounding warning do not enforce post-export gain preservation"
+  ],
+  "large_artifact": {
+    "repo": "ggml-org/Qwen3.8-27B-GGUF",
+    "revision": "c1869413dece09109e55b7dcc2c77ef382b0d0bd",
+    "file": "Qwen3.8-27B-Q4_K_M.gguf",
+    "bytes": 19403684480,
+    "sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+    "source_repo": "Qwen/Qwen3.8-27B",
+    "source_revision": "37561816e66b5b9153b1b64c10968c18c1e6f4a0",
+    "actual_types": [
+      "F32",
+      "Q4_K",
+      "Q8_0"
+    ],
+    "parameters": 26895998464,
+    "inference_tested": true
+  },
+  "regression": {
+    "python_passed": 232,
+    "bridge_passed": 15
+  },
+  "supervised_attempt": {
+    "authorization": "explicit supervised approval",
+    "initial_preflight": {
+      "time": 1794619824.4563751,
+      "available": 53262270464,
+      "free": 13714849792,
+      "total": 137438953472,
+      "swap_used": 0,
+      "swap_out": 0,
+      "compressed": 13946650624,
+      "pressure": 1,
+      "psutil_available": 64576962560,
+      "inactive": 50473680896,
+      "speculative": 229801984,
+      "purgeable": 897318912,
+      "file_backed": 39547420672,
+      "reclaimable": 39547420672,
+      "available_estimator": "vm_stat.free_excluding_speculative + file_backed; purgeable credit=0",
+      "vm_pressure": 0
+    },
+    "outcome": {
+      "outcome": "preflight_refused_before_spawn",
+      "reason": "Forecast leaves less than25GiB available headroom after23GiB reservation",
+      "returncode": 1,
+      "child_spawned": false,
+      "model_loaded": false,
+      "subsequent_phases_started": false,
+      "retry": false,
+      "permit_revoked": true,
+      "qualification": "Numeric refusal-time snapshot was not persisted; launch-preflight.json is earlier and diagnostic_snapshot is later",
+      "diagnostic_snapshot": {
+        "time": 1794619878.24205,
+        "available": 53194457088,
+        "free": 13631520768,
+        "total": 137438953472,
+        "swap_used": 0,
+        "swap_out": 0,
+        "compressed": 13896581120,
+        "pressure": 1,
+        "psutil_available": 64948207616,
+        "inactive": 50995052544,
+        "speculative": 229851136,
+        "purgeable": 932659200,
+        "file_backed": 39562936320,
+        "reclaimable": 39562936320,
+        "available_estimator": "vm_stat.free_excluding_speculative + file_backed; purgeable credit=0",
+        "vm_pressure": 0
+      }
+    },
+    "evidence_directory": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b",
+    "peak_model_memory": null,
+    "throughput": null
+  },
+  "supervised_attempt2": {
+    "authorization": "explicit supervised approval",
+    "stop_confirmation": "explicit supervised approval",
+    "evidence_directory": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2",
+    "permit_revoked": true,
+    "browser_started": false,
+    "quality_acceptance_passed": false,
+    "reason": "retains_minimum_target_gain=false; stop-on-first-failure preserved",
+    "context": 64,
+    "new_tokens": 4,
+    "seed": 0,
+    "batch": 1,
+    "forecast_reservation_gib": 23,
+    "process_budget_gib": 24,
+    "hard_ceiling_gib": 26,
+    "preferred_headroom_gib": 25,
+    "hard_floor_gib": 20,
+    "sample_seconds": 1,
+    "first_smoke_timeout_seconds": 60,
+    "phase_timeout_seconds": 600,
+    "total_timeout_seconds": 2400,
+    "telemetry": {
+      "original": {
+        "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/original/watchdog.jsonl",
+        "sha256": "81b5efee089f29fc240932561a7e3e4847b84fea582b8c22202708df86e3fc87",
+        "baseline_available_gib": 84.03315734863281,
+        "minimum_available_gib": 63.82958984375,
+        "peak_rss_gib": 2.5619964599609375,
+        "peak_footprint_gib": 2.1005466654896736,
+        "peak_metal_gib": 18.076507568359375,
+        "peak_mps_driver_gib": 18.076507568359375,
+        "swap_growth_bytes": 0,
+        "compression_growth_bytes": 0,
+        "pressure_levels": [
+          1
+        ],
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 229.16518162499415
+        }
+      },
+      "companion": {
+        "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/companion/watchdog.jsonl",
+        "sha256": "3b5c6f82b78232926f4f73c5f60c0134b6592734209fe497140ccbbe7166cf6c",
+        "baseline_available_gib": 83.6207275390625,
+        "minimum_available_gib": 63.833953857421875,
+        "peak_rss_gib": 1.8431243896484375,
+        "peak_footprint_gib": 1.7627926543354988,
+        "peak_metal_gib": 18.071823120117188,
+        "peak_mps_driver_gib": 18.07177734375,
+        "swap_growth_bytes": 0,
+        "compression_growth_bytes": 0,
+        "pressure_levels": [
+          1
+        ],
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 47.42346779204672
+        }
+      },
+      "merged": {
+        "log": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/merged/watchdog.jsonl",
+        "sha256": "2ec1cb362d59f83a09bbcc5c31edfdafd863af56939162410a1e34333c7afe3a",
+        "baseline_available_gib": 83.6158447265625,
+        "minimum_available_gib": 63.806549072265625,
+        "peak_rss_gib": 2.085906982421875,
+        "peak_footprint_gib": 1.8956473544239998,
+        "peak_metal_gib": 18.071792602539062,
+        "peak_mps_driver_gib": 18.071792602539062,
+        "swap_growth_bytes": 0,
+        "compression_growth_bytes": 0,
+        "pressure_levels": [
+          1
+        ],
+        "teardown": {
+          "event": "teardown",
+          "reason": null,
+          "returncode": 0,
+          "remaining": [],
+          "elapsed": 37.11880891700275
+        }
+      }
+    },
+    "artifact_manifest": {
+      "original.json": {
+        "bytes": 12391,
+        "sha256": "ccfec3cb6f8cf29ac2b4a31889370c8f213666ae407d9609b0fe7a07980f9588"
+      },
+      "companion.json": {
+        "bytes": 2509,
+        "sha256": "5a7ababf4e8dfb44e322b0a2bf1aad0657e0f9bde1258ed6d2ec492696676e86"
+      },
+      "merged.json": {
+        "bytes": 2693,
+        "sha256": "36953d50ded7fd3b071c5b74b2d5efb8206b54c48d1a489453c617ba3e237f3b"
+      },
+      "first-smoke.json": {
+        "bytes": 331,
+        "sha256": "930325c468f58e5ec754bc0a9870e40a3ac48a9c4895ef3087fc92294553bfeb"
+      },
+      "edited.wsppatch.zip": {
+        "bytes": 4007204,
+        "sha256": "d79c10aa249b9c973e5f57ed5e8cebd2e683f357946110a1a42518282a5f301c"
+      },
+      "expected.pt": {
+        "bytes": 7949595,
+        "sha256": "da33cd08d09899cf46015a99959f4f4c31a814902e60ddb25458dc354f818a9d"
+      },
+      "revoked-approval.json": {
+        "bytes": 414,
+        "sha256": "473a7a88032428d798414ae9efea1d5cc634daa521b774216c2d9a82779023b3"
+      },
+      "quality-hold.json": {
+        "bytes": 404,
+        "sha256": "1a3a33f64254dc459be4bc755100c57e074799ef56ef251738acd4402ad89298"
+      },
+      "final-decision.json": {
+        "bytes": 373,
+        "sha256": "78eb97ce91e41d325f01d7a27e644b0dc952e995956e9ef6887347ffa89a6f6a"
+      },
+      "python-regression.log": {
+        "bytes": 341,
+        "sha256": "f66771179ed722b77a6386cc6c86708245175e0e0f4c7482659367e46552bd0e"
+      },
+      "bridge-regression.log": {
+        "bytes": 1481,
+        "sha256": "c9c07c1b1fbd04045a05d0045ef2b98e0781557aba2554f266dd51176934567c"
+      },
+      "telemetry-summary.txt": {
+        "bytes": 1920,
+        "sha256": "e224b75ae0f1859b7c1d81c57dac5e0873156b6941892bb9d476d9690d5ba6cc"
+      }
+    },
+    "original": {
+      "phase": "original",
+      "model": "~/.cache/wsp-quantized-ide/qwen38/Qwen3.8-27B-Q4_K_M.gguf",
+      "artifact_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+      "parameters": 26895998464,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q8_0"
+      ],
+      "seed": 0,
+      "batch": 1,
+      "context": 64,
+      "generation_limit": 4,
+      "versions": {
+        "torch": "2.15.0",
+        "transformers": "5.22.2",
+        "gguf": "0.19.0",
+        "numpy": "2.5.4"
+      },
+      "completion_base": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 2.334586124983616,
+        "tokens_per_second": 1.713365789847685,
+        "prefill_seconds": 0.541685750009492,
+        "decode_seconds": 0.7417382499552332,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat_base": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.44150933297351,
+        "tokens_per_second": 2.7748693043484485,
+        "prefill_seconds": 0.5887937090010382,
+        "decode_seconds": 0.7033215010305867,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "chat_prompt": "<|im_start|>user\nSay hello.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+      "chat_template_sha256": {
+        "chat_template.jinja": "af16f654968d47d09a6c604e00370b12dbc21f76456f59c9e98b82e84d9f6375"
+      },
+      "residency": {
+        "backend": "ggml-metal",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "metal",
+        "packed_bytes": 19392690176,
+        "dense_parameter_bytes": 10582016,
+        "forecast": {
+          "weights": 19392690176,
+          "runtime": 2147483648,
+          "kv": 167772160,
+          "activations": 508559360,
+          "patches": 0,
+          "temporary": 1610612736,
+          "recurrent": 603979776,
+          "convolution": 10485760,
+          "total": 24441583616
+        },
+        "mps_current": 0,
+        "mps_driver": 19404161024,
+        "mps_recommended": 115448725504,
+        "metal_allocated": 19404161024,
+        "metal_recommended": 115448725504,
+        "metal_mapped_bytes": 19403684480
+      },
+      "commits": [
+        {
+          "drift": {
+            "kl": 0.00032,
+            "kl_max": 0.0087,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "tests": {
+            "suite": "supervised-locality",
+            "before": [
+              4,
+              4
+            ],
+            "after": [
+              4,
+              4
+            ],
+            "fixed": [],
+            "broken": [],
+            "summary": "supervised-locality: 4/4 pass"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 89128960,
+              "of": 89128960,
+              "norm": 0.01665,
+              "max_abs": 0.00028,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 22528
+            }
+          ],
+          "output": "",
+          "n_changed": 89128960,
+          "stored": 22528,
+          "patch": "0001-20153"
+        },
+        {
+          "drift": {
+            "kl": 0.00033,
+            "kl_max": 0.0089,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "tests": {
+            "suite": "supervised-locality",
+            "before": [
+              4,
+              4
+            ],
+            "after": [
+              4,
+              4
+            ],
+            "fixed": [],
+            "broken": [],
+            "summary": "supervised-locality: 4/4 pass"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 3,
+              "of": 89128960,
+              "norm": 0.0066,
+              "max_abs": 0.00426,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9
+            }
+          ],
+          "output": "",
+          "n_changed": 3,
+          "stored": 9,
+          "patch": "0002-20165"
+        },
+        {
+          "drift": {
+            "kl": 0.00033,
+            "kl_max": 0.0089,
+            "top1_agree": 1.0,
+            "n": 128,
+            "calibration": "4 sequences x <=32 tokens, batch 1",
+            "limit": 0.01,
+            "within_limit": true,
+            "enforcement": "advisory; exceeding max_kl does not reject a commit"
+          },
+          "tests": {
+            "suite": "supervised-locality",
+            "before": [
+              4,
+              4
+            ],
+            "after": [
+              4,
+              4
+            ],
+            "fixed": [],
+            "broken": [],
+            "summary": "supervised-locality: 4/4 pass"
+          },
+          "ok": true,
+          "committed": true,
+          "changed": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 1,
+              "of": 89128960,
+              "norm": 0.00104,
+              "max_abs": 0.00104,
+              "rank": 1,
+              "kinds": [
+                "block"
+              ],
+              "stored": 1
+            }
+          ],
+          "output": "",
+          "n_changed": 1,
+          "stored": 1,
+          "patch": "0003-20177",
+          "status": {
+            "tests": {
+              "suite": "supervised-locality",
+              "passed": 4,
+              "total": 4,
+              "base_passed": 4
+            },
+            "drift": {
+              "kl": 0.00033,
+              "kl_max": 0.0089,
+              "top1_agree": 1.0,
+              "n": 128,
+              "calibration": "4 sequences x <=32 tokens, batch 1"
+            },
+            "n_patches": 3,
+            "version": 4,
+            "can_run": true,
+            "runner_loaded": true,
+            "run_error": null,
+            "suite": "supervised-locality",
+            "changed": 89128964,
+            "stored": 22538
+          }
+        }
+      ],
+      "task": {
+        "title": "Bounded factual reinforcement",
+        "instructions": "",
+        "scope": [
+          "model.layers.63.mlp.down_proj.weight"
+        ],
+        "suite": "supervised-locality",
+        "preserve": {
+          "max_kl": 0.01
+        }
+      },
+      "scope_rejection": {
+        "ok": false,
+        "error": "edit touches weights of lm_head.weight outside the task scope; the scope is ['model.layers.63.mlp.down_proj.weight']",
+        "output": ""
+      },
+      "suite": {
+        "name": "supervised-locality",
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "cases": [
+          {
+            "name": "France target",
+            "type": "next_token",
+            "prompt": "The capital of France is",
+            "got": "\u00b7Paris",
+            "pass": true,
+            "expect": [
+              "\u00b7Paris"
+            ],
+            "rank": 0,
+            "prob": 0.6842,
+            "value": 3.2036
+          },
+          {
+            "name": "preserve0",
+            "type": "preserve",
+            "prompt": "The capital of Germany is",
+            "got": "\u00b7Berlin",
+            "pass": true,
+            "value": 0.0,
+            "base": "\u00b7Berlin"
+          },
+          {
+            "name": "preserve1",
+            "type": "preserve",
+            "prompt": "Water freezes at",
+            "got": "\u00b7",
+            "pass": true,
+            "value": 0.0,
+            "base": "\u00b7"
+          },
+          {
+            "name": "preserve2",
+            "type": "preserve",
+            "prompt": "A small bird flies over",
+            "got": "\u00b7a",
+            "pass": true,
+            "value": 6e-05,
+            "base": "\u00b7a"
+          }
+        ]
+      },
+      "behavior": {
+        "target_margin": 6.523002624511719,
+        "target_gain_vs_base": 0.5468559265136719,
+        "target_gain_overlay": 0.5468559265136719,
+        "preservation_kl": [
+          1.249409024239867e-06,
+          1.0084531822940335e-06,
+          6.085170753067359e-05
+        ],
+        "unrelated_top1_preserved": [
+          true,
+          true,
+          true
+        ],
+        "kl_vs_overlay": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_logit_error_vs_overlay": 0.0
+      },
+      "completion_overlay": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 1.2950579159660265,
+        "tokens_per_second": 3.088664955201071,
+        "prefill_seconds": 0.37537254102062434,
+        "decode_seconds": 0.7415854160208255,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat_overlay": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.336431082978379,
+        "tokens_per_second": 2.993046219102877,
+        "prefill_seconds": 0.4589446249883622,
+        "decode_seconds": 0.7157580000348389,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "workspace": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/workspaces/qwen3.8-27b-q4_k_m-3cd778aa48",
+      "undo_redo": true,
+      "scaling": true,
+      "trace_intervention": true,
+      "qualification": "Factual reinforcement/locality probe, not demonstrated new knowledge; max_kl is advisory",
+      "companion": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/edited.wsppatch.zip",
+      "merged": {
+        "format": "standalone-gguf-same-scheme",
+        "base_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+        "artifact_sha256": "52560a5d8f66bbed89ae7b83d5390590e80dab9c4ad394de391fdeb48d205e24",
+        "path": "~/.cache/wsp-quantized-ide/qwen38/evidence/supervised-27b-attempt2/edited-standalone.gguf",
+        "standalone": true,
+        "patches": [
+          {
+            "id": "0001-20153",
+            "message": "Rank-one factual reinforcement",
+            "author": "acceptance",
+            "source": {
+              "kind": "lowrank"
+            },
+            "enabled": true,
+            "strength": 1.0,
+            "created": 1794620153.177611,
+            "info": {
+              "tests": [
+                4,
+                4
+              ],
+              "drift": 0.00032
+            },
+            "stats": [
+              {
+                "param": "model.layers.63.mlp.down_proj.weight",
+                "changed": 89128960,
+                "norm": 0.016650328509270985,
+                "max_abs": 0.00028124835807830095,
+                "rank": 1,
+                "kinds": [
+                  "lowrank"
+                ],
+                "stored": 22528,
+                "pieces": 1
+              }
+            ],
+            "changed": 89128960,
+            "stored": 22528
+          },
+          {
+            "id": "0002-20165",
+            "message": "Sparse internal probe",
+            "author": "acceptance",
+            "source": {
+              "kind": "sparse"
+            },
+            "enabled": true,
+            "strength": 1.0,
+            "created": 1794620165.72419,
+            "info": {
+              "tests": [
+                4,
+                4
+              ],
+              "drift": 0.00033
+            },
+            "stats": [
+              {
+                "param": "model.layers.63.mlp.down_proj.weight",
+                "changed": 3,
+                "norm": 0.006595317033209126,
+                "max_abs": 0.004260675515979528,
+                "rank": null,
+                "kinds": [
+                  "sparse"
+                ],
+                "stored": 9,
+                "pieces": 1
+              }
+            ],
+            "changed": 3,
+            "stored": 9
+          },
+          {
+            "id": "0003-20177",
+            "message": "Block internal probe",
+            "author": "human",
+            "source": {
+              "kind": "wscript",
+              "script": "P(\"model.layers.63.mlp.down_proj.weight\")[2606:2607, 3028:3029] += 0.0010396114084869623"
+            },
+            "enabled": true,
+            "strength": 1.0,
+            "created": 1794620177.530914,
+            "info": {
+              "tests": [
+                4,
+                4
+              ],
+              "drift": 0.00033
+            },
+            "stats": [
+              {
+                "param": "model.layers.63.mlp.down_proj.weight",
+                "changed": 1,
+                "norm": 0.0010396111756563187,
+                "max_abs": 0.0010396111756563187,
+                "rank": 1,
+                "kinds": [
+                  "block"
+                ],
+                "stored": 1,
+                "pieces": 1
+              }
+            ],
+            "changed": 1,
+            "stored": 1
+          }
+        ],
+        "rows_requantized": 5120,
+        "changed_rows_max_weight_error": 0.003249636385589838,
+        "changed_rows_rms_weight_error": 4.7750979652678e-06,
+        "float_slab_limit_bytes": 1048576,
+        "backend": "ggml 0.29.0 quantize_chunk",
+        "limitations": "Same tensor schemes only; rounding changes logits; original GGUF metadata retained; no patch undo"
+      },
+      "immutable_base": true
+    },
+    "companion": {
+      "phase": "companion",
+      "behavior": {
+        "target_margin": 6.523002624511719,
+        "target_gain_vs_base": 0.5468559265136719,
+        "target_gain_overlay": 0.5468559265136719,
+        "preservation_kl": [
+          1.249409024239867e-06,
+          1.0084531822940335e-06,
+          6.085170753067359e-05
+        ],
+        "unrelated_top1_preserved": [
+          true,
+          true,
+          true
+        ],
+        "kl_vs_overlay": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_logit_error_vs_overlay": 0.0
+      },
+      "completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 1.1981219159788452,
+        "tokens_per_second": 3.3385584110044997,
+        "prefill_seconds": 0.3550897919922136,
+        "decode_seconds": 0.7006295410101302,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat_prompt_identical": true,
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.3427362919901498,
+        "tokens_per_second": 2.9789914995679165,
+        "prefill_seconds": 0.4610715000308119,
+        "decode_seconds": 0.7328690409194678,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "suite": {
+        "name": "supervised-locality",
+        "cases": [
+          {
+            "name": "France target",
+            "type": "next_token",
+            "prompt": "The capital of France is",
+            "got": "\u00b7Paris",
+            "pass": true,
+            "expect": [
+              "\u00b7Paris"
+            ],
+            "rank": 0,
+            "prob": 0.6842,
+            "value": 3.2036
+          },
+          {
+            "name": "preserve0",
+            "type": "preserve",
+            "prompt": "The capital of Germany is",
+            "value": 1.249409024239867e-06,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          },
+          {
+            "name": "preserve1",
+            "type": "preserve",
+            "prompt": "Water freezes at",
+            "value": 1.0084531822940335e-06,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          },
+          {
+            "name": "preserve2",
+            "type": "preserve",
+            "prompt": "A small bird flies over",
+            "value": 6.085170753067359e-05,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "comparison_base": "original immutable GGUF logits, not exported checkpoint logits"
+      },
+      "saved_reopen_exact": true
+    },
+    "merged": {
+      "phase": "merged",
+      "behavior": {
+        "target_margin": 5.985471725463867,
+        "target_gain_vs_base": 0.009325027465820312,
+        "target_gain_overlay": 0.5468559265136719,
+        "preservation_kl": [
+          1.3395733731158543e-06,
+          8.169055831785954e-07,
+          4.045257071538799e-07
+        ],
+        "unrelated_top1_preserved": [
+          true,
+          true,
+          true
+        ],
+        "kl_vs_overlay": [
+          0.008481528609991074,
+          0.0,
+          0.0,
+          5.708178287022747e-05
+        ],
+        "max_logit_error_vs_overlay": 0.27541351318359375
+      },
+      "completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 1.2187377079972066,
+        "tokens_per_second": 3.2820843843203447,
+        "prefill_seconds": 0.3566563749918714,
+        "decode_seconds": 0.706338791991584,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat_prompt_identical": true,
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.2958531670155935,
+        "tokens_per_second": 3.086769474980082,
+        "prefill_seconds": 0.4494453329825774,
+        "decode_seconds": 0.6950855409959331,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "suite": {
+        "name": "supervised-locality",
+        "cases": [
+          {
+            "name": "France target",
+            "type": "next_token",
+            "prompt": "The capital of France is",
+            "got": "\u00b7Paris",
+            "pass": true,
+            "expect": [
+              "\u00b7Paris"
+            ],
+            "rank": 0,
+            "prob": 0.622,
+            "value": 2.9324
+          },
+          {
+            "name": "preserve0",
+            "type": "preserve",
+            "prompt": "The capital of Germany is",
+            "value": 1.3395733731158543e-06,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          },
+          {
+            "name": "preserve1",
+            "type": "preserve",
+            "prompt": "Water freezes at",
+            "value": 8.169055831785954e-07,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          },
+          {
+            "name": "preserve2",
+            "type": "preserve",
+            "prompt": "A small bird flies over",
+            "value": 4.045257071538799e-07,
+            "max_kl": 0.01,
+            "top1_preserved": true,
+            "pass": true
+          }
+        ],
+        "passed": 4,
+        "total": 4,
+        "comparison_base": "original immutable GGUF logits, not exported checkpoint logits"
+      },
+      "qualification": "Requantized standalone; rounding may erase target gains, no undo; preservation uses original base logits",
+      "retains_minimum_target_gain": false
+    }
+  }
+}

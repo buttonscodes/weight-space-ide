@@ -1,0 +1,1298 @@
+{
+ "date": "2026-11-21",
+ "what": "Acceptance on a trained model, Qwen/Qwen2.5-0.5B-Instruct (494 million parameters), of rendering as Heretic renders (F4), running a Heretic reproduce.json (H3b) and scoring a PEFT adapter (H4b); every model process under python -m wsp.memory_guard with its default limits, one at a time, on the CPU, offline, in isolated roots",
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991"
+ },
+ "tree": "e581f54 plus the bound of scripts/heretic_run_reproduce.py's R2 taken per model from scripts/heretic_compare_adapter.py (1e-3 for this model), written before the run",
+ "bounds": "in the scripts' docstrings before the runs; a stage outside its bound is reported as failed and no bound was moved",
+ "f4": "the three bfloat16 comparisons of the earlier record (docs/directions-formats-heretic-validation.json) run again on the new renderer, on the same Heretic runs: every assertion line is the same, number for number (31 lines), and one check added since passes. The one failure is the earlier record's: the low-rank change of row_normalization full, 4.85e-4 from Heretic's against 4e-4",
+ "not_run": {
+  "H4c on this model (scripts/evaluate_workspace_check.py)": "the memory guard refused the preflight: 32.7 GiB were available, and after the 8 GiB reservation less than the 25 GiB it requires would have been left, while another workload on the machine was running. Nothing was changed and the run was not forced; on the tiny model the check passed 10 of 10"
+ },
+ "runs": {
+  "f4-compare-abl": {
+   "what": "F4: the IDE against Heretic's bfloat16 ablation run (row_normalization full), on the new renderer",
+   "tree": "e581f54",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 5,
+    "fail": 1,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 2.06,
+    "least_available_gib": 49.1,
+    "seconds": 82.1,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.0009501256967029884,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999937252313479,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 48,
+      "heretic_unmatched": 0,
+      "ide_modules": 48,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 0,
+      "bound": 2,
+      "ide": 28,
+      "heretic": 28,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "fail",
+     "numbers": {
+      "value": 0.0004852521157596435,
+      "bound": 0.0004,
+      "tensors": 31,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 rounded sums",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": {
+       "max_difference_in_allowed_steps": 1,
+       "differing_fraction": 0.01
+      },
+      "tensors": 31,
+      "tensors_outside": 0,
+      "elements": 71106560,
+      "equal": 71087885,
+      "one_step": 17167,
+      "more_than_one": 1508,
+      "max_steps": 27577,
+      "differing": 18675,
+      "outside": 0,
+      "max_abs_difference": 0.0009765625,
+      "max_abs_difference_in_median_steps": 16.0,
+      "max_excess": 1.0,
+      "largest_abs_over_median": 0.08094262295081968,
+      "tensors_outside_names": [],
+      "worst_one_step_fraction": 0.0029471261160714285,
+      "worst_differing_fraction": 0.0032647580516581634
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "pass",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 31,
+      "worst": 5.74117422167812e-07,
+      "errors": []
+     }
+    }
+   ]
+  },
+  "f4-compare-ara": {
+   "what": "F4: the IDE against Heretic's bfloat16 ARA run, on the new renderer",
+   "tree": "e581f54",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "reported": 3
+   },
+   "guard": {
+    "peak_footprint_gib": 2.07,
+    "least_available_gib": 50.6,
+    "seconds": 93.6,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.0008457027633460995,
+      "bad_rel_worst": 0.0009501256967029884,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.01353733528340909,
+      "worst_output_rel": 0.012438835789270474,
+      "captured_by_both": 48,
+      "ide_modules": 48,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 8,
+      "smallest": 0.0015956667323200305,
+      "largest": 0.0016811903337109585
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-5 refusals of the IDE's own fit",
+     "status": "reported",
+     "numbers": {
+      "ide": 0,
+      "heretic": 0,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-3 objective reduction",
+     "status": "pass",
+     "numbers": {
+      "value": 0.005241157878794483,
+      "bound": 0.1,
+      "matrices": 8,
+      "worst": 0.029433376131106807
+     }
+    }
+   ]
+  },
+  "f4-scores": {
+   "what": "F4: the scores of both runs, on the new renderer",
+   "tree": "e581f54",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 23,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 1.14,
+    "least_available_gib": 25.3,
+    "seconds": 458.4,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.96875,
+       "heretic": 0.96875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 24,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 133.84375,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "pass",
+     "numbers": {
+      "trials": 4,
+      "outside": [],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 3,
+      "trials": 4
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 30,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.875,
+       "heretic": 0.875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 28,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 131.46875,
+       "heretic": 131.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.013402196860624827,
+      "heretic": 0.014471225440502167,
+      "bound": 0.15151840865357197
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.96875,
+       "heretic": 0.96875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 24,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 133.84375,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 26,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.0,
+       "heretic": 0.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 127.8125,
+       "heretic": 128.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.09024988552118884,
+      "heretic": 0.0913395881652832,
+      "bound": 0.38066289396124564
+     }
+    }
+   ]
+  },
+  "h3b": {
+   "what": "H3b: Heretic's own reproduce.json of its float32 ablation (full) and ARA runs, run by the IDE; against Heretic's adapters, the hand-pasted path and the round trip",
+   "tree": "e581f54",
+   "interpreter": "the IDE's versions plus pyarrow (the datasets are parquet)",
+   "counts": {
+    "pass": 15,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 3.56,
+    "least_available_gib": 43.4,
+    "seconds": 229.6,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "abl-full",
+     "stage": "J journals equal",
+     "status": "pass",
+     "numbers": {
+      "rows": [
+       56,
+       56
+      ],
+      "first_difference": null
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "F the file is the new run's",
+     "status": "pass",
+     "numbers": {
+      "modifier": "heretic.modifiers.abliteration.Abliteration"
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "R0 checked without refusal",
+     "status": "pass",
+     "numbers": {
+      "refusal": null,
+      "model": {
+       "repository": "same",
+       "commit": "same"
+      }
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "R1 committed through Session.apply",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "record_error": null
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "R2 against Heretic's adapter",
+     "status": "pass",
+     "numbers": {
+      "worst_relative": 0.0003870660595083768,
+      "bound": 0.001,
+      "tensors": 31,
+      "one_sided": 0
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "M0 measured prompts are the dump's",
+     "status": "pass",
+     "numbers": {
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       64,
+       64
+      ]
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "R3 the hand-pasted patch is the file's",
+     "status": "pass",
+     "numbers": {
+      "measured_from": "datasets",
+      "digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "file_digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a"
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "R4 round trip bit for bit",
+     "status": "pass",
+     "numbers": {
+      "digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "written_digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "hand_digest": "6c9f25c8ce7dd9f566280755edc10d4df2ed7a62889336054fcd59d477f0df4a",
+      "same_as_file": true
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "J journals equal",
+     "status": "pass",
+     "numbers": {
+      "rows": [
+       40,
+       40
+      ],
+      "first_difference": null
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "F the file is the new run's",
+     "status": "pass",
+     "numbers": {
+      "modifier": "heretic.modifiers.ara.ARA"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "R0 checked without refusal",
+     "status": "pass",
+     "numbers": {
+      "refusal": null,
+      "model": {
+       "repository": "same",
+       "commit": "same"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "R1 committed through Session.apply",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "record_error": null
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "M0 measured prompts are the dump's",
+     "status": "pass",
+     "numbers": {
+      "source": "datasets",
+      "error": null,
+      "counts": [
+       64,
+       64
+      ]
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "R3 the hand-pasted patch is the file's",
+     "status": "pass",
+     "numbers": {
+      "measured_from": "datasets",
+      "digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "file_digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "R4 round trip bit for bit",
+     "status": "pass",
+     "numbers": {
+      "digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "written_digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "hand_digest": "7675eec3ea2bd83120d2b5de25bcfdc79fb709e1c32a1c49caa502773f4ba580",
+      "same_as_file": true
+     }
+    }
+   ]
+  },
+  "h4b-merge-abl-full": {
+   "what": "H4b: PEFT's own merge of Heretic's ablation adapter",
+   "tree": "e581f54",
+   "interpreter": "Heretic's own environment (torch 2.14.1, transformers 5.18.0, peft 0.21.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 2.51,
+    "least_available_gib": 49.6,
+    "seconds": 8.3,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h4b-dump-abl-full": {
+   "what": "H4b: Heretic's dump and evaluate_model on that merged model",
+   "tree": "e581f54",
+   "interpreter": "Heretic's own environment (torch 2.14.1, transformers 5.18.0, peft 0.21.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 2.5,
+    "least_available_gib": 49.6,
+    "seconds": 190.3,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h4b-merge-ara": {
+   "what": "H4b: PEFT's own merge of Heretic's ARA adapter",
+   "tree": "e581f54",
+   "interpreter": "Heretic's own environment (torch 2.14.1, transformers 5.18.0, peft 0.21.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 2.5,
+    "least_available_gib": 49.9,
+    "seconds": 6.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h4b-dump-ara": {
+   "what": "H4b: Heretic's dump and evaluate_model on that merged model",
+   "tree": "e581f54",
+   "interpreter": "Heretic's own environment (torch 2.14.1, transformers 5.18.0, peft 0.21.2)",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 2.59,
+    "least_available_gib": 48.7,
+    "seconds": 210.0,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": []
+  },
+  "h4b": {
+   "what": "H4b: the IDE scores each adapter directory, against its scoring of PEFT's merge and against Heretic's evaluate_model",
+   "tree": "e581f54",
+   "interpreter": "the IDE's environment (torch 2.15.0, transformers 5.22.2)",
+   "counts": {
+    "pass": 32,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 4.82,
+    "least_available_gib": 25.9,
+    "seconds": 450.0,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "abl-full",
+     "stage": "E1 the differing tensors, their changed counts and norms",
+     "status": "pass",
+     "numbers": {
+      "ide_differ": 31,
+      "script_differ": 31,
+      "only_ide": [],
+      "only_script": [],
+      "changed_unequal": [],
+      "norm_outside": [],
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "only_base": [],
+      "only_modified": [],
+      "script_excluded": [],
+      "ide_tied": []
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E1b the applied change reconstructs the checkpoint to one float32 ulp",
+     "status": "pass",
+     "numbers": {
+      "max_abs": 0.0,
+      "m": 0.922976553440094,
+      "bound": 1.1002737920762229e-07,
+      "inexact": 0
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E2 base responses identical or near-tie",
+     "status": "pass",
+     "numbers": {
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "bound": 0.001
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E3 modified responses identical or near-tie",
+     "status": "pass",
+     "numbers": {
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "bound": 0.001
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E4 base Refusals and mean length equal Heretic's exactly, KL 0 by definition",
+     "status": "pass",
+     "numbers": {
+      "refusals": {
+       "ide": 0.9375,
+       "heretic": 0.9375,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "length": {
+       "ide": 133.53125,
+       "heretic": 133.53125,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "kl": {
+       "value": 0.0,
+       "display": "0 (by definition)",
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E4 modified Refusals and mean length equal Heretic's evaluate_model",
+     "status": "pass",
+     "numbers": {
+      "refusals": {
+       "ide": 0.875,
+       "heretic": 0.875,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "length": {
+       "ide": 131.53125,
+       "heretic": 131.53125,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E4 modified KL within the bound of Heretic's evaluate_model",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.01325146468661842,
+      "heretic": 0.013251330703496933,
+      "difference": 1.339831214863807e-07,
+      "bound": 3.9658426924123344e-05
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E7 the base snapshot as path is refused (E-H16)",
+     "status": "pass",
+     "numbers": {
+      "got": "path holds the open workspace's own base checkpoint: there is nothing to compare",
+      "want": "path holds the open workspace's own base checkpoint: there is nothing to compare"
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E7 the run directory as path is refused (unrecognised)",
+     "status": "pass",
+     "numbers": {
+      "got": "path holds no model the IDE reads: no PEFT adapter (adapter_config.json), no workspace (workspace.json) and no safetensors weights (model.safetensors, an index, or *.safetensors files); it holds 6 entries: adapter/, checkpoints/, config.toml, dump/, model/, run.log",
+      "want": "path holds no model the IDE reads: no PEFT adapter (adapter_config.json), no workspace (workspace.json) and no safetensors weights (model.safetensors, an index, or *.safetensors files); it holds 6 entries: adapter/, checkpoints/, config.toml, dump/, model/, run.log"
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A0 the adapter is read as an adapter, model/ as a checkpoint",
+     "status": "pass",
+     "numbers": {
+      "adapter": "adapter",
+      "checkpoint": "checkpoint"
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A1 the weight comparison equals the checkpoint request's",
+     "status": "pass",
+     "numbers": {
+      "params": [
+       31,
+       31
+      ],
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A1b base + adapter as the IDE reads it equals PEFT's merge to one float32 ulp",
+     "status": "pass",
+     "numbers": {
+      "max_abs": 0.0,
+      "m": 0.922976553440094,
+      "bound": 1.1002737920762229e-07,
+      "tensors": 48,
+      "bit_equal": 48
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A2 responses token for token equal the checkpoint request's and Heretic's",
+     "status": "pass",
+     "numbers": {
+      "refusal.base": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "refusal.merged": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "length.base": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "length.merged": {
+       "prompts": 32,
+       "identical": 32
+      }
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A3 scores: base as the checkpoint request's, modified as Heretic's, KL within the bounds",
+     "status": "pass",
+     "numbers": {
+      "base_equal": true,
+      "refusals": [
+       0.875,
+       0.875
+      ],
+      "length": [
+       131.53125,
+       131.53125
+      ],
+      "kl": {
+       "adapter": 0.01325146468661842,
+       "checkpoint": 0.01325146468661842,
+       "heretic": 0.013251330703496933,
+       "to_heretic": 1.339831214863807e-07,
+       "bound_heretic": 3.9658426924123344e-05,
+       "to_checkpoint": 0.0,
+       "bound_checkpoint": 2.325146468661842e-06
+      }
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "A4 nothing written in the adapter directory",
+     "status": "pass",
+     "numbers": {
+      "files": 3
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "E6 nothing written",
+     "status": "pass",
+     "numbers": {
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_files": 7,
+      "merged_same": true
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E1 the differing tensors, their changed counts and norms",
+     "status": "pass",
+     "numbers": {
+      "ide_differ": 8,
+      "script_differ": 8,
+      "only_ide": [],
+      "only_script": [],
+      "changed_unequal": [],
+      "norm_outside": [],
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "only_base": [],
+      "only_modified": [],
+      "script_excluded": [],
+      "ide_tied": []
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E1b the applied change reconstructs the checkpoint to one float32 ulp",
+     "status": "pass",
+     "numbers": {
+      "max_abs": 0.0,
+      "m": 0.5135948657989502,
+      "bound": 6.122527906882169e-08,
+      "inexact": 0
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E2 base responses identical or near-tie",
+     "status": "pass",
+     "numbers": {
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "bound": 0.001
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E3 modified responses identical or near-tie",
+     "status": "pass",
+     "numbers": {
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "divergences": [],
+       "error": null
+      },
+      "bound": 0.001
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E4 base Refusals and mean length equal Heretic's exactly, KL 0 by definition",
+     "status": "pass",
+     "numbers": {
+      "refusals": {
+       "ide": 0.9375,
+       "heretic": 0.9375,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "length": {
+       "ide": 133.53125,
+       "heretic": 133.53125,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "kl": {
+       "value": 0.0,
+       "display": "0 (by definition)",
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E4 modified Refusals and mean length equal Heretic's evaluate_model",
+     "status": "pass",
+     "numbers": {
+      "refusals": {
+       "ide": 0.0,
+       "heretic": 0.0,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      },
+      "length": {
+       "ide": 128.0625,
+       "heretic": 128.0625,
+       "equal": true,
+       "difference_from_accepted_divergences": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E4 modified KL within the bound of Heretic's evaluate_model",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.08775495513691567,
+      "heretic": 0.08775538206100464,
+      "difference": 4.269240889698267e-07,
+      "bound": 0.00010048355869509986
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E7 the base snapshot as path is refused (E-H16)",
+     "status": "pass",
+     "numbers": {
+      "got": "path holds the open workspace's own base checkpoint: there is nothing to compare",
+      "want": "path holds the open workspace's own base checkpoint: there is nothing to compare"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E7 the run directory as path is refused (unrecognised)",
+     "status": "pass",
+     "numbers": {
+      "got": "path holds no model the IDE reads: no PEFT adapter (adapter_config.json), no workspace (workspace.json) and no safetensors weights (model.safetensors, an index, or *.safetensors files); it holds 6 entries: adapter/, checkpoints/, config.toml, dump/, model/, run.log",
+      "want": "path holds no model the IDE reads: no PEFT adapter (adapter_config.json), no workspace (workspace.json) and no safetensors weights (model.safetensors, an index, or *.safetensors files); it holds 6 entries: adapter/, checkpoints/, config.toml, dump/, model/, run.log"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A0 the adapter is read as an adapter, model/ as a checkpoint",
+     "status": "pass",
+     "numbers": {
+      "adapter": "adapter",
+      "checkpoint": "checkpoint"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A1 the weight comparison equals the checkpoint request's",
+     "status": "pass",
+     "numbers": {
+      "params": [
+       8,
+       8
+      ],
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A1b base + adapter as the IDE reads it equals PEFT's merge to one float32 ulp",
+     "status": "pass",
+     "numbers": {
+      "max_abs": 0.0,
+      "m": 0.921875,
+      "bound": 1.0989606380462646e-07,
+      "tensors": 48,
+      "bit_equal": 48
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A2 responses token for token equal the checkpoint request's and Heretic's",
+     "status": "pass",
+     "numbers": {
+      "refusal.base": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "refusal.merged": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "length.base": {
+       "prompts": 32,
+       "identical": 32
+      },
+      "length.merged": {
+       "prompts": 32,
+       "identical": 32
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A3 scores: base as the checkpoint request's, modified as Heretic's, KL within the bounds",
+     "status": "pass",
+     "numbers": {
+      "base_equal": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "length": [
+       128.0625,
+       128.0625
+      ],
+      "kl": {
+       "adapter": 0.08775495513691567,
+       "checkpoint": 0.08775495513691567,
+       "heretic": 0.08775538206100464,
+       "to_heretic": 4.269240889698267e-07,
+       "bound_heretic": 0.00010048355869509986,
+       "to_checkpoint": 0.0,
+       "bound_checkpoint": 9.775495513691568e-06
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "A4 nothing written in the adapter directory",
+     "status": "pass",
+     "numbers": {
+      "files": 3
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "E6 nothing written",
+     "status": "pass",
+     "numbers": {
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_files": 7,
+      "merged_same": true
+     }
+    }
+   ]
+  }
+ },
+ "totals_of_the_final_runs": {
+  "pass": 78,
+  "fail": 1,
+  "reported": 6
+ }
+}

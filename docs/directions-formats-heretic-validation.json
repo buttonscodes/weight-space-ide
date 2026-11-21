@@ -1,0 +1,2166 @@
+{
+ "date": "2026-11-18",
+ "what": "Behaviour directions on other layouts and model formats: a transformers model run in bfloat16, a real GGUF base, a hybrid GGUF, and the candidate transport through the model worker; each compared with Heretic where Heretic can run the model",
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0"
+  },
+  "device": "cpu",
+  "batch_size": 1
+ },
+ "ide": {
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  },
+  "device": "cpu (transformers, GGUF CPU bridge), metal (the hybrid GGUF)"
+ },
+ "models": {
+  "Qwen/Qwen2.5-0.5B-Instruct": "safetensors bfloat16, 494,032,768 parameters; run by both tools in bfloat16 (and by the IDE in float32)",
+  "qwen2.5-0.5b-instruct-q4_0.gguf": "GGUF Q4_0 of the same model; IDE only, against Heretic's float32 runs of the checkpoint (behaviour level)",
+  "Qwen3.5-0.8B-Q4_K_M.gguf": "hybrid (linear and full attention) GGUF, 752,393,024 text parameters; IDE only, Metal bridge, no oracle (its checkpoint is not on this machine)",
+  "Qwen/Qwen3.5-4B": "hybrid checkpoint, 4,659,865,088 parameters: Heretic's timing probe only; the comparison was not run (see c4)"
+ },
+ "bounds": "written in docs/DIRECTIONS.md (Runs in bfloat16; On a GGUF base) and in each script's docstring before the runs; a stage outside its bound is reported as failed and the bound is not moved",
+ "corrections_after_the_first_runs": [
+  "The runner loaded every transformers model with eager attention. In bfloat16 that kernel is about three times less accurate than the library's default one, which Heretic uses (probe with transformers alone: worst relative difference of the mean residual from float32 6.4e-2 with eager, 2.3e-2 with the default; under both library versions). bfloat16 and float16 runs now load the default kernel and switch to eager only for a forward pass that reads attention patterns. The bfloat16 comparison was run again from the start.",
+  "B-S4's rule for the rounded sums was corrected twice before being applied: the first wording (every element equal or one of its own bfloat16 steps apart) cannot hold for weights near zero; the second (one step at the tensor's median magnitude for every element) cannot hold for weights above the median. Final rule: |a - b| <= max(own step of a, own step of b, step at the median magnitude), and at most 1% of a tensor's elements differing.",
+  "B-S5 (the IDE's fit from Heretic's captures is bit-equal to Heretic's) is stated under the torch version of Heretic's run. The fit check asserted it under any interpreter; under another torch version it now reports the counts.",
+  "G-S9: a companion bundle reopened in a fresh root gave first-token logits that were not bit-equal (largest difference 0.372 on the Q4_0 file, 0.014 on the hybrid file). Cause: a just-committed low-rank piece held its factors as transposed views and the same piece read back from its file as contiguous tensors; the run-time overlay's product differs in the last bits between the two layouts, and the packed model can amplify that. The overlay now holds its factors contiguous; both GGUF comparisons were run again.",
+  "A replica of Heretic's randomized rank-r approximation was added after the first two bfloat16 runs, to test the explanation of the failed 4e-4 bound of B-S4 (row_normalization full). The 4e-4 bound is unchanged."
+ ],
+ "model_free_suites": {
+  "tree": "1db34b3",
+  "offline_suite": {
+   "passed": 2377,
+   "skipped": 97,
+   "failed": 0
+  },
+  "frontend": {
+   "passed": 439,
+   "failed": 0
+  },
+  "with_the_cpu_bridge": {
+   "passed": 146,
+   "skipped": 13,
+   "failed": 0,
+   "skipped_reason": "the Metal bridge variable was not set in that run"
+  },
+  "with_the_metal_bridge": {
+   "passed": 80,
+   "failed": 0
+  }
+ },
+ "b3_fit_timing": {
+  "what": "model-free ARA fits at rank 50 on random matrices of the 4B and 27B shapes, CPU, 3 repeats each",
+  "median_seconds_per_fit": {
+   "4096x2560": 1.387,
+   "9216x2560": 2.368,
+   "6144x5120": 2.988,
+   "17408x5120": 6.633
+  },
+  "T27_minutes": 5.13,
+  "rule_minutes": 30,
+  "verdict": "the fit on the GPU is not a prerequisite of the 27B run"
+ },
+ "c4": {
+  "status": "not run",
+  "heretic_timing_probe": {
+   "model": "Qwen/Qwen3.5-4B",
+   "dtype": "bfloat16",
+   "device": "cpu",
+   "config": "8 + 8 measured prompts, 4 per score, 8 new tokens, 1 ARA trial",
+   "wall_seconds": 1735.6,
+   "module_io_seconds_for_8_prompts": [
+    93.4,
+    93.1
+   ],
+   "prefix_test_seconds": 644.5,
+   "baseline_scores_seconds": 368.5,
+   "trial_seconds": 495.5,
+   "result": {
+    "refusals": "0/4",
+    "kl": 0.0152
+   },
+   "peak_footprint_gib": 1.56,
+   "least_available_gib": 32.0,
+   "first_attempt": "Heretic could not load the directory without an image-processor config; the spec's fallback was applied (the two preprocessor config files of another local Qwen3.5-family checkpoint with the same patch, merge and temporal sizes)"
+  },
+  "ide_timing_probe": "refused three times by the memory guard before any model was loaded: 36.3, 40.6 and 40.4 GiB were available and the 16 GiB reservation needs 41 (25 GiB must stay free); another workload on the machine held about 22 GiB",
+  "rule": "from Heretic's times alone (about 11.7 s per measured prompt and about 10 s per generated token) the planned counts cost about 47 hours for both tools, above the rule's 12-hour line: the comparison goes to MPS with every count halved, which is not verified for either tool on this model",
+  "mps_feasibility_on_qwen2.5-0.5b_bfloat16": {
+   "ide": {
+    "what": "scripts/formats_bf16_self.py with WSP_DEVICE=mps: 64 + 64 prompts measured with module capture, ARA fitted, base, ablation and ARA scored on 32 + 32 prompts",
+    "refusals_of_32": {
+     "base": 31,
+     "ablation": 28,
+     "ara": 0
+    },
+    "kl": {
+     "ablation": 0.0151,
+     "ara": 0.0889
+    },
+    "cpu_run_for_comparison": {
+     "refusals_of_32": {
+      "base": 31,
+      "ablation": 28,
+      "ara": 0
+     },
+     "kl": {
+      "ablation": 0.0131,
+      "ara": 0.099
+     }
+    },
+    "seconds": {
+     "measure": 10.2,
+     "ara_fit": 7.1,
+     "score_base": 5.9,
+     "score_ablation": 7.8,
+     "score_ara": 13.4
+    },
+    "cpu_seconds": {
+     "measure": 17.5,
+     "ara_fit": 6.1,
+     "score_base": 23.6,
+     "score_ablation": 23.7,
+     "score_ara": 35.9
+    },
+    "compared_with_heretic": false
+   },
+   "heretic_directional_ablation_full": "device_map mps: the base scored 31/32, then the first trial stalled in the row_normalization full step after torch warned that linalg.svd fell back to the CPU; no output and no CPU use for eight minutes, SIGINT ignored, terminated (guard teardown clean, returncode -15)",
+   "heretic_ara": "not started: the memory guard refused it (34.8 GiB available, 35 needed for a 10 GiB reservation)"
+  }
+ },
+ "manual_check": "the Q4_0 file on a supervised serve through the model worker, in a browser: chat offered; 16 + 16 prompts measured with module capture in 8.4 s; the default ablation as an uncommitted candidate (26 tensors, 98,176 stored numbers); Compare base against candidate on 8 + 8 prompts: refusals 8/8 against 3/8, KL 0.0213; generation settings repetition_penalty 1.1 and both end-of-text ids in the scores answer; committed from the page; the adapter buttons off with the GGUF text; the companion bundle exported; one interrupt, guard teardown with nothing remaining",
+ "runs": {
+  "bf16 self (IDE float32 vs IDE bfloat16)": {
+   "what": "Qwen2.5-0.5B: the IDE in float32 and in bfloat16 on the same prompts and parameters",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "reported": 0
+   },
+   "timing_seconds": {
+    "float32": {
+     "measure_seconds": 8.285453999997117,
+     "ara_fit_seconds": 5.865476957987994,
+     "score_base_seconds": 27.96630320791155,
+     "score_ablation_seconds": 23.1296272079926,
+     "score_ara_seconds": 36.57980900001712
+    },
+    "bfloat16": {
+     "measure_seconds": 17.53832279110793,
+     "ara_fit_seconds": 6.121103540994227,
+     "score_base_seconds": 23.566965083009563,
+     "score_ablation_seconds": 23.679741417057812,
+     "score_ara_seconds": 35.949878167011775
+    }
+   },
+   "directions_and_scores": {
+    "bfloat16 vs float32": {
+     "B-S1 token ids": {
+      "pass": true,
+      "value": true,
+      "bound": "identical",
+      "ide_bf16_vs_fp32": {
+       "good": true,
+       "bad": true,
+       "kl": true,
+       "refusal": true
+      },
+      "ide_vs_heretic": {
+       "float32": {
+        "good": true,
+        "bad": true,
+        "kl": true
+       },
+       "bfloat16": {
+        "good": true,
+        "bad": true,
+        "kl": true
+       }
+      }
+     },
+     "B-S3 directions": {
+      "cosine_per_index": [
+       0.0,
+       0.9940262820658103,
+       0.9946115915947327,
+       0.9957201277177017,
+       0.9961881088810282,
+       0.9981936109165741,
+       0.9984091001234288,
+       0.9987184459496258,
+       0.999025987676698,
+       0.9990660208806261,
+       0.9994760613218442,
+       0.9997512434515297,
+       0.9997799744695286,
+       0.9998580300234603,
+       0.9998796066005143,
+       0.9999103973494066,
+       0.9999283426604794,
+       0.9999430113655406,
+       0.9999540748570819,
+       0.9999541405166059,
+       0.9999467964377111,
+       0.9999493041408882,
+       0.999956155620935,
+       0.9999545946992086,
+       0.9999526248589314
+      ],
+      "min_cosine_1_to_n": 0.9940262820658103,
+      "expected_at_least": 0.99
+     },
+     "B-S6 consistency check": {
+      "pass": true,
+      "value": [
+       0.001628420878902723,
+       0.001641341568817673,
+       0.0016435683982009034,
+       0.0016562702929360123,
+       0.0015956667323200305,
+       0.0016811903337109585,
+       0.0016748146524225758,
+       0.0016430958461536261,
+       0.0016598223925543335,
+       0.0016522920586431772,
+       0.0016434636740131538,
+       0.0016402889185360412,
+       0.0016719764074135778,
+       0.001653693683603786,
+       0.001663751945141076,
+       0.0016631801715398322
+      ],
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 8,
+      "smallest": 0.0015956667323200305,
+      "largest": 0.0016811903337109585,
+      "float32_largest": 0.0
+     },
+     "B-S9 refusals and KL": {
+      "states": {
+       "base": {
+        "refusals_float32": 30,
+        "refusals_bfloat16": 31,
+        "of": 32,
+        "kl_float32": 0.0,
+        "kl_bfloat16": 0.0
+       },
+       "ablation": {
+        "refusals_float32": 28,
+        "refusals_bfloat16": 28,
+        "of": 32,
+        "kl_float32": 0.013251490776383434,
+        "kl_bfloat16": 0.01310148603079142
+       },
+       "ara": {
+        "refusals_float32": 0,
+        "refusals_bfloat16": 0,
+        "of": 32,
+        "kl_float32": 0.09015011675364804,
+        "kl_bfloat16": 0.09900397017190699
+       }
+      },
+      "expected": {
+       "refusals_within": 3
+      },
+      "generation_bfloat16": {
+       "runner": "HFRunner",
+       "where": "this process",
+       "generation": "transformers generate, do_sample false, the checkpoint's generation config",
+       "first_token": "one forward pass, head at the last position (logits_to_keep=1)",
+       "max_response_length": 30,
+       "settings": {
+        "eos_token_id": [
+         151645,
+         151643
+        ],
+        "repetition_penalty": 1.1
+       },
+       "patches": "float32 side path on linear layers (PEFT's order); other tensors rounded once to bfloat16"
+      }
+     }
+    }
+   },
+   "checks": [
+    {
+     "label": "bfloat16",
+     "stage": "vs float32 B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "ide_bf16_vs_fp32": {
+       "good": true,
+       "bad": true,
+       "kl": true,
+       "refusal": true
+      },
+      "ide_vs_heretic": {
+       "float32": {
+        "good": true,
+        "bad": true,
+        "kl": true
+       },
+       "bfloat16": {
+        "good": true,
+        "bad": true,
+        "kl": true
+       }
+      }
+     }
+    },
+    {
+     "label": "bfloat16",
+     "stage": "vs float32 B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 8,
+      "smallest": 0.0015956667323200305,
+      "largest": 0.0016811903337109585,
+      "float32_largest": 0.0
+     }
+    }
+   ]
+  },
+  "bf16 ablation vs Heretic": {
+   "what": "Qwen2.5-0.5B bfloat16, directional ablation with row_normalization full: scripts/heretic_compare.py",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 4,
+    "fail": 1,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 4.41,
+    "least_available_gib": 47.0,
+    "seconds": 74.0,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.0009501256967029884,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.9999937252313479,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 48,
+      "heretic_unmatched": 0,
+      "ide_modules": 48,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 0,
+      "bound": 2,
+      "ide": 28,
+      "heretic": 28,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "fail",
+     "numbers": {
+      "value": 0.0004852521157596435,
+      "bound": 0.0004,
+      "tensors": 31,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 rounded sums",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": {
+       "max_difference_in_allowed_steps": 1,
+       "differing_fraction": 0.01
+      },
+      "tensors": 31,
+      "tensors_outside": 0,
+      "elements": 71106560,
+      "equal": 71087885,
+      "one_step": 17167,
+      "more_than_one": 1508,
+      "max_steps": 27577,
+      "differing": 18675,
+      "outside": 0,
+      "max_abs_difference": 0.0009765625,
+      "max_abs_difference_in_median_steps": 16.0,
+      "max_excess": 1.0,
+      "largest_abs_over_median": 0.08094262295081968,
+      "tensors_outside_names": [],
+      "worst_one_step_fraction": 0.0029471261160714285,
+      "worst_differing_fraction": 0.0032647580516581634
+     }
+    }
+   ]
+  },
+  "bf16 replica (Heretic's torch)": {
+   "what": "scripts/heretic_replica_check.py on the same run's files, no model, under Heretic's interpreter",
+   "tree": "85b2bd8",
+   "interpreter": "torch 2.14.1",
+   "counts": {
+    "pass": 1,
+    "fail": 1,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "abl-full",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "pass",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 31,
+      "worst": 5.74117422167811e-07,
+      "errors": []
+     }
+    },
+    {
+     "label": "abl-full",
+     "stage": "B-S4 replica of Heretic's randomized approximation",
+     "status": "fail",
+     "numbers": {
+      "bound": {
+       "replica_vs_heretic": 1e-05
+      },
+      "tensors": 31,
+      "errors": [],
+      "worst_replica_vs_heretic": 1.1551312964059431e-05,
+      "worst_replica_vs_ide": 0.00048502420883627187,
+      "worst_ide_vs_heretic": 0.0004852521157596043,
+      "worst_tail": 0.9907425027004598,
+      "smallest_sigma_r_over_sigma_1": 0.01009723861037028,
+      "worst_exact_truncation_vs_ide": 5.74117422167811e-07,
+      "worst_replica_of_heretic_formula_vs_heretic": 1.96559681996861e-06,
+      "replicas_bit_equal": 0,
+      "torch": "2.14.1",
+      "run_torch": "2.14.1"
+     }
+    }
+   ]
+  },
+  "bf16 replica (IDE's torch)": {
+   "what": "the same under the IDE's interpreter (reported only)",
+   "tree": "85b2bd8",
+   "interpreter": "torch 2.15.0",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "abl-full",
+     "stage": "B-S4 replica input is the IDE's change",
+     "status": "pass",
+     "numbers": {
+      "bound": 1e-06,
+      "tensors": 31,
+      "worst": 5.74117422167812e-07,
+      "errors": []
+     }
+    }
+   ]
+  },
+  "bf16 ARA vs Heretic": {
+   "what": "Qwen2.5-0.5B bfloat16, ARA: scripts/heretic_compare_ara.py",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "reported": 3
+   },
+   "guard": {
+    "peak_footprint_gib": 4.36,
+    "least_available_gib": 47.9,
+    "seconds": 106.3,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.0008457027633460995,
+      "bad_rel_worst": 0.0009501256967029884,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.01353733528340909,
+      "worst_output_rel": 0.012438835789270474,
+      "captured_by_both": 48,
+      "ide_modules": 48,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 8,
+      "smallest": 0.0015956667323200305,
+      "largest": 0.0016811903337109585
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-5 refusals of the IDE's own fit",
+     "status": "reported",
+     "numbers": {
+      "ide": 0,
+      "heretic": 0,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-3 objective reduction",
+     "status": "pass",
+     "numbers": {
+      "value": 0.005241157878794483,
+      "bound": 0.1,
+      "matrices": 8,
+      "worst": 0.029433376131106807
+     }
+    }
+   ]
+  },
+  "bf16 fit check (Heretic's torch)": {
+   "what": "scripts/heretic_fit_check.py, no model, under Heretic's interpreter",
+   "tree": "1db34b3",
+   "interpreter": "torch 2.14.1",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "pass",
+     "numbers": {
+      "modules": 8,
+      "not_equal": [],
+      "factors_equal": 8
+     }
+    }
+   ]
+  },
+  "bf16 fit check (IDE's torch)": {
+   "what": "the same under the IDE's interpreter (reported only)",
+   "tree": "1db34b3",
+   "interpreter": "torch 2.15.0",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "reported": 1
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "reported",
+     "numbers": "reported only: this interpreter's torch 2.15.0 is not the run's 2.14.1; bit equality is stated under the run's own torch"
+    }
+   ]
+  },
+  "bf16 scores vs Heretic": {
+   "what": "Qwen2.5-0.5B bfloat16: scripts/heretic_compare_scores.py on Heretic's merged models and trials",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 23,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 1.05,
+    "least_available_gib": 45.0,
+    "seconds": 446.6,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.96875,
+       "heretic": 0.96875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 24,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 133.84375,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "pass",
+     "numbers": {
+      "trials": 4,
+      "outside": [],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 3,
+      "trials": 4
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 30,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.875,
+       "heretic": 0.875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 28,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 131.46875,
+       "heretic": 131.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.013402196860624827,
+      "heretic": 0.014471225440502167,
+      "bound": 0.15151840865357197
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.96875,
+       "heretic": 0.96875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 24,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 133.84375,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 26,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.0,
+       "heretic": 0.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 25,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 127.8125,
+       "heretic": 128.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.09024988552118884,
+      "heretic": 0.0913395881652832,
+      "bound": 0.38066289396124564
+     }
+    }
+   ]
+  },
+  "GGUF Q4_0 (CPU bridge)": {
+   "what": "qwen2.5-0.5b-instruct-q4_0.gguf: scripts/formats_gguf_compare.py against Heretic's float32 runs of the checkpoint",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 11,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 1.7,
+    "least_available_gib": 45.5,
+    "seconds": 255.5,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "gguf",
+     "stage": "G-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "good": "64/64",
+      "bad": "64/64",
+      "kl": "32/32",
+      "ara_good": "64/64",
+      "ara_bad": "64/64",
+      "refusal": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 base refusals",
+     "status": "pass",
+     "numbers": {
+      "refusals": 29,
+      "of": 32,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 ablation committed through Session.apply",
+     "status": "pass",
+     "numbers": {
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0001-54294)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 4358144,
+      "tensors": 24,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 2.9598595574498177e-08,
+      "packed": {
+       "tensor": "model.layers.4.self_attn.o_proj.weight",
+       "relative": 1.1953745024453895e-06,
+       "ref_norm": 0.06401678174734116
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 edited refusals and KL",
+     "status": "pass",
+     "numbers": {
+      "refusals": 3,
+      "of": 32,
+      "kl": 0.035385411509196274,
+      "heretic_kl": 0.04274297133088112,
+      "kl_ratio": 0.8278650362248184,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S8 generation config",
+     "status": "pass",
+     "numbers": {
+      "repetition_penalty_file": 1.1,
+      "listed_penalties": [
+       "argmax loop to the configuration's end-of-text ids; from the workspace's generation_config.json: eos_token_id and repetition_penalty (other greedy keys refused)",
+       1.1
+      ],
+      "eos_file": [
+       151643,
+       151645
+      ],
+      "listed_stop_ids": [
+       151643,
+       151645
+      ],
+      "stop_ids_runner": [
+       151643,
+       151645
+      ]
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S5 consistency check (the ARA run's trial)",
+     "status": "pass",
+     "numbers": {
+      "modules": 8,
+      "largest": 0.01016771608367509,
+      "smallest": 0.00708685189564079
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0002-54373)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 4358144,
+      "tensors": 8,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 2.7706846594810486e-08,
+      "packed": {
+       "tensor": "model.layers.12.self_attn.o_proj.weight",
+       "relative": 2.726182149350721e-07,
+       "ref_norm": 0.7779330611228943
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S7 ARA edited refusals",
+     "status": "pass",
+     "numbers": {
+      "refusals": 1,
+      "of": 32,
+      "kl": 0.09149190492462367,
+      "heretic_kl": 0.0877549946308136,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S9 export",
+     "status": "pass",
+     "numbers": {
+      "logits_bit_equal": true,
+      "prompts": 8,
+      "max_abs": 0.0,
+      "export_adapter_status": 400,
+      "export_adapter_answer": "{\"error\":\"AdapterError: this workspace's base is a quantized GGUF file: a PEFT adapter applies to a floating-point transformers checkpoint, and these patches were computed against the quantized weights, so the adapter's base would be the dequantized model, which the IDE never builds. Export the WSP "
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 base unchanged after every step",
+     "status": "pass",
+     "numbers": {
+      "steps": 10
+     }
+    }
+   ]
+  },
+  "hybrid GGUF (Metal bridge)": {
+   "what": "Qwen3.5-0.8B-Q4_K_M.gguf: scripts/formats_gguf_compare.py --no-oracle --device metal",
+   "tree": "1db34b3",
+   "counts": {
+    "pass": 6,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 3.23,
+    "least_available_gib": 40.7,
+    "seconds": 1306.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "gguf",
+     "stage": "base refusals",
+     "status": "reported",
+     "numbers": {
+      "refusals": 30,
+      "of": 32,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 own search reaches a front trial at most half the base's refusals",
+     "status": "pass",
+     "numbers": {
+      "best_front_refusals": 1,
+      "base_refusals": 30,
+      "front": [
+       4,
+       6,
+       1,
+       7,
+       5
+      ]
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S5 consistency check (default parameters)",
+     "status": "pass",
+     "numbers": {
+      "modules": 48,
+      "largest": 0.01878875885606634,
+      "smallest": 0.00019535901727358868
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S7 own ARA runs to completion",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "modules": 48
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0001-55741)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 3670016,
+      "tensors": 48,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 1.3737007975578308e-08,
+      "packed": {
+       "tensor": "model.layers.0.linear_attn.out_proj.weight",
+       "relative": 3.6928981364341275e-06,
+       "ref_norm": 0.009924995712935925
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S9 export",
+     "status": "pass",
+     "numbers": {
+      "logits_bit_equal": true,
+      "prompts": 8,
+      "max_abs": 0.0,
+      "export_adapter_status": 400,
+      "export_adapter_answer": "{\"error\":\"AdapterError: this workspace's base is a quantized GGUF file: a PEFT adapter applies to a floating-point transformers checkpoint, and these patches were computed against the quantized weights, so the adapter's base would be the dequantized model, which the IDE never builds. Export the WSP "
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 base unchanged after every step",
+     "status": "pass",
+     "numbers": {
+      "steps": 7
+     }
+    }
+   ]
+  },
+  "transport, Q4_0 (CPU)": {
+   "what": "scripts/formats_transport.py: a supervised ARA search of 6 trials at rank 50 through the model worker",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 2.32,
+    "least_available_gib": 42.9,
+    "seconds": 396.0,
+    "returncode": 0,
+    "violation": null
+   },
+   "summary": {
+    "trials": 6,
+    "median_share": 0.01729222658008041,
+    "max_share": 0.021413509086198323,
+    "limit": 0.1,
+    "over": false
+   },
+   "derived": {
+    "complete_trials": 6,
+    "bytes": 6692864000,
+    "transport_seconds": 5.941790254786611,
+    "bytes_per_second": 1126405294.197037,
+    "response_tokens": 5760,
+    "scoring_seconds": 187.00128750002477,
+    "seconds_per_decoded_token": 0.03246550130208763,
+    "jobs_per_trial": [
+     64,
+     64,
+     64,
+     64,
+     64,
+     64
+    ],
+    "jobs_per_scored_prompt": 1.0,
+    "median_share": 0.01729222658008041,
+    "max_share": 0.021413509086198323,
+    "projection_27b": {
+     "bytes_per_job": 216268800,
+     "jobs": 200.0,
+     "transport_seconds": 38.39981951685839,
+     "shares": {
+      "5": 0.018838217678983075,
+      "10": 0.03697980180189638,
+      "20": 0.07132212553733223
+     }
+    },
+    "expected_share": [
+     0.01,
+     0.03
+    ],
+    "decision": {
+     "e4": "measured median share 0.01729 on model.gguf; candidates keep travelling with each job",
+     "build_e4b": false,
+     "ask_owner_q8": false,
+     "far_from_expected": false
+    }
+   },
+   "checks": [
+    {
+     "label": "guard",
+     "stage": "teardown remaining: []",
+     "status": "pass",
+     "numbers": {
+      "pid": 94089,
+      "teardown": {
+       "event": "teardown",
+       "reason": null,
+       "returncode": 0,
+       "remaining": [],
+       "cleanup_errors": [],
+       "cleanup_complete": true,
+       "elapsed": 396.0277027080301
+      }
+     }
+    }
+   ]
+  },
+  "transport, hybrid GGUF (Metal)": {
+   "what": "the same on Qwen3.5-0.8B-Q4_K_M.gguf",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 3.57,
+    "least_available_gib": 47.2,
+    "seconds": 699.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "summary": {
+    "trials": 6,
+    "median_share": 0.009793176440160204,
+    "max_share": 0.012825914185260958,
+    "limit": 0.1,
+    "over": false
+   },
+   "derived": {
+    "complete_trials": 6,
+    "bytes": 5681971200,
+    "transport_seconds": 5.740194172365591,
+    "bytes_per_second": 989856968.1412717,
+    "response_tokens": 5760,
+    "scoring_seconds": 474.98103254206944,
+    "seconds_per_decoded_token": 0.0824619848163315,
+    "jobs_per_trial": [
+     64,
+     64,
+     64,
+     64,
+     64,
+     64
+    ],
+    "jobs_per_scored_prompt": 1.0,
+    "median_share": 0.009793176440160204,
+    "max_share": 0.012825914185260958,
+    "projection_27b": {
+     "bytes_per_job": 216268800,
+     "jobs": 200.0,
+     "transport_seconds": 43.696979858838404,
+     "shares": {
+      "5": 0.021381339939082665,
+      "10": 0.04186749669884882,
+      "20": 0.08037009856148837
+     }
+    },
+    "expected_share": [
+     0.01,
+     0.03
+    ],
+    "decision": {
+     "e4": "measured median share 0.009793 on model.gguf; candidates keep travelling with each job",
+     "build_e4b": false,
+     "ask_owner_q8": false,
+     "far_from_expected": false
+    }
+   },
+   "checks": [
+    {
+     "label": "guard",
+     "stage": "teardown remaining: []",
+     "status": "pass",
+     "numbers": {
+      "pid": 23744,
+      "teardown": {
+       "event": "teardown",
+       "reason": null,
+       "returncode": 0,
+       "remaining": [],
+       "cleanup_errors": [],
+       "cleanup_complete": true,
+       "elapsed": 699.17577708303
+      }
+     }
+    }
+   ]
+  },
+  "first run: bf16 ablation vs Heretic": {
+   "what": "before the attention and rule corrections",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 3,
+    "fail": 2,
+    "reported": 2
+   },
+   "guard": {
+    "peak_footprint_gib": 4.4,
+    "least_available_gib": 51.2,
+    "seconds": 100.2,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "worst_relative": 0.07405566251145468,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S3 directions",
+     "status": "reported",
+     "numbers": {
+      "min_cosine_1_to_n": 0.944177749047592,
+      "expected_at_least": 0.99
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-1 modules and tensors",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "equal sets",
+      "heretic_modules": 48,
+      "heretic_unmatched": 0,
+      "ide_modules": 48,
+      "only_heretic": [],
+      "only_ide": [],
+      "tensors_changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "C4-4 refusals of the IDE's own edit",
+     "status": "pass",
+     "numbers": {
+      "value": 1,
+      "bound": 2,
+      "ide": 27,
+      "heretic": 28,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 change from Heretic's means",
+     "status": "fail",
+     "numbers": {
+      "value": 0.0004852521157596435,
+      "bound": 0.0004,
+      "tensors": 31,
+      "changed_in_one_only": 0
+     }
+    },
+    {
+     "label": "full",
+     "stage": "B-S4 rounded sums",
+     "status": "fail",
+     "numbers": {
+      "value": false,
+      "bound": {
+       "max_steps": 1,
+       "one_step_fraction": 0.01
+      },
+      "tensors": 31,
+      "tensors_outside": 30,
+      "elements": 71106560,
+      "equal": 71087885,
+      "one_step": 17167,
+      "more_than_one": 1508,
+      "max_steps": 27577,
+      "worst_one_step_fraction": 0.0029471261160714285
+     }
+    }
+   ]
+  },
+  "first run: bf16 ARA vs Heretic": {
+   "what": "before the attention correction",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "reported": 3
+   },
+   "guard": {
+    "peak_footprint_gib": 4.29,
+    "least_available_gib": 51.8,
+    "seconds": 120.8,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "counts": {
+       "good": "64/64",
+       "bad": "64/64",
+       "kl": "32/32"
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S2 mean residuals",
+     "status": "reported",
+     "numbers": {
+      "good_rel_worst": 0.0670895081095344,
+      "bad_rel_worst": 0.07405566251145468,
+      "expected_below": 0.02
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-2 module inputs and outputs",
+     "status": "reported",
+     "numbers": {
+      "worst_input_rel": 0.1570336076567468,
+      "worst_output_rel": 0.16220650562545386,
+      "captured_by_both": 48,
+      "ide_modules": 48,
+      "expected_order": 0.00390625
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "B-S6 consistency check",
+     "status": "pass",
+     "numbers": {
+      "bound": [
+       0.0,
+       0.005
+      ],
+      "modules": 8,
+      "smallest": 0.001622179986639446,
+      "largest": 0.0016931193351580388
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-5 refusals of the IDE's own fit",
+     "status": "reported",
+     "numbers": {
+      "ide": 0,
+      "heretic": 0,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "C4-3 objective reduction",
+     "status": "pass",
+     "numbers": {
+      "value": 0.0152457733513509,
+      "bound": 0.1,
+      "matrices": 8,
+      "worst": 0.06457256027976188
+     }
+    }
+   ]
+  },
+  "first run: bf16 scores vs Heretic": {
+   "what": "before the attention correction (its self-calibrating bounds were vacuous: the two tools' base logits were 4.69 apart)",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 23,
+    "fail": 0,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 1.07,
+    "least_available_gib": 55.2,
+    "seconds": 788.5,
+    "returncode": 0,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "full",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 20,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.9375,
+       "heretic": 0.96875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 16,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 132.75,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 KL of every trial as a candidate",
+     "status": "pass",
+     "numbers": {
+      "trials": 4,
+      "outside": [],
+      "relative": 0.01
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S6 refusals (reported)",
+     "status": "reported",
+     "numbers": {
+      "equal": 2,
+      "trials": 4
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 26,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.875,
+       "heretic": 0.875,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 21,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 128.8125,
+       "heretic": 131.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "full",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.030814839077720535,
+      "heretic": 0.014471225440502167,
+      "bound": 2.392381136635347
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "refusal": "32/32",
+      "length": "32/32",
+      "kl": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S2 prefix and prefix-test responses",
+     "status": "pass",
+     "numbers": {
+      "ide_prefix": "",
+      "heretic_prefix": ""
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 20,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.9375,
+       "heretic": 0.96875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S3 base responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 16,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S4 base score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 132.75,
+       "heretic": 133.3125,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (refusal)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 19,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (refusal)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 0.0,
+       "heretic": 0.0,
+       "equal": true,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged responses (length)",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "identical": 14,
+      "prompts": 32
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged score (length)",
+     "status": "pass",
+     "numbers": {
+      "value": {
+       "ide": 129.1875,
+       "heretic": 128.875,
+       "equal": false,
+       "ok": true
+      }
+     }
+    },
+    {
+     "label": "ara",
+     "stage": "S5 merged KL",
+     "status": "pass",
+     "numbers": {
+      "ide": 0.09872124996036291,
+      "heretic": 0.0913395881652832,
+      "bound": 6.010451957282827
+     }
+    }
+   ]
+  },
+  "first run: bf16 fit check (IDE's torch)": {
+   "what": "before B-S5 was limited to the run's torch version",
+   "tree": "7f6764c",
+   "interpreter": "torch 2.15.0",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "reported": 0
+   },
+   "checks": [
+    {
+     "label": "ara",
+     "stage": "B-S5 IDE fit from Heretic's captures",
+     "status": "fail",
+     "numbers": {
+      "modules": 8,
+      "not_equal": [
+       "model.layers.12.self_attn.o_proj.weight",
+       "model.layers.12.mlp.down_proj.weight",
+       "model.layers.13.self_attn.o_proj.weight",
+       "model.layers.13.mlp.down_proj.weight",
+       "model.layers.14.self_attn.o_proj.weight"
+      ],
+      "factors_equal": 0
+     }
+    }
+   ]
+  },
+  "first run: GGUF Q4_0 (CPU bridge)": {
+   "what": "before the overlay correction",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 10,
+    "fail": 1,
+    "reported": 0
+   },
+   "guard": {
+    "peak_footprint_gib": 1.65,
+    "least_available_gib": 48.6,
+    "seconds": 245.9,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "gguf",
+     "stage": "G-S1 token ids",
+     "status": "pass",
+     "numbers": {
+      "value": true,
+      "bound": "identical",
+      "good": "64/64",
+      "bad": "64/64",
+      "kl": "32/32",
+      "ara_good": "64/64",
+      "ara_bad": "64/64",
+      "refusal": "32/32",
+      "prefix_test_without": "32/32"
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 base refusals",
+     "status": "pass",
+     "numbers": {
+      "refusals": 29,
+      "of": 32,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 ablation committed through Session.apply",
+     "status": "pass",
+     "numbers": {
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0001-50253)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 4358144,
+      "tensors": 24,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 2.9598595574498177e-08,
+      "packed": {
+       "tensor": "model.layers.4.self_attn.o_proj.weight",
+       "relative": 1.4528937004390552e-06,
+       "ref_norm": 0.06401678174734116
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 edited refusals and KL",
+     "status": "pass",
+     "numbers": {
+      "refusals": 3,
+      "of": 32,
+      "kl": 0.03467474003628013,
+      "heretic_kl": 0.04274297133088112,
+      "kl_ratio": 0.8112384084825702,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S8 generation config",
+     "status": "pass",
+     "numbers": {
+      "repetition_penalty_file": 1.1,
+      "listed_penalties": [
+       "argmax loop to the configuration's end-of-text ids; from the workspace's generation_config.json: eos_token_id and repetition_penalty (other greedy keys refused)",
+       1.1
+      ],
+      "eos_file": [
+       151643,
+       151645
+      ],
+      "listed_stop_ids": [
+       151643,
+       151645
+      ],
+      "stop_ids_runner": [
+       151643,
+       151645
+      ]
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S5 consistency check (the ARA run's trial)",
+     "status": "pass",
+     "numbers": {
+      "modules": 8,
+      "largest": 0.01016771608367509,
+      "smallest": 0.00708685189564079
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0002-50328)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 4358144,
+      "tensors": 8,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 2.7706846594810486e-08,
+      "packed": {
+       "tensor": "model.layers.12.self_attn.o_proj.weight",
+       "relative": 3.6646019353991815e-07,
+       "ref_norm": 0.7779330611228943
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S7 ARA edited refusals",
+     "status": "pass",
+     "numbers": {
+      "refusals": 0,
+      "of": 32,
+      "kl": 0.09153365711972583,
+      "heretic_kl": 0.0877549946308136,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S9 export",
+     "status": "fail",
+     "numbers": {
+      "logits_bit_equal": false,
+      "prompts": 8,
+      "max_abs": 0.3722116947174072,
+      "export_adapter_status": 400,
+      "export_adapter_answer": "{\"error\":\"AdapterError: this workspace's base is a quantized GGUF file: a PEFT adapter applies to a floating-point transformers checkpoint, and these patches were computed against the quantized weights, so the adapter's base would be the dequantized model, which the IDE never builds. Export the WSP "
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 base unchanged after every step",
+     "status": "pass",
+     "numbers": {
+      "steps": 10
+     }
+    }
+   ]
+  },
+  "first run: hybrid GGUF (Metal bridge)": {
+   "what": "before the overlay correction",
+   "tree": "7f6764c",
+   "counts": {
+    "pass": 5,
+    "fail": 1,
+    "reported": 1
+   },
+   "guard": {
+    "peak_footprint_gib": 3.17,
+    "least_available_gib": 48.8,
+    "seconds": 1336.2,
+    "returncode": 1,
+    "violation": null
+   },
+   "checks": [
+    {
+     "label": "gguf",
+     "stage": "base refusals",
+     "status": "reported",
+     "numbers": {
+      "refusals": 30,
+      "of": 32,
+      "error": null
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S6 own search reaches a front trial at most half the base's refusals",
+     "status": "pass",
+     "numbers": {
+      "best_front_refusals": 1,
+      "base_refusals": 30,
+      "front": [
+       4,
+       6,
+       1,
+       7,
+       5
+      ]
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S5 consistency check (default parameters)",
+     "status": "pass",
+     "numbers": {
+      "modules": 48,
+      "largest": 0.01878875885606634,
+      "smallest": 0.00019535901727358868
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S7 own ARA runs to completion",
+     "status": "pass",
+     "numbers": {
+      "error": null,
+      "modules": 48
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 invariants (patch 0001-52084)",
+     "status": "pass",
+     "numbers": {
+      "base_unchanged": true,
+      "piece_dtypes": [
+       "torch.float32"
+      ],
+      "largest_read": 3670016,
+      "tensors": 48,
+      "current_not_base_plus_delta": [],
+      "delta_read_not_delta": [],
+      "max_abs_current_minus_base_vs_delta": 1.3737007975578308e-08,
+      "packed": {
+       "tensor": "model.layers.0.linear_attn.out_proj.weight",
+       "relative": 3.695191049381564e-06,
+       "ref_norm": 0.009924995712935925
+      }
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S9 export",
+     "status": "fail",
+     "numbers": {
+      "logits_bit_equal": false,
+      "prompts": 8,
+      "max_abs": 0.014386415481567383,
+      "export_adapter_status": 400,
+      "export_adapter_answer": "{\"error\":\"AdapterError: this workspace's base is a quantized GGUF file: a PEFT adapter applies to a floating-point transformers checkpoint, and these patches were computed against the quantized weights, so the adapter's base would be the dequantized model, which the IDE never builds. Export the WSP "
+     }
+    },
+    {
+     "label": "gguf",
+     "stage": "G-S4 base unchanged after every step",
+     "status": "pass",
+     "numbers": {
+      "steps": 7
+     }
+    }
+   ]
+  }
+ },
+ "totals_of_the_final_runs": {
+  "pass": 54,
+  "fail": 2,
+  "reported": 8
+ }
+}

@@ -1,0 +1,1042 @@
+{
+ "date": "2026-11-18",
+ "what": "The fitted low-rank ablation (ARA): the same model, prompts and parameters through Heretic and through the IDE, stage by stage.",
+ "ide": {
+  "branch": "feature/claude/directions-ara",
+  "tree": "the one this file is committed with",
+  "runner": "HFRunner",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "also_run_under": {
+   "note": "the same IDE code under Heretic's interpreter and libraries",
+   "versions": {
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2",
+    "safetensors": "0.8.0"
+   }
+  }
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "heretic-llm": "2.2.0.dev0",
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0",
+   "tokenizers": "0.23.2"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "batch_size": 1,
+  "n_trials": 2,
+  "export_strategy": "merge",
+  "lora_rank": 4
+ },
+ "model": {
+  "repository": "tiny-random/qwen2.5",
+  "commit": "7a6a3128ee4137a248d6d1582824592b87a81647",
+  "layers": 4,
+  "d_model": 8,
+  "tensors": 51,
+  "parameters": 2462792
+ },
+ "runs": {
+  "s12345": {
+   "heretic_run": "ara-s12345",
+   "seed": 12345,
+   "parameters": {
+    "start_layer_index": 2,
+    "end_layer_index": 3,
+    "preserve_good_behavior_weight": 0.22964349961398073,
+    "steer_bad_behavior_weight": 0.00011481930683434137,
+    "overcorrect_relative_weight": 0.6581294089043791,
+    "neighbor_count": 2,
+    "preserve_row_magnitudes": true,
+    "lora_rank": 4,
+    "n_optimization_steps": 5,
+    "learning_rate": 1.0,
+    "max_iter": 20,
+    "history_size": 10,
+    "seed": 12345
+   },
+   "refusals_heretic": 0.0,
+   "whole_ide_under_ide_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 2.9871439302726616e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.962283335716726e-07,
+     "outputs_rel_worst": 5.502790383242419e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.00020238847355358303,
+      "own_captures": {
+       "change_rel_diff": 0.04362040715721593,
+       "elements_that_differ": 2004
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.05636732883920402,
+       "elements_that_differ": 2030
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 1.8638213849022226e-06,
+      "heretic": 1.7738753980142462e-06,
+      "ide_own_captures": 1.7741274853195067e-06,
+      "ide_heretic_captures": 1.7742579598505667e-06
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 2.6939245839573753e-07,
+      "heretic": 2.6939245839573753e-07,
+      "ide_own_captures": 2.6939245839573753e-07,
+      "ide_heretic_captures": 2.6939245839573753e-07
+     }
+    ],
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "kl": {
+     "heretic": 3.4341962873440934e-07,
+     "ide_own_captures": 5.997829362058837e-07,
+     "ide_heretic_captures": 3.992928725438105e-07
+    }
+   },
+   "whole_ide_under_heretic_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 3.0739397863007105e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.365834658395089e-07,
+     "outputs_rel_worst": 5.53193938457601e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.00020238857541698962,
+      "own_captures": {
+       "change_rel_diff": 0.013068014492900059,
+       "elements_that_differ": 2011
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0,
+       "elements_that_differ": 0
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 1.8638213849022221e-06,
+      "heretic": 1.7738753980142456e-06,
+      "ide_own_captures": 1.7739107814694565e-06,
+      "ide_heretic_captures": 1.7738753980142456e-06
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 2.693924583957375e-07,
+      "heretic": 2.693924583957375e-07,
+      "ide_own_captures": 2.693924583957375e-07,
+      "ide_heretic_captures": 2.693924583957375e-07
+     }
+    ],
+    "base_logits_max_abs_diff": 1.387670636177063e-07,
+    "kl": {
+     "heretic": 3.4341962873440934e-07,
+     "ide_own_captures": 7.250005751302524e-07,
+     "ide_heretic_captures": 3.082645321228483e-07
+    }
+   },
+   "fit_check": {
+    "under_ide_torch": {
+     "torch": "2.15.0",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.11115239627814713,
+       0.1416858963697232
+      ],
+      "all_budgets": [
+       0.020277905517604018,
+       0.15725645035069452
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.00020238847355358303,
+       "heretic_loop_change_rel_diff": 0.05636657598409793,
+       "ide_change_rel_diff": 0.05636657598409793,
+       "heretic_loop_merged_elements_that_differ": 2030,
+       "ide_merged_elements_that_differ": 2030
+      }
+     ]
+    },
+    "under_heretic_torch": {
+     "torch": "2.14.1",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.11115239627814719,
+       0.1416858963715748
+      ],
+      "all_budgets": [
+       0.012165972378437613,
+       0.15852475518115697
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.00020238857541698962,
+       "heretic_loop_change_rel_diff": 0.0001244775212940692,
+       "ide_change_rel_diff": 0.0001244775212940692,
+       "heretic_loop_merged_elements_that_differ": 0,
+       "ide_merged_elements_that_differ": 0
+      }
+     ]
+    },
+    "overcorrect_set_to_zero": {
+     "under_ide_torch": {
+      "torch": "2.15.0",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        0.00013333960233049766,
+        0.00019670662749400798
+       ],
+       "all_budgets": [
+        0.00012993195901176842,
+        0.00019670662749400798
+       ]
+      }
+     },
+     "under_heretic_torch": {
+      "torch": "2.14.1",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        0.00013333960233050205,
+        0.00019670755090738282
+       ],
+       "all_budgets": [
+        0.00012993196045561504,
+        0.00035236089201604753
+       ]
+      }
+     }
+    }
+   }
+  },
+  "s1": {
+   "heretic_run": "ara-s1",
+   "seed": 1,
+   "parameters": {
+    "start_layer_index": 2,
+    "end_layer_index": 4,
+    "preserve_good_behavior_weight": 0.004483433332550856,
+    "steer_bad_behavior_weight": 0.0022963171409208214,
+    "overcorrect_relative_weight": 0.011969077170964765,
+    "neighbor_count": 1,
+    "preserve_row_magnitudes": true,
+    "lora_rank": 4,
+    "n_optimization_steps": 5,
+    "learning_rate": 1.0,
+    "max_iter": 20,
+    "history_size": 10,
+    "seed": 1
+   },
+   "refusals_heretic": 0.0,
+   "whole_ide_under_ide_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 2.9871439302726616e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.962283335716726e-07,
+     "outputs_rel_worst": 5.502790383242419e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.09642627090215683,
+      "own_captures": {
+       "change_rel_diff": 0.3798809105709102,
+       "elements_that_differ": 2048
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.33010616996793013,
+       "elements_that_differ": 2048
+      }
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.0015219264896586537,
+      "own_captures": {
+       "change_rel_diff": 0.001001586926920502,
+       "elements_that_differ": 2006
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0030307515760861345,
+       "elements_that_differ": 2038
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 4.4087824325494616e-05,
+      "heretic": 1.737732924800931e-05,
+      "ide_own_captures": 1.3506413917507124e-05,
+      "ide_heretic_captures": 1.3761355166959849e-05
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 5.637831585457576e-06,
+      "heretic": 5.637831585457576e-06,
+      "ide_own_captures": 5.637831585457576e-06,
+      "ide_heretic_captures": 5.637831585457576e-06
+     },
+     {
+      "layer": 3,
+      "component": "attn.o_proj",
+      "start": 3.012355969434612e-05,
+      "heretic": 2.331716140305238e-05,
+      "ide_own_captures": 2.3317160073274518e-05,
+      "ide_heretic_captures": 2.331717402753756e-05
+     },
+     {
+      "layer": 3,
+      "component": "mlp.down_proj",
+      "start": 2.3534723029572316e-06,
+      "heretic": 2.3534723029572316e-06,
+      "ide_own_captures": 2.3534723029572316e-06,
+      "ide_heretic_captures": 2.3534723029572316e-06
+     }
+    ],
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "kl": {
+     "heretic": 1.0571621942290221e-06,
+     "ide_own_captures": 7.700808168920048e-07,
+     "ide_heretic_captures": 1.0926119102805387e-06
+    }
+   },
+   "whole_ide_under_heretic_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 3.0739397863007105e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.365834658395089e-07,
+     "outputs_rel_worst": 5.53193938457601e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.09642630070447922,
+      "own_captures": {
+       "change_rel_diff": 0.44091599387912545,
+       "elements_that_differ": 2048
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0,
+       "elements_that_differ": 0
+      }
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.001521926955319941,
+      "own_captures": {
+       "change_rel_diff": 0.0054999312902107795,
+       "elements_that_differ": 2022
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0,
+       "elements_that_differ": 0
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 4.4087824325494616e-05,
+      "heretic": 1.7377329248009312e-05,
+      "ide_own_captures": 1.3926429483727818e-05,
+      "ide_heretic_captures": 1.7377329248009312e-05
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 5.637831585457576e-06,
+      "heretic": 5.637831585457576e-06,
+      "ide_own_captures": 5.637831585457576e-06,
+      "ide_heretic_captures": 5.637831585457576e-06
+     },
+     {
+      "layer": 3,
+      "component": "attn.o_proj",
+      "start": 3.012355969434612e-05,
+      "heretic": 2.3317161403052423e-05,
+      "ide_own_captures": 2.331716892265631e-05,
+      "ide_heretic_captures": 2.3317161403052423e-05
+     },
+     {
+      "layer": 3,
+      "component": "mlp.down_proj",
+      "start": 2.353472302957232e-06,
+      "heretic": 2.353472302957232e-06,
+      "ide_own_captures": 2.353472302957232e-06,
+      "ide_heretic_captures": 2.353472302957232e-06
+     }
+    ],
+    "base_logits_max_abs_diff": 1.387670636177063e-07,
+    "kl": {
+     "heretic": 1.0571621942290221e-06,
+     "ide_own_captures": 1.5354529523392557e-06,
+     "ide_heretic_captures": 1.0334482567486702e-06
+    }
+   },
+   "fit_check": {
+    "under_ide_torch": {
+     "torch": "2.15.0",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.004004256271572373,
+       0.006445453104786306
+      ],
+      "all_budgets": [
+       0.0004344700714659936,
+       0.3732659650350967
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.09642627090215683,
+       "heretic_loop_change_rel_diff": 0.33010617194048847,
+       "ide_change_rel_diff": 0.3301061719404884,
+       "heretic_loop_merged_elements_that_differ": 2048,
+       "ide_merged_elements_that_differ": 2048
+      },
+      {
+       "tensor": "model.layers.3.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.0015219264896586537,
+       "heretic_loop_change_rel_diff": 0.0030311221107982875,
+       "ide_change_rel_diff": 0.0030311221107982875,
+       "heretic_loop_merged_elements_that_differ": 2038,
+       "ide_merged_elements_that_differ": 2038
+      }
+     ]
+    },
+    "under_heretic_torch": {
+     "torch": "2.14.1",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.004004256271572376,
+       0.006445450818984006
+      ],
+      "all_budgets": [
+       0.0004344700466936957,
+       0.3502835482204825
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.09642630070447922,
+       "heretic_loop_change_rel_diff": 2.654532220816738e-07,
+       "ide_change_rel_diff": 2.654532220816738e-07,
+       "heretic_loop_merged_elements_that_differ": 0,
+       "ide_merged_elements_that_differ": 0
+      },
+      {
+       "tensor": "model.layers.3.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.001521926955319941,
+       "heretic_loop_change_rel_diff": 1.6895902708675036e-05,
+       "ide_change_rel_diff": 1.6895902708675036e-05,
+       "heretic_loop_merged_elements_that_differ": 0,
+       "ide_merged_elements_that_differ": 0
+      }
+     ]
+    },
+    "overcorrect_set_to_zero": {
+     "under_ide_torch": {
+      "torch": "2.15.0",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        1.0263439947262567e-05,
+        2.8846751818325993e-05
+       ],
+       "all_budgets": [
+        5.241098335935062e-06,
+        0.11143546614545405
+       ]
+      }
+     },
+     "under_heretic_torch": {
+      "torch": "2.14.1",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        1.0264136537841355e-05,
+        2.884675198961798e-05
+       ],
+       "all_budgets": [
+        5.241098312582552e-06,
+        0.292350344838748
+       ]
+      }
+     }
+    }
+   }
+  },
+  "nomag": {
+   "heretic_run": "ara-nomag-s12345",
+   "seed": 12345,
+   "parameters": {
+    "start_layer_index": 2,
+    "end_layer_index": 3,
+    "preserve_good_behavior_weight": 0.22964349961398073,
+    "steer_bad_behavior_weight": 0.00011481930683434137,
+    "overcorrect_relative_weight": 0.6581294089043791,
+    "neighbor_count": 2,
+    "preserve_row_magnitudes": false,
+    "lora_rank": 4,
+    "n_optimization_steps": 5,
+    "learning_rate": 1.0,
+    "max_iter": 20,
+    "history_size": 10,
+    "seed": 12345
+   },
+   "refusals_heretic": 0.0,
+   "whole_ide_under_ide_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 2.9871439302726616e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.962283335716726e-07,
+     "outputs_rel_worst": 5.502790383242419e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.0002101883728755638,
+      "own_captures": {
+       "change_rel_diff": 0.05123000377213285,
+       "elements_that_differ": 2036
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0036753221463610665,
+       "elements_that_differ": 1840
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 1.8638213849022226e-06,
+      "heretic": 1.7740932303121965e-06,
+      "ide_own_captures": 1.7740026013029592e-06,
+      "ide_heretic_captures": 1.7740622159020748e-06
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 2.6939245839573753e-07,
+      "heretic": 2.6939245839573753e-07,
+      "ide_own_captures": 2.6939245839573753e-07,
+      "ide_heretic_captures": 2.6939245839573753e-07
+     }
+    ],
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "kl": {
+     "heretic": 5.345633553588414e-07,
+     "ide_own_captures": 5.455564178191707e-07,
+     "ide_heretic_captures": 4.846093020205444e-07
+    }
+   },
+   "whole_ide_under_heretic_libraries": {
+    "tokens_identical": {
+     "good": "5/5",
+     "bad": "5/5",
+     "kl": "5/5"
+    },
+    "means_rel_worst": 3.0739397863007105e-07,
+    "module_io": {
+     "captured_by_both": 8,
+     "components": 8,
+     "inputs_rel_worst": 6.365834658395089e-07,
+     "outputs_rel_worst": 5.53193938457601e-07
+    },
+    "changed_tensors": [
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "elements": 2048,
+      "change_over_weight": 0.00021018848929088563,
+      "own_captures": {
+       "change_rel_diff": 0.02510656573448266,
+       "elements_that_differ": 2027
+      },
+      "heretic_captures": {
+       "change_rel_diff": 0.0,
+       "elements_that_differ": 0
+      }
+     }
+    ],
+    "untouched_max_abs": {
+     "heretic_max_abs": 0.0,
+     "ide_max_abs": 0.0
+    },
+    "objective": [
+     {
+      "layer": 2,
+      "component": "attn.o_proj",
+      "start": 1.8638213849022221e-06,
+      "heretic": 1.774093230312197e-06,
+      "ide_own_captures": 1.7739414136125796e-06,
+      "ide_heretic_captures": 1.774093230312197e-06
+     },
+     {
+      "layer": 2,
+      "component": "mlp.down_proj",
+      "start": 2.693924583957375e-07,
+      "heretic": 2.693924583957375e-07,
+      "ide_own_captures": 2.693924583957375e-07,
+      "ide_heretic_captures": 2.693924583957375e-07
+     }
+    ],
+    "base_logits_max_abs_diff": 1.387670636177063e-07,
+    "kl": {
+     "heretic": 5.345633553588414e-07,
+     "ide_own_captures": 6.244931114451902e-07,
+     "ide_heretic_captures": 5.168167831470782e-07
+    }
+   },
+   "fit_check": {
+    "under_ide_torch": {
+     "torch": "2.15.0",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.11167018027124928,
+       0.14176045124740205
+      ],
+      "all_budgets": [
+       0.021474656825878086,
+       0.15818777521734817
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.0002101883728755638,
+       "heretic_loop_change_rel_diff": 0.0036730779296380613,
+       "ide_change_rel_diff": 0.0036730779296380613,
+       "heretic_loop_merged_elements_that_differ": 1840,
+       "ide_merged_elements_that_differ": 1840
+      }
+     ]
+    },
+    "under_heretic_torch": {
+     "torch": "2.14.1",
+     "budgets": [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       1,
+       20
+      ],
+      [
+       5,
+       20
+      ]
+     ],
+     "ide_vs_heretic_loop_worst": 0.0,
+     "nudged_heretic_loop_vs_itself": {
+      "one_iteration": [
+       0.11167018027124925,
+       0.14176045124740203
+      ],
+      "all_budgets": [
+       0.02147465682699292,
+       0.15827623422083542
+      ]
+     },
+     "against_heretics_export": [
+      {
+       "tensor": "model.layers.2.self_attn.o_proj.weight",
+       "elements": 2048,
+       "change_over_weight": 0.00021018848929088563,
+       "heretic_loop_change_rel_diff": 0.00012135372488731322,
+       "ide_change_rel_diff": 0.00012135372488731322,
+       "heretic_loop_merged_elements_that_differ": 0,
+       "ide_merged_elements_that_differ": 0
+      }
+     ]
+    },
+    "overcorrect_set_to_zero": {
+     "under_ide_torch": {
+      "torch": "2.15.0",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        0.00013443781520888147,
+        0.00019892233816680977
+       ],
+       "all_budgets": [
+        0.00012843940179469893,
+        0.00019892623194970146
+       ]
+      }
+     },
+     "under_heretic_torch": {
+      "torch": "2.14.1",
+      "budgets": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        1,
+        20
+       ],
+       [
+        5,
+        20
+       ]
+      ],
+      "ide_vs_heretic_loop_worst": 0.0,
+      "nudged_heretic_loop_vs_itself": {
+       "one_iteration": [
+        0.00013443781520888136,
+        0.0001989223381668098
+       ],
+       "all_budgets": [
+        0.00012843940179469896,
+        0.4495269320997472
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}

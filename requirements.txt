@@ -1,0 +1,10 @@
+# CPU is enough. For a CPU-only torch wheel: pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.5
+numpy
+psutil>=7.2        # fail-closed macOS/Linux available-memory telemetry
+safetensors
+tokenizers          # any Hugging Face tokenizer.json
+fastapi
+uvicorn
+transformers        # only to RUN checkpoints in their native layout; viewing and editing them does not need it
+pytest              # tests only

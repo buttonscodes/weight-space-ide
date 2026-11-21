@@ -1,0 +1,144 @@
+The river had been rising for three days before anyone in the village thought to move the boats. By the fourth morning the lower road was under water, and the baker's cart stood axle-deep outside the mill. Old Tomas said he had seen worse in the spring of his twelfth year, when the bridge went, but nobody remembered that flood except him. The children were sent up to the school on the hill. The men carried sacks of grain to the church loft, and the women counted candles, blankets, and jars of salted fish.
+
+Maria did not go up the hill. She stood at the edge of the square with her arms folded, watching the brown water turn slowly around the well. "It will stop tonight," she said. "The wind has changed." Her brother laughed at her, but she was right: by evening the rain had thinned to a mist, and the water held its line a hand's width below the chapel step.
+
+In 1869 the first transcontinental railroad in the United States was completed at Promontory Summit, Utah. The line joined the Central Pacific, built eastward from Sacramento, with the Union Pacific, built westward from Omaha. A journey that had taken four to six months by wagon could now be made in about a week. Freight rates fell sharply, towns grew along the route, and the population of California nearly doubled within twenty years. The railroad also brought lasting harm to the Plains nations, whose lands it crossed and whose bison herds were destroyed in the decades that followed.
+
+Water boils at 100 degrees Celsius at sea level, which is 212 degrees Fahrenheit. At the top of Mount Everest, where the air pressure is about one third of that at sea level, it boils at roughly 71 degrees Celsius. This is why food takes longer to cook at high altitude. A pressure cooker works the other way: by raising the pressure it raises the boiling point to about 120 degrees, so beans that need two hours in an open pot are done in forty minutes.
+
+The heart of an adult human beats about 100,000 times a day and pumps roughly 7,500 litres of blood. The left ventricle has the thickest wall because it must push blood through the whole body, while the right ventricle sends it only to the lungs. Red blood cells carry oxygen bound to haemoglobin; white blood cells defend against infection; platelets help the blood to clot.
+
+"Did you lock the door?" she asked.
+"I thought you did."
+"I had the groceries. You had the keys."
+He patted his coat pockets, then his trousers. "They're in the car."
+"Then the car is unlocked too."
+"Probably." He sighed and turned back down the stairs. "Put the kettle on. I'll be two minutes."
+"You said that last time, and I ate dinner alone."
+
+Dear Ms. Okafor,
+Thank you for your letter of 14 March regarding the delayed delivery of your order (reference 48213-B). I am sorry for the inconvenience this has caused. Our records show that the parcel left the warehouse on 9 March and was held at the regional depot because of an incomplete address label. It has now been re-labelled and should reach you by Friday. As an apology, we have refunded the delivery charge of £6.50 to your card. If the parcel has not arrived by Monday, please call me directly on 020 7946 0153.
+Yours sincerely,
+Daniel Reyes, Customer Services
+
+To make the dough, mix 500 grams of strong white flour with 10 grams of salt and 7 grams of dried yeast. Add 320 millilitres of lukewarm water and two tablespoons of olive oil. Knead for ten minutes until the dough is smooth and elastic, then cover the bowl and leave it in a warm place for one hour, or until it has doubled in size. Heat the oven to 220 degrees. Shape the dough into a round loaf, slash the top with a sharp knife, and bake for 30 to 35 minutes. The loaf is ready when it sounds hollow if you tap the base.
+
+Question: A train leaves the station at 9:15 and travels at 80 kilometres per hour. A second train leaves the same station at 10:00 and travels at 100 kilometres per hour in the same direction. At what time does the second train catch the first?
+Answer: When the second train leaves, the first has travelled for 45 minutes, which is 0.75 hours, so it is 80 × 0.75 = 60 kilometres ahead. The second train closes the gap at 100 − 80 = 20 kilometres per hour. 60 ÷ 20 = 3 hours. The second train catches the first at 13:00.
+
+Question: What is 17 times 23?
+Answer: 17 × 23 = 17 × 20 + 17 × 3 = 340 + 51 = 391.
+
+Question: Sarah has 12 apples. She gives 5 to Tom and then buys 9 more. How many apples does she have now?
+Answer: 12 − 5 = 7, and 7 + 9 = 16. Sarah has 16 apples.
+
+One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve. Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. January, February, March, April, May, June, July, August, September, October, November, December. Red, orange, yellow, green, blue, indigo, violet. North, south, east, west. The first, the second, the third, the fourth, and the fifth.
+
+def fibonacci(n):
+    """Return the n-th Fibonacci number."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.items:
+            raise IndexError("pop from empty stack")
+        return self.items.pop()
+
+    def __len__(self):
+        return len(self.items)
+
+
+if __name__ == "__main__":
+    s = Stack()
+    for i in range(5):
+        s.push(fibonacci(i))
+    print(len(s), s.pop())
+
+function debounce(fn, delay) {
+  let timer = null;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+const users = [{ name: "Ada", age: 36 }, { name: "Linus", age: 54 }];
+const names = users.filter((u) => u.age > 40).map((u) => u.name);
+console.log(names.join(", "));
+
+SELECT c.name, COUNT(o.id) AS orders, SUM(o.total) AS revenue
+FROM customers AS c
+LEFT JOIN orders AS o ON o.customer_id = c.id
+WHERE o.created_at >= '2024-01-01'
+GROUP BY c.name
+HAVING COUNT(o.id) > 3
+ORDER BY revenue DESC
+LIMIT 10;
+
+{"id": 1042, "title": "Replace the pump seal", "done": false, "tags": ["maintenance", "urgent"], "assignee": {"name": "Priya", "email": "priya@example.org"}, "due": "2025-06-30"}
+
+# Installation
+
+1. Download the latest release from the project page.
+2. Unpack the archive: `tar -xzf tool-2.4.1.tar.gz`
+3. Run `./configure --prefix=/usr/local` and then `make install`.
+4. Check the version with `tool --version`. It should print `2.4.1`.
+
+**Note:** on macOS you may need to install the command-line developer tools first.
+
+User: Can you recommend a book for a long flight?
+Assistant: Sure. Do you prefer fiction or non-fiction, and how long is the flight?
+User: Fiction, and it's about eleven hours.
+Assistant: Then I'd suggest a novel you can sink into. "The Count of Monte Cristo" is long, fast-moving, and hard to put down. If you want something shorter, "The Remains of the Day" is quiet and beautifully written.
+User: I've read the first one. What is the second about?
+Assistant: It follows an English butler looking back on his years of service and on the things he chose not to say. It is about duty, regret, and dignity.
+
+The committee met on Tuesday to discuss the budget for the coming year. Revenue rose by 4.2 percent to $18.6 million, while costs increased by 6.1 percent, mainly because of higher energy prices. The treasurer proposed delaying the purchase of new equipment until the third quarter. Three members voted in favour, two against, and one abstained. The motion was carried.
+
+Scientists have long known that sleep helps memory, but the reason was unclear. A recent study suggests that during deep sleep the brain replays the day's experiences, strengthening some connections between neurons and weakening others. People who slept after learning a list of words remembered about 20 percent more than those who stayed awake. The effect was strongest for words the participants had been told were important.
+
+Although the experiment was carefully designed, its conclusions should be treated with caution. The sample was small, the participants were all university students, and the task was artificial. However, the results agree with earlier work, and they suggest several questions that larger studies could answer. Whether the same mechanism operates in older adults, for instance, remains unknown.
+
+She was not happy, but she was not unhappy either. It was neither hot nor cold. He never said yes, and he never quite said no. Nobody knew where the cat had gone; everybody had a theory. If it rains, we will stay; if it does not, we will leave at noon. The more he explained, the less they understood.
+
+Paris is the capital of France. Berlin is the capital of Germany. Tokyo is the capital of Japan. Cairo is the capital of Egypt. The Amazon is the largest river by volume, and the Nile is usually called the longest. Mount Everest is the highest mountain above sea level. The Pacific is the largest ocean. Shakespeare wrote Hamlet; Tolstoy wrote War and Peace; Jane Austen wrote Pride and Prejudice.
+
+Le petit village se trouvait au bord de la mer. Chaque matin, les pêcheurs partaient avant le lever du soleil et revenaient vers midi avec leurs filets pleins. Les enfants les attendaient sur le quai. « Combien de poissons aujourd'hui ? » demandaient-ils, et le vieux Jean répondait toujours : « Assez pour tout le monde. »
+
+Der Zug nach München fährt um halb acht von Gleis drei ab. Bitte achten Sie auf Ihr Gepäck und halten Sie Ihre Fahrkarte bereit. Wegen Bauarbeiten hat der Zug heute etwa zehn Minuten Verspätung. Wir bitten um Ihr Verständnis und wünschen Ihnen eine angenehme Reise.
+
+La biblioteca abre de lunes a viernes, de nueve de la mañana a ocho de la tarde. Para sacar libros es necesario tener el carné de socio, que es gratuito. Se pueden llevar hasta cinco libros durante tres semanas. Si necesita más tiempo, puede renovar el préstamo por teléfono o en nuestra página web.
+
+今天天气很好，我们决定去公园散步。公园里有很多人，有的在跑步，有的在放风筝，还有的坐在长椅上看书。孩子们在草地上玩球，笑声传得很远。中午我们在湖边吃了三明治，喝了热茶。回家的路上，妹妹说她明天还想再来。
+
+北京是中华人民共和国的首都，有三千多年的历史。上海是中国最大的城市之一，也是重要的金融中心。一加一等于二，二加三等于五，四乘以六等于二十四。
+
+東京は日本の首都で、世界でも最も人口の多い都市の一つです。春には桜が咲き、多くの人が公園で花見を楽しみます。電車は時間どおりに来ることで有名です。
+
+Москва — столица России. Зимой здесь холодно и часто идёт снег, а летом бывает тепло и солнечно. Дети любят кататься на коньках в парке, а взрослые гуляют по набережной и пьют горячий чай.
+
+A doença foi descoberta cedo, e o tratamento começou na mesma semana. Os médicos disseram que a recuperação seria lenta, mas completa. Em três meses ela voltou ao trabalho, e em seis já corria outra vez na praia todas as manhãs.
+
+Once upon a time there was a small fox who lived at the edge of a great forest. Every night she looked up at the moon and wondered what it was made of. "Cheese," said the owl. "Silver," said the badger. "Ice," said the hare. The fox decided to find out for herself, so she climbed the tallest hill she could find, and then the tallest tree on that hill, and stretched out her paw as far as it would go. The moon was still very far away. But from the top of the tree she could see the whole forest, and the river, and the lights of the village, and she thought that was a fine thing to have found instead.
+
+The patient is a 58-year-old man who presented with chest pain lasting two hours. The pain began at rest, radiated to the left arm, and was accompanied by sweating and nausea. He has a history of hypertension and type 2 diabetes and smokes ten cigarettes a day. Blood pressure was 150/95 and heart rate 104. An electrocardiogram showed ST elevation in leads II, III and aVF. He was given aspirin and transferred for urgent angiography.
+
+This Agreement is made on the first day of May between the Landlord and the Tenant. The Tenant shall pay the rent of nine hundred pounds per month in advance on the first day of each month. The Tenant shall not sublet the property, nor make any alterations to it, without the prior written consent of the Landlord. Either party may end this Agreement by giving not less than two months' notice in writing.
+
+Breaking: the city council voted late on Thursday to close the central bridge to cars from next spring. Supporters say the change will cut traffic and make the old town safer for cyclists and pedestrians. Opponents, including several shop owners, warn that deliveries will become harder and that customers will stay away. The mayor promised a review after twelve months.
+
+If x + 3 = 11, then x = 8. If 2y = 18, then y = 9. The area of a rectangle is its length times its width, so a room 4 metres long and 3 metres wide has an area of 12 square metres. The sum of the angles of a triangle is 180 degrees. The square root of 144 is 12, and 2 to the power of 10 is 1024. A prime number has exactly two divisors: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29.
+
+Yesterday I walked to the market and bought bread, cheese, tomatoes, and a small bunch of flowers. Tomorrow I will take the early bus to the coast. Last year we went in August, and it rained every day; this year we are going in June. She has lived in the same house since she was born. They had already eaten when we arrived. By next spring he will have finished the bridge.
+
+Why is the sky blue? Sunlight is a mixture of all colours. As it passes through the air, the shorter blue wavelengths are scattered in every direction by the molecules of the atmosphere far more than the longer red ones. Wherever you look, some of that scattered blue light reaches your eye. At sunset the light travels through much more air, most of the blue is scattered away, and what remains looks orange and red.

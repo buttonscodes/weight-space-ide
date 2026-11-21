@@ -1,0 +1,2 @@
+-r requirements.txt
+pyarrow==25.0.1  # reads parquet and arrow dataset files (the version Heretic 64e9991's environment reads them with)

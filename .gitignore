@@ -1,0 +1,16 @@
+*.egg-info/
+*.pyc
+.pytest_cache/
+__pycache__/
+workspaces/
+bridge/node_modules/
+**/atlas/build.lock
+.venv/
+*.gguf
+*.wsppatch.zip
+*.dylib
+*.so
+*.part
+config.local.json
+config.local.json.lock
+**/agent/conversations/

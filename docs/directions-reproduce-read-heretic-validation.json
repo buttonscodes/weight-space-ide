@@ -1,0 +1,525 @@
+{
+ "slice": "H3b: reading a Heretic reproduce.json and running it in the IDE",
+ "date": "2026-11-19",
+ "script": "scripts/heretic_run_reproduce.py",
+ "heretic": {
+  "commit": "64e9991",
+  "torch": "2.14.1",
+  "transformers": "5.18.0",
+  "peft": "0.21.2"
+ },
+ "ide": {
+  "torch": "2.15.0",
+  "transformers": "5.22.2"
+ },
+ "model": {
+  "repository": "tiny-random/qwen2.5",
+  "commit": "7a6a3128ee4137a248d6d1582824592b87a81647"
+ },
+ "run": "float32, CPU, one prompt at a time, offline; Heretic runs with export_strategy adapter; each file written by heretic.utils.generate_reproduce_json (scripts/heretic_reproduce_json.py, without system information)",
+ "bounds": {
+  "J": "exact",
+  "F": "exact",
+  "R0": "no refusal, model repository and commit same",
+  "R1": "committed",
+  "R2 ablation": {
+   "per_tensor_relative": 5e-05,
+   "one_sided": 0,
+   "source": "heretic_compare_adapter.py P6 (tiny fixture)"
+  },
+  "R2 ARA": "reported only (heretic_compare_ara.py float32 rows, heretic_compare_adapter.py P6c)",
+  "R3": "identical piece digest",
+  "R4": "identical digest, every piece equal, same_as_file true"
+ },
+ "labels": {
+  "none": {
+   "checks": {
+    "J journals equal": {
+     "pass": true,
+     "rows": [
+      28,
+      28
+     ],
+     "first_difference": null
+    },
+    "F the file is the new run's": {
+     "pass": true,
+     "modifier": "heretic.modifiers.abliteration.Abliteration"
+    },
+    "R0 checked without refusal": {
+     "pass": true,
+     "refusal": null,
+     "model": {
+      "repository": "same",
+      "commit": "same"
+     }
+    },
+    "R1 committed through Session.apply": {
+     "pass": true,
+     "error": null,
+     "record_error": null
+    },
+    "R2 against Heretic's adapter": {
+     "pass": true,
+     "worst_relative": 1.1552103664406963e-05,
+     "bound": 5e-05,
+     "tensors": 5,
+     "one_sided": 0
+    },
+    "M0 measured prompts are the dump's": {
+     "pass": true,
+     "source": "datasets",
+     "error": null,
+     "counts": [
+      5,
+      5
+     ]
+    },
+    "R3 the hand-pasted patch is the file's": {
+     "pass": true,
+     "measured_from": "datasets",
+     "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+     "file_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec"
+    },
+    "R4 round trip bit for bit": {
+     "pass": true,
+     "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+     "written_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+     "hand_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+     "same_as_file": true
+    }
+   },
+   "R1_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+   "R1_measured": true,
+   "R2": {
+    "tensors": 5,
+    "one_sided": 0,
+    "worst_relative": 1.1552103664406963e-05
+   },
+   "R2_per_tensor": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 1.1151612299867417e-05,
+     "max_abs_diff": 2.4586915969848633e-06
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 1.1482861341748475e-05,
+     "max_abs_diff": 2.7567148208618164e-06
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 1.104039426885289e-05,
+     "max_abs_diff": 3.293156623840332e-06
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 1.0824334896299813e-05,
+     "max_abs_diff": 2.9802322387695312e-06
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 1.1552103664406963e-05,
+     "max_abs_diff": 3.166496753692627e-06
+    }
+   ],
+   "script": "ablate_direction(\"heretic-1d67ae783771\", direction_index=1.4758782175156417, weight_distributions={\"attn.o_proj\": {\"max_weight\": 0.9431921949871278, \"max_weight_position\": 2.481270034898024, \"min_weight\": 0.5617131156159574, \"min_weight_distance\": 1.7716116157884971}, \"mlp.down_proj\": {\"max_weight\": 0.8930599195252491, \"max_weight_position\": 2.698687965040694, \"min_weight\": 0.5836770562669782, \"min_weight_distance\": 1.598171847417019}}, orthogonalize_direction=True, row_normalization=\"none\", full_normalization_lora_rank=3)",
+   "notes": [
+    "the file has no system information (Heretic's \"basic\"): the Python version, operating system, CPU and accelerator are not compared",
+    "the file describes one trial (its parameters and scores) of a search of 2 trials (seed 12345); the search's other trials are in Heretic's study journal beside the file, not in reproduce.json, and nothing of the search is run again",
+    "settings.seed is not used: Heretic's directional ablation uses the seed only for row_normalization full",
+    "the IDE loads transformers models with eager attention, Heretic with the default"
+   ],
+   "environment": {
+    "severity": "critical",
+    "same": 24,
+    "low_differences": 79,
+    "critical_high_medium": [
+     {
+      "name": "heretic-llm",
+      "file": "2.2.0.dev0-local",
+      "ide": "2.2.0.dev0-git+https://github.com/p-e-w/heretic@64e999152ff7918efc73576814709b6b6a71f15c",
+      "severity": "critical"
+     },
+     {
+      "name": "torch",
+      "file": "2.14.1",
+      "ide": "2.15.0",
+      "severity": "high"
+     },
+     {
+      "name": "transformers",
+      "file": "5.18.0",
+      "ide": "5.22.2",
+      "severity": "high"
+     },
+     {
+      "name": "accelerate",
+      "file": "1.15.0",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "bitsandbytes",
+      "file": "0.50.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "peft",
+      "file": "0.21.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "tokenizers",
+      "file": "0.23.2",
+      "ide": "0.23.3",
+      "severity": "medium"
+     }
+    ]
+   }
+  },
+  "full": {
+   "checks": {
+    "J journals equal": {
+     "pass": true,
+     "rows": [
+      28,
+      28
+     ],
+     "first_difference": null
+    },
+    "F the file is the new run's": {
+     "pass": true,
+     "modifier": "heretic.modifiers.abliteration.Abliteration"
+    },
+    "R0 checked without refusal": {
+     "pass": true,
+     "refusal": null,
+     "model": {
+      "repository": "same",
+      "commit": "same"
+     }
+    },
+    "R1 committed through Session.apply": {
+     "pass": true,
+     "error": null,
+     "record_error": null
+    },
+    "R2 against Heretic's adapter": {
+     "pass": true,
+     "worst_relative": 1.3576743361786994e-05,
+     "bound": 5e-05,
+     "tensors": 5,
+     "one_sided": 0
+    },
+    "M0 measured prompts are the dump's": {
+     "pass": true,
+     "source": "datasets",
+     "error": null,
+     "counts": [
+      5,
+      5
+     ]
+    },
+    "R3 the hand-pasted patch is the file's": {
+     "pass": true,
+     "measured_from": "datasets",
+     "digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+     "file_digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564"
+    },
+    "R4 round trip bit for bit": {
+     "pass": true,
+     "digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+     "written_digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+     "hand_digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+     "same_as_file": true
+    }
+   },
+   "R1_digest": "8844cf2b1f118bbb2faeef0b5ed341d2b1a8ed6554b6779bd6364aed643bb564",
+   "R1_measured": true,
+   "R2": {
+    "tensors": 5,
+    "one_sided": 0,
+    "worst_relative": 1.3576743361786994e-05
+   },
+   "R2_per_tensor": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 1.1460061548135898e-05,
+     "max_abs_diff": 2.5406479835510254e-06
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 1.2368966212005323e-05,
+     "max_abs_diff": 3.0463561415672302e-06
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 1.1651026456663746e-05,
+     "max_abs_diff": 3.913417458534241e-06
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 1.135621741837635e-05,
+     "max_abs_diff": 2.8759241104125977e-06
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 1.3576743361786994e-05,
+     "max_abs_diff": 3.7997961044311523e-06
+    }
+   ],
+   "script": "ablate_direction(\"heretic-361b4689142b\", direction_index=1.4758782175156417, weight_distributions={\"attn.o_proj\": {\"max_weight\": 0.9431921949871278, \"max_weight_position\": 2.481270034898024, \"min_weight\": 0.5617131156159574, \"min_weight_distance\": 1.7716116157884971}, \"mlp.down_proj\": {\"max_weight\": 0.8930599195252491, \"max_weight_position\": 2.698687965040694, \"min_weight\": 0.5836770562669782, \"min_weight_distance\": 1.598171847417019}}, orthogonalize_direction=True, row_normalization=\"full\", full_normalization_lora_rank=3)",
+   "notes": [
+    "the file has no system information (Heretic's \"basic\"): the Python version, operating system, CPU and accelerator are not compared",
+    "the file describes one trial (its parameters and scores) of a search of 2 trials (seed 12345); the search's other trials are in Heretic's study journal beside the file, not in reproduce.json, and nothing of the search is run again",
+    "row_normalization full: Heretic stores a randomized rank-r approximation (svd_lowrank seeded with the seed), the IDE the best rank-r one",
+    "the IDE loads transformers models with eager attention, Heretic with the default"
+   ],
+   "environment": {
+    "severity": "critical",
+    "same": 24,
+    "low_differences": 79,
+    "critical_high_medium": [
+     {
+      "name": "heretic-llm",
+      "file": "2.2.0.dev0-local",
+      "ide": "2.2.0.dev0-git+https://github.com/p-e-w/heretic@64e999152ff7918efc73576814709b6b6a71f15c",
+      "severity": "critical"
+     },
+     {
+      "name": "torch",
+      "file": "2.14.1",
+      "ide": "2.15.0",
+      "severity": "high"
+     },
+     {
+      "name": "transformers",
+      "file": "5.18.0",
+      "ide": "5.22.2",
+      "severity": "high"
+     },
+     {
+      "name": "accelerate",
+      "file": "1.15.0",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "bitsandbytes",
+      "file": "0.50.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "peft",
+      "file": "0.21.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "tokenizers",
+      "file": "0.23.2",
+      "ide": "0.23.3",
+      "severity": "medium"
+     }
+    ]
+   }
+  },
+  "ara-s1": {
+   "checks": {
+    "J journals equal": {
+     "pass": true,
+     "rows": [
+      20,
+      20
+     ],
+     "first_difference": null
+    },
+    "F the file is the new run's": {
+     "pass": true,
+     "modifier": "heretic.modifiers.ara.ARA"
+    },
+    "R0 checked without refusal": {
+     "pass": true,
+     "refusal": null,
+     "model": {
+      "repository": "same",
+      "commit": "same"
+     }
+    },
+    "R1 committed through Session.apply": {
+     "pass": true,
+     "error": null,
+     "record_error": null
+    },
+    "R2 against Heretic's adapter (ARA, reported)": {
+     "worst_relative": 0.37988091320603573,
+     "one_sided": 0
+    },
+    "M0 measured prompts are the dump's": {
+     "pass": true,
+     "source": "datasets",
+     "error": null,
+     "counts": [
+      5,
+      5
+     ]
+    },
+    "R3 the hand-pasted patch is the file's": {
+     "pass": true,
+     "measured_from": "datasets",
+     "digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+     "file_digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be"
+    },
+    "R4 round trip bit for bit": {
+     "pass": true,
+     "digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+     "written_digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+     "hand_digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+     "same_as_file": true
+    }
+   },
+   "R1_digest": "cee426b0c4d56165922c4db7833b301d4eb97f45a2f34efd5af7053ece2e11be",
+   "R1_measured": true,
+   "R2": {
+    "tensors": 2,
+    "one_sided": 0,
+    "worst_relative": 0.37988091320603573
+   },
+   "R2_per_tensor": [
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 0.37988091320603573,
+     "max_abs_diff": 0.03562600910663605
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 0.0010017831961731032,
+     "max_abs_diff": 9.7684096544981e-07
+    }
+   ],
+   "script": "ablate_ara(\"heretic-0478fbf3ea3e\", start_layer_index=2, end_layer_index=4, preserve_good_behavior_weight=0.004483433332550856, steer_bad_behavior_weight=0.0022963171409208214, overcorrect_relative_weight=0.011969077170964765, neighbor_count=1, preserve_row_magnitudes=True, lora_rank=4, n_optimization_steps=5, learning_rate=1.0, max_iter=20, history_size=10, seed=1)",
+   "notes": [
+    "the file has no system information (Heretic's \"basic\"): the Python version, operating system, CPU and accelerator are not compared",
+    "the file describes one trial (its parameters and scores) of a search of 2 trials (seed 1); the search's other trials are in Heretic's study journal beside the file, not in reproduce.json, and nothing of the search is run again",
+    "ARA: a fit is reproducible only with the same torch version and thread count, in either tool",
+    "the IDE loads transformers models with eager attention, Heretic with the default"
+   ],
+   "environment": {
+    "severity": "critical",
+    "same": 24,
+    "low_differences": 79,
+    "critical_high_medium": [
+     {
+      "name": "heretic-llm",
+      "file": "2.2.0.dev0-local",
+      "ide": "2.2.0.dev0-git+https://github.com/p-e-w/heretic@64e999152ff7918efc73576814709b6b6a71f15c",
+      "severity": "critical"
+     },
+     {
+      "name": "torch",
+      "file": "2.14.1",
+      "ide": "2.15.0",
+      "severity": "high"
+     },
+     {
+      "name": "transformers",
+      "file": "5.18.0",
+      "ide": "5.22.2",
+      "severity": "high"
+     },
+     {
+      "name": "accelerate",
+      "file": "1.15.0",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "bitsandbytes",
+      "file": "0.50.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "peft",
+      "file": "0.21.2",
+      "ide": null,
+      "severity": "medium"
+     },
+     {
+      "name": "tokenizers",
+      "file": "0.23.2",
+      "ide": "0.23.3",
+      "severity": "medium"
+     }
+    ]
+   }
+  }
+ },
+ "with_system_information": {
+  "label": "none (the same run's file written with Heretic's full information)",
+  "checks": {
+   "J journals equal": {
+    "pass": true,
+    "rows": [
+     28,
+     28
+    ],
+    "first_difference": null
+   },
+   "F the file is the new run's": {
+    "pass": true,
+    "modifier": "heretic.modifiers.abliteration.Abliteration"
+   },
+   "R0 checked without refusal": {
+    "pass": true,
+    "refusal": null,
+    "model": {
+     "repository": "same",
+     "commit": "same"
+    }
+   },
+   "R1 committed through Session.apply": {
+    "pass": true,
+    "error": null,
+    "record_error": null
+   },
+   "R2 against Heretic's adapter": {
+    "pass": true,
+    "worst_relative": 1.1552103664406963e-05,
+    "bound": 5e-05,
+    "tensors": 5,
+    "one_sided": 0
+   },
+   "M0 measured prompts are the dump's": {
+    "pass": true,
+    "source": "datasets",
+    "error": null,
+    "counts": [
+     5,
+     5
+    ]
+   },
+   "R3 the hand-pasted patch is the file's": {
+    "pass": true,
+    "measured_from": "datasets",
+    "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+    "file_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec"
+   },
+   "R4 round trip bit for bit": {
+    "pass": true,
+    "digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+    "written_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+    "hand_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec",
+    "same_as_file": true
+   }
+  },
+  "environment_rows_equal": 27,
+  "R1_digest": "5254d585a74b725a45a50bd045f7cc7df355f67be156ab1df55bc8fa68e337ec"
+ },
+ "first_run": "all assertions passed on the first run (before a change to how the seed is listed, which does not touch the weights); these numbers are from the run on the committed code",
+ "pass": true
+}

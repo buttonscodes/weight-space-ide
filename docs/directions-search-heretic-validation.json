@@ -1,0 +1,1775 @@
+{
+ "date": "2026-11-18",
+ "what": "The IDE's automatic search against finished Heretic searches: model-free against Heretic's own records, then the IDE's own search on two models with the same seeds.",
+ "ide": {
+  "commit": "0b068b3",
+  "scripts": "the ones this file is committed with",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "optuna": "5.0.0",
+   "numpy": "2.5.4"
+  },
+  "runner": "HFRunner",
+  "dtype": "float32",
+  "device": "cpu",
+  "sampler_environment": "Optuna installed beside the IDE's packages"
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "heretic-llm": "2.2.0.dev0",
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0",
+   "tokenizers": "0.23.2"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "batch_size": 1,
+  "seed": 12345,
+  "note": "tiny/perlayer-s1 and tiny/ara-s1 use seed 1"
+ },
+ "acceptance": "written in scripts/heretic_compare_search.py before any run",
+ "model_free": {
+  "what": "from each run's configuration, Optuna journal and dump: the space, the sampler told Heretic's recorded outcomes, the parameter transformation and the Pareto front, each against Heretic's record",
+  "totals": {
+   "trials": 72,
+   "startup": 30,
+   "tpe": 42,
+   "equal": 72,
+   "startup_equal": 30,
+   "tpe_equal": 42
+  },
+  "runs": {
+   "tiny/none": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      1
+     ],
+     "heretic": [
+      1
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/pre": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      1
+     ],
+     "heretic": [
+      1
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/full": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      1
+     ],
+     "heretic": [
+      1
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/perlayer-s1": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      2
+     ],
+     "heretic": [
+      2
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/ara-s12345": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      2
+     ],
+     "heretic": [
+      2
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/ara-s1": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      2
+     ],
+     "heretic": [
+      2
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/ara-nomag-s12345": {
+    "trials": 2,
+    "startup_equal": "1/1",
+    "tpe_equal": "1/1",
+    "space_equal": true,
+    "parameters_equal": "2/2",
+    "front": {
+     "ide": [
+      2
+     ],
+     "heretic": [
+      2
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/search-full": {
+    "trials": 12,
+    "startup_equal": "4/4",
+    "tpe_equal": "8/8",
+    "space_equal": true,
+    "parameters_equal": "12/12",
+    "front": {
+     "ide": [
+      12
+     ],
+     "heretic": [
+      12
+     ],
+     "equal_with_order": true
+    }
+   },
+   "tiny/search-ara": {
+    "trials": 12,
+    "startup_equal": "4/4",
+    "tpe_equal": "8/8",
+    "space_equal": true,
+    "parameters_equal": "12/12",
+    "front": {
+     "ide": [
+      12
+     ],
+     "heretic": [
+      12
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen05b/abl-full": {
+    "trials": 4,
+    "startup_equal": "2/2",
+    "tpe_equal": "2/2",
+    "space_equal": true,
+    "parameters_equal": "4/4",
+    "front": {
+     "ide": [
+      1,
+      3
+     ],
+     "heretic": [
+      1,
+      3
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen05b/abl-none": {
+    "trials": 4,
+    "startup_equal": "2/2",
+    "tpe_equal": "2/2",
+    "space_equal": true,
+    "parameters_equal": "4/4",
+    "front": {
+     "ide": [
+      1,
+      3
+     ],
+     "heretic": [
+      1,
+      3
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen05b/ara": {
+    "trials": 4,
+    "startup_equal": "2/2",
+    "tpe_equal": "2/2",
+    "space_equal": true,
+    "parameters_equal": "4/4",
+    "front": {
+     "ide": [
+      1,
+      3
+     ],
+     "heretic": [
+      1,
+      3
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen05b/search-abl-full": {
+    "trials": 10,
+    "startup_equal": "4/4",
+    "tpe_equal": "6/6",
+    "space_equal": true,
+    "parameters_equal": "10/10",
+    "front": {
+     "ide": [
+      4,
+      5,
+      8,
+      7,
+      3
+     ],
+     "heretic": [
+      4,
+      5,
+      8,
+      7,
+      3
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen05b/search-ara": {
+    "trials": 8,
+    "startup_equal": "3/3",
+    "tpe_equal": "5/5",
+    "space_equal": true,
+    "parameters_equal": "8/8",
+    "front": {
+     "ide": [
+      1,
+      7,
+      4
+     ],
+     "heretic": [
+      1,
+      7,
+      4
+     ],
+     "equal_with_order": true
+    }
+   },
+   "qwen3-06b/ara": {
+    "trials": 4,
+    "startup_equal": "2/2",
+    "tpe_equal": "2/2",
+    "space_equal": true,
+    "parameters_equal": "4/4",
+    "front": {
+     "ide": [
+      3,
+      1
+     ],
+     "heretic": [
+      3,
+      1
+     ],
+     "equal_with_order": true
+    }
+   }
+  }
+ },
+ "on_models": {
+  "what": "the IDE's own measurement, its own search with the run's seed, n_trials and n_startup_trials, its own scores; then the same search driven with Heretic's recorded scores, a stop and resume, and a committed trial",
+  "tiny-random/qwen2.5": {
+   "prompts_per_score": 5,
+   "runs": {
+    "tiny/none": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 0.2,
+     "startup_draws_equal": "1/1",
+     "tpe_draws_equal": "1/1",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.000585266761481762
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.000585252302698791
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0007060465402901172
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0007059021736495197
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "2/2"
+     },
+     "front": {
+      "ide": [
+       1
+      ],
+      "heretic": [
+       1
+      ],
+      "ide_scores": {
+       "1": {
+        "refusals": "0/5",
+        "kl": 0.000585266761481762
+       }
+      },
+      "heretic_scores": {
+       "1": {
+        "refusals": "0/5",
+        "kl": 0.000585252302698791
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 1,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true
+    },
+    "tiny/full": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 0.2,
+     "startup_draws_equal": "1/1",
+     "tpe_draws_equal": "1/1",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0007421170827001333
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.000742275093216449
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0007944428245536983
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0007944536628201604
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "2/2"
+     },
+     "front": {
+      "ide": [
+       1
+      ],
+      "heretic": [
+       1
+      ],
+      "ide_scores": {
+       "1": {
+        "refusals": "0/5",
+        "kl": 0.0007421170827001333
+       }
+      },
+      "heretic_scores": {
+       "1": {
+        "refusals": "0/5",
+        "kl": 0.000742275093216449
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 1,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true,
+     "stop_and_resume": {
+      "stopped_inside_trial": 2,
+      "at_unit": "5 of 10",
+      "final_records_equal_the_uninterrupted_search": true
+     }
+    },
+    "tiny/perlayer-s1": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 0.2,
+     "startup_draws_equal": "1/1",
+     "tpe_draws_equal": "1/1",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.00019077726174145936
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0001907242985907942
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0001249070424819365
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.00012496468843892217
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "2/2"
+     },
+     "front": {
+      "ide": [
+       2
+      ],
+      "heretic": [
+       2
+      ],
+      "ide_scores": {
+       "2": {
+        "refusals": "0/5",
+        "kl": 0.0001249070424819365
+       }
+      },
+      "heretic_scores": {
+       "2": {
+        "refusals": "0/5",
+        "kl": 0.00012496468843892217
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 2,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true,
+     "stop_and_resume": {
+      "stopped_inside_trial": 2,
+      "at_unit": "5 of 10",
+      "final_records_equal_the_uninterrupted_search": true
+     }
+    },
+    "tiny/ara-s12345": {
+     "method": "ARA",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 0.2,
+     "startup_draws_equal": "1/1",
+     "tpe_draws_equal": "1/1",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 2.265194507344859e-06
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 2.3392788079945603e-06
+       }
+      },
+      {
+       "index": 2,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 6.05767144179481e-07
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 3.4341962873440934e-07
+       }
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "2/2"
+     },
+     "front": {
+      "ide": [
+       2
+      ],
+      "heretic": [
+       2
+      ],
+      "ide_scores": {
+       "2": {
+        "refusals": "0/5",
+        "kl": 6.05767144179481e-07
+       }
+      },
+      "heretic_scores": {
+       "2": {
+        "refusals": "0/5",
+        "kl": 3.4341962873440934e-07
+       }
+      }
+     },
+     "commit": {
+      "trial": 2,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true
+    },
+    "tiny/search-full": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 1.2,
+     "startup_draws_equal": "4/4",
+     "tpe_draws_equal": "8/8",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0007421170827001333
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.000742275093216449
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0011278639081865548
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.001127696014009416
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 3,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0009913918096572162
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0009912947425618768
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 4,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0026188695337623358
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0026190555654466152
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 5,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0002825807314366102
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0002825281990226358
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 6,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.00023698079166933894
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.00023687076463829726
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 7,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0001742336171446368
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.00017437178757973015
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 8,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0002546344505390152
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.00025478473980911076
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 9,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0005111391888931394
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0005112729850225151
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 10,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0004993648442905396
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0004990917514078319
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 11,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.00028604920371435585
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0002861117827706039
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 12,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0001661860733292997
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.0001663555158302188
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "12/12"
+     },
+     "front": {
+      "ide": [
+       12
+      ],
+      "heretic": [
+       12
+      ],
+      "ide_scores": {
+       "12": {
+        "refusals": "0/5",
+        "kl": 0.0001661860733292997
+       }
+      },
+      "heretic_scores": {
+       "12": {
+        "refusals": "0/5",
+        "kl": 0.0001663555158302188
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 12,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true,
+     "stop_and_resume": {
+      "stopped_inside_trial": 2,
+      "at_unit": "5 of 10",
+      "final_records_equal_the_uninterrupted_search": true
+     }
+    },
+    "tiny/search-ara": {
+     "method": "ARA",
+     "base_logits_max_abs_diff": 1.4901161193847656e-07,
+     "search_seconds": 1.8,
+     "startup_draws_equal": "4/4",
+     "tpe_draws_equal": "2/8",
+     "first_trial_whose_draws_differ": 7,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 2.265194507344859e-06
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 2.3392788079945603e-06
+       }
+      },
+      {
+       "index": 2,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 5.29246299265651e-06
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 4.493374035519082e-06
+       }
+      },
+      {
+       "index": 3,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.001690558181144297
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.001178515492938459
+       }
+      },
+      {
+       "index": 4,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 3.628134572863928e-06
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 7.066588295856491e-06
+       }
+      },
+      {
+       "index": 5,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 6.05767144179481e-07
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 3.4341962873440934e-07
+       }
+      },
+      {
+       "index": 6,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 1.481342678744113e-07
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 1.335174033556541e-06
+       }
+      },
+      {
+       "index": 7,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 0.0
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 1.4082173720453284e-06
+       }
+      },
+      {
+       "index": 8,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 3.4832685742003376e-06
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 2.6660818548407406e-06
+       }
+      },
+      {
+       "index": 9,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": 1.351239097857615e-05
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 1.2498144315031823e-06
+       }
+      },
+      {
+       "index": 10,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": -2.9025343906141643e-08
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 0.006783788558095694
+       }
+      },
+      {
+       "index": 11,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": -5.193048195906158e-08
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 4.312195756028814e-07
+       }
+      },
+      {
+       "index": 12,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "0/5",
+        "kl": -1.5780896092110198e-07
+       },
+       "heretic": {
+        "refusals": "0/5",
+        "kl": 1.109857947767523e-07
+       }
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "12/12"
+     },
+     "front": {
+      "ide": [
+       12
+      ],
+      "heretic": [
+       12
+      ],
+      "ide_scores": {
+       "12": {
+        "refusals": "0/5",
+        "kl": -1.5780896092110198e-07
+       }
+      },
+      "heretic_scores": {
+       "12": {
+        "refusals": "0/5",
+        "kl": 1.109857947767523e-07
+       }
+      }
+     },
+     "commit": {
+      "trial": 12,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true
+    }
+   }
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct": {
+   "prompts_per_score": 32,
+   "runs": {
+    "qwen05b/search-abl-full": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "search_seconds": 258.6,
+     "startup_draws_equal": "4/4",
+     "tpe_draws_equal": "6/6",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "28/32",
+        "kl": 0.013251490776383434
+       },
+       "heretic": {
+        "refusals": "28/32",
+        "kl": 0.013251576572656631
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "30/32",
+        "kl": 0.03194383008667501
+       },
+       "heretic": {
+        "refusals": "30/32",
+        "kl": 0.03194257989525795
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 3,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "27/32",
+        "kl": 0.006409575803218104
+       },
+       "heretic": {
+        "refusals": "27/32",
+        "kl": 0.00640962366014719
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 4,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "3/32",
+        "kl": 0.04274343609358766
+       },
+       "heretic": {
+        "refusals": "3/32",
+        "kl": 0.04274297133088112
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 5,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "5/32",
+        "kl": 0.03082314753009996
+       },
+       "heretic": {
+        "refusals": "5/32",
+        "kl": 0.03082144632935524
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 6,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "12/32",
+        "kl": 0.029240514295906905
+       },
+       "heretic": {
+        "refusals": "12/32",
+        "kl": 0.029240088537335396
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 7,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "24/32",
+        "kl": 0.008568134875872602
+       },
+       "heretic": {
+        "refusals": "24/32",
+        "kl": 0.008568010292947292
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 8,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "8/32",
+        "kl": 0.02470103682298941
+       },
+       "heretic": {
+        "refusals": "8/32",
+        "kl": 0.024700382724404335
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 9,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "26/32",
+        "kl": 0.010468034648511093
+       },
+       "heretic": {
+        "refusals": "26/32",
+        "kl": 0.010468059219419956
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 10,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "4/32",
+        "kl": 0.04572194279626274
+       },
+       "heretic": {
+        "refusals": "4/32",
+        "kl": 0.045721232891082764
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "10/10"
+     },
+     "front": {
+      "ide": [
+       4,
+       5,
+       8,
+       7,
+       3
+      ],
+      "heretic": [
+       4,
+       5,
+       8,
+       7,
+       3
+      ],
+      "ide_scores": {
+       "4": {
+        "refusals": "3/32",
+        "kl": 0.04274343609358766
+       },
+       "5": {
+        "refusals": "5/32",
+        "kl": 0.03082314753009996
+       },
+       "8": {
+        "refusals": "8/32",
+        "kl": 0.02470103682298941
+       },
+       "7": {
+        "refusals": "24/32",
+        "kl": 0.008568134875872602
+       },
+       "3": {
+        "refusals": "27/32",
+        "kl": 0.006409575803218104
+       }
+      },
+      "heretic_scores": {
+       "4": {
+        "refusals": "3/32",
+        "kl": 0.04274297133088112
+       },
+       "5": {
+        "refusals": "5/32",
+        "kl": 0.03082144632935524
+       },
+       "8": {
+        "refusals": "8/32",
+        "kl": 0.024700382724404335
+       },
+       "7": {
+        "refusals": "24/32",
+        "kl": 0.008568010292947292
+       },
+       "3": {
+        "refusals": "27/32",
+        "kl": 0.00640962366014719
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 4,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true,
+     "stop_and_resume": {
+      "stopped_inside_trial": 2,
+      "at_unit": "5 of 64",
+      "final_records_equal_the_uninterrupted_search": true
+     }
+    },
+    "qwen05b/abl-none": {
+     "method": "directional ablation",
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "search_seconds": 89.8,
+     "startup_draws_equal": "2/2",
+     "tpe_draws_equal": "2/2",
+     "first_trial_whose_draws_differ": null,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "28/32",
+        "kl": 0.013385055113758426
+       },
+       "heretic": {
+        "refusals": "28/32",
+        "kl": 0.013385218568146229
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 2,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "30/32",
+        "kl": 0.06752377215889283
+       },
+       "heretic": {
+        "refusals": "30/32",
+        "kl": 0.06752379238605499
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 3,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "29/32",
+        "kl": 0.003544111332303146
+       },
+       "heretic": {
+        "refusals": "29/32",
+        "kl": 0.003544082399457693
+       },
+       "kl_within_bound": true
+      },
+      {
+       "index": 4,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "30/32",
+        "kl": 0.004873245337876142
+       },
+       "heretic": {
+        "refusals": "30/32",
+        "kl": 0.004873096477240324
+       },
+       "kl_within_bound": true
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "4/4"
+     },
+     "front": {
+      "ide": [
+       1,
+       3
+      ],
+      "heretic": [
+       1,
+       3
+      ],
+      "ide_scores": {
+       "1": {
+        "refusals": "28/32",
+        "kl": 0.013385055113758426
+       },
+       "3": {
+        "refusals": "29/32",
+        "kl": 0.003544111332303146
+       }
+      },
+      "heretic_scores": {
+       "1": {
+        "refusals": "28/32",
+        "kl": 0.013385218568146229
+       },
+       "3": {
+        "refusals": "29/32",
+        "kl": 0.003544082399457693
+       }
+      },
+      "equal": true
+     },
+     "commit": {
+      "trial": 1,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true,
+     "scores_equal_for_every_trial": true,
+     "rankings_equal": true
+    },
+    "qwen05b/search-ara": {
+     "method": "ARA",
+     "base_logits_max_abs_diff": 7.915496826171875e-05,
+     "search_seconds": 342.9,
+     "startup_draws_equal": "3/3",
+     "tpe_draws_equal": "4/5",
+     "first_trial_whose_draws_differ": 8,
+     "trials": [
+      {
+       "index": 1,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/32",
+        "kl": 0.09015011675364804
+       },
+       "heretic": {
+        "refusals": "0/32",
+        "kl": 0.0877549946308136
+       }
+      },
+      {
+       "index": 2,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/32",
+        "kl": 2.011180669767782
+       },
+       "heretic": {
+        "refusals": "0/32",
+        "kl": 1.8798043727874756
+       }
+      },
+      {
+       "index": 3,
+       "kind": "startup",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/32",
+        "kl": 15.600638896226883
+       },
+       "heretic": {
+        "refusals": "0/32",
+        "kl": 13.499120712280273
+       }
+      },
+      {
+       "index": 4,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "5/32",
+        "kl": 0.07679156017184141
+       },
+       "heretic": {
+        "refusals": "17/32",
+        "kl": 0.036170125007629395
+       }
+      },
+      {
+       "index": 5,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "4/32",
+        "kl": 0.11738702951697633
+       },
+       "heretic": {
+        "refusals": "1/32",
+        "kl": 0.09805645048618317
+       }
+      },
+      {
+       "index": 6,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "0/32",
+        "kl": 1.9512143139727414
+       },
+       "heretic": {
+        "refusals": "3/32",
+        "kl": 2.218778133392334
+       }
+      },
+      {
+       "index": 7,
+       "kind": "tpe",
+       "draws_equal": true,
+       "ide": {
+        "refusals": "3/32",
+        "kl": 0.03644972246547695
+       },
+       "heretic": {
+        "refusals": "13/32",
+        "kl": 0.04122059792280197
+       }
+      },
+      {
+       "index": 8,
+       "kind": "tpe",
+       "draws_equal": false,
+       "ide": {
+        "refusals": "1/32",
+        "kl": 1.7776304674334824
+       },
+       "heretic": {
+        "refusals": "9/32",
+        "kl": 0.19002923369407654
+       }
+      }
+     ],
+     "driven_with_heretics_scores": {
+      "draws_equal": "8/8"
+     },
+     "front": {
+      "ide": [
+       1,
+       7
+      ],
+      "heretic": [
+       1,
+       7,
+       4
+      ],
+      "ide_scores": {
+       "1": {
+        "refusals": "0/32",
+        "kl": 0.09015011675364804
+       },
+       "7": {
+        "refusals": "3/32",
+        "kl": 0.03644972246547695
+       }
+      },
+      "heretic_scores": {
+       "1": {
+        "refusals": "0/32",
+        "kl": 0.0877549946308136
+       },
+       "7": {
+        "refusals": "13/32",
+        "kl": 0.04122059792280197
+       },
+       "4": {
+        "refusals": "17/32",
+        "kl": 0.036170125007629395
+       }
+      }
+     },
+     "commit": {
+      "trial": 1,
+      "committed": true,
+      "edit_equals_scored": true,
+      "scores_of_the_committed_weights_equal_the_trials": true
+     },
+     "required_stages_passed": true
+    }
+   }
+  }
+ },
+ "ara_trials_of_qwen05b_search_ara_from_heretics_captures": {
+  "what": "each of Heretic's 8 ARA trials fitted by the IDE from Heretic's captured module inputs and outputs and scored as an uncommitted candidate, once under each tool's library versions",
+  "under_heretic_libraries": {
+   "versions": {
+    "torch": "2.14.1",
+    "transformers": "5.18.0"
+   },
+   "threads": 12,
+   "captures": "Heretic's (dump)",
+   "refusals_equal": "8/8",
+   "largest_kl_difference": 3.400491550564766e-06,
+   "trials": [
+    {
+     "index": 1,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 0.08775530097045703
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 0.0877549946308136
+     }
+    },
+    {
+     "index": 2,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 1.8798077732790262
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 1.8798043727874756
+     }
+    },
+    {
+     "index": 3,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 13.499119877815247
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 13.499120712280273
+     }
+    },
+    {
+     "index": 4,
+     "ide": {
+      "refusals": "17/32",
+      "kl": 0.03617027326254174
+     },
+     "heretic": {
+      "refusals": "17/32",
+      "kl": 0.036170125007629395
+     }
+    },
+    {
+     "index": 5,
+     "ide": {
+      "refusals": "1/32",
+      "kl": 0.09805664216401055
+     },
+     "heretic": {
+      "refusals": "1/32",
+      "kl": 0.09805645048618317
+     }
+    },
+    {
+     "index": 6,
+     "ide": {
+      "refusals": "3/32",
+      "kl": 2.2187756346538663
+     },
+     "heretic": {
+      "refusals": "3/32",
+      "kl": 2.218778133392334
+     }
+    },
+    {
+     "index": 7,
+     "ide": {
+      "refusals": "13/32",
+      "kl": 0.041220457504095975
+     },
+     "heretic": {
+      "refusals": "13/32",
+      "kl": 0.04122059792280197
+     }
+    },
+    {
+     "index": 8,
+     "ide": {
+      "refusals": "9/32",
+      "kl": 0.1900279633118771
+     },
+     "heretic": {
+      "refusals": "9/32",
+      "kl": 0.19002923369407654
+     }
+    }
+   ],
+   "tensors_touched_after": 0
+  },
+  "under_ide_libraries": {
+   "versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2"
+   },
+   "threads": 12,
+   "captures": "Heretic's (dump)",
+   "refusals_equal": "4/8",
+   "largest_kl_difference": 2.7300642281770706,
+   "trials": [
+    {
+     "index": 1,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 0.09253650021128124
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 0.0877549946308136
+     }
+    },
+    {
+     "index": 2,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 2.0041653998196125
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 1.8798043727874756
+     }
+    },
+    {
+     "index": 3,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 10.769056484103203
+     },
+     "heretic": {
+      "refusals": "0/32",
+      "kl": 13.499120712280273
+     }
+    },
+    {
+     "index": 4,
+     "ide": {
+      "refusals": "19/32",
+      "kl": 0.07458481932553696
+     },
+     "heretic": {
+      "refusals": "17/32",
+      "kl": 0.036170125007629395
+     }
+    },
+    {
+     "index": 5,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 0.10452232215902768
+     },
+     "heretic": {
+      "refusals": "1/32",
+      "kl": 0.09805645048618317
+     }
+    },
+    {
+     "index": 6,
+     "ide": {
+      "refusals": "0/32",
+      "kl": 1.7379344678483903
+     },
+     "heretic": {
+      "refusals": "3/32",
+      "kl": 2.218778133392334
+     }
+    },
+    {
+     "index": 7,
+     "ide": {
+      "refusals": "12/32",
+      "kl": 0.04216742798598716
+     },
+     "heretic": {
+      "refusals": "13/32",
+      "kl": 0.04122059792280197
+     }
+    },
+    {
+     "index": 8,
+     "ide": {
+      "refusals": "9/32",
+      "kl": 0.17685936408815905
+     },
+     "heretic": {
+      "refusals": "9/32",
+      "kl": 0.19002923369407654
+     }
+    }
+   ],
+   "tensors_touched_after": 0
+  }
+ },
+ "memory_guard": {
+  "what": "every model load ran under python -m wsp.memory_guard, one at a time, offline, in an isolated root and model cache",
+  "violations": 0,
+  "heretic search, tiny, 12 trials, ablation": {
+   "peak_footprint_gib": 0.69,
+   "largest_step_gib": 0.25,
+   "seconds": 20
+  },
+  "heretic search, tiny, 12 trials, ARA": {
+   "peak_footprint_gib": 0.68,
+   "largest_step_gib": 0.23,
+   "seconds": 19
+  },
+  "heretic search, Qwen2.5-0.5B, 10 trials, ablation": {
+   "peak_footprint_gib": 2.63,
+   "largest_step_gib": 2.01,
+   "seconds": 381
+  },
+  "heretic search, Qwen2.5-0.5B, 8 trials, ARA": {
+   "peak_footprint_gib": 2.81,
+   "largest_step_gib": 2.04,
+   "seconds": 440
+  },
+  "comparison on tiny (6 runs)": {
+   "peak_footprint_gib": 3.76,
+   "largest_step_gib": 2.95,
+   "seconds": 59
+  },
+  "comparison on Qwen2.5-0.5B (3 runs)": {
+   "peak_footprint_gib": 6.2,
+   "largest_step_gib": 2.9,
+   "seconds": 1833
+  },
+  "ARA trials under Heretic's libraries": {
+   "peak_footprint_gib": 3.35,
+   "largest_step_gib": 2.1,
+   "seconds": 351
+  },
+  "ARA trials under the IDE's libraries": {
+   "peak_footprint_gib": 3.2,
+   "largest_step_gib": 1.98,
+   "seconds": 346
+  }
+ },
+ "not_covered": [
+  "Heretic's defaults of 100 trials with 30 startup trials (the longest run compared has 12)",
+  "a search through the model worker with a real GGUF model (the transfer share is not measured)",
+  "Qwen3-0.6B on a model (its Heretic search is in the model-free part only)",
+  "a search resumed after a server restart or a killed process on a real model (tested on tiny in-memory models)",
+  "scorers other than refusals and KL as objectives"
+ ]
+}

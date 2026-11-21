@@ -1,0 +1,763 @@
+{
+ "date": "2026-11-18",
+ "what": "The same model, prompts and parameters through Heretic and through the IDE's behaviour directions, stage by stage.",
+ "ide": {
+  "commit": "aef0dde",
+  "runner": "HFRunner",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  },
+  "dtype": "float32",
+  "device": "cpu"
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "versions": {
+   "heretic-llm": "2.2.0.dev0",
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "peft": "0.21.2",
+   "optuna": "5.0.0",
+   "tokenizers": "0.23.2"
+  },
+  "dtype": "float32",
+  "device": "cpu",
+  "batch_size": 1,
+  "n_trials": 2,
+  "export_strategy": "merge"
+ },
+ "model": {
+  "repository": "tiny-random/qwen2.5",
+  "commit": "7a6a3128ee4137a248d6d1582824592b87a81647",
+  "layers": 4,
+  "d_model": 8,
+  "tensors": 51,
+  "parameters": 2462792
+ },
+ "prompts": {
+  "good": "mlabonne/harmless_alpaca train[:5] at 02c6a92cfcf11bb0c387334f8146d149d65b587f",
+  "bad": "mlabonne/harmful_behaviors train[:5] at 01cead01398926d81f7c52bdb790ee8cf77ebba7",
+  "kl": "mlabonne/harmless_alpaca test[:5] at 02c6a92cfcf11bb0c387334f8146d149d65b587f",
+  "system": "You are a helpful assistant.",
+  "response_prefix": ""
+ },
+ "guard": "every run under python -m wsp.memory_guard; Heretic runs reserved 4 GiB, IDE runs 6 GiB (the IDE's own forecast for this model is 4.86 GiB)",
+ "runs": {
+  "one direction, row_normalization none (seed 12345)": {
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "peft": "0.21.2",
+    "optuna": "5.0.0",
+    "tokenizers": "0.23.2"
+   },
+   "heretic_dtype": "torch.float32",
+   "heretic_device": "cpu",
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ],
+     "lengths_heretic": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ]
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ],
+     "lengths_heretic": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ]
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_per_index": [
+     0.0,
+     1.3506994481660833e-07,
+     1.2833803784137667e-07,
+     1.5511354023041598e-07,
+     2.0825807884118077e-07
+    ],
+    "bad_rel_per_index": [
+     0.0,
+     1.3462946394862562e-07,
+     1.4005825945100966e-07,
+     1.9051824351284626e-07,
+     2.9871439302726616e-07
+    ],
+    "good_max_abs": 2.384185791015625e-07,
+    "bad_max_abs": 4.172325134277344e-07,
+    "typical_norm": 1.463389277458191
+   },
+   "directions": {
+    "cosine_per_index": [
+     0.0,
+     0.9999999999894633,
+     0.9999999999734586,
+     0.9999999999581289,
+     0.9999999999777727
+    ],
+    "max_abs": 6.735324859619141e-06
+   },
+   "parameters": {
+    "direction_index": 1.4758782175156417,
+    "weight_distributions": {
+     "attn.o_proj": {
+      "max_weight": 0.9431921949871278,
+      "max_weight_position": 2.481270034898024,
+      "min_weight": 0.5617131156159574,
+      "min_weight_distance": 1.7716116157884971
+     },
+     "mlp.down_proj": {
+      "max_weight": 0.8930599195252491,
+      "max_weight_position": 2.698687965040694,
+      "min_weight": 0.5836770562669782,
+      "min_weight_distance": 1.598171847417019
+     }
+    }
+   },
+   "keys": {
+    "base": 51,
+    "merged": 51,
+    "only_base": [],
+    "only_merged": []
+   },
+   "weights": {
+    "changed": [
+     {
+      "tensor": "model.layers.1.self_attn.o_proj.weight",
+      "rel_diff": 1.1153082672530092e-05,
+      "change_over_weight": 0.2257092446088791,
+      "max_abs_diff": 2.4437904357910156e-06
+     },
+     {
+      "tensor": "model.layers.2.mlp.down_proj.weight",
+      "rel_diff": 1.1465317135666753e-05,
+      "change_over_weight": 0.2523241341114044,
+      "max_abs_diff": 2.7567148208618164e-06
+     },
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "rel_diff": 1.1040070810249296e-05,
+      "change_over_weight": 0.29204970598220825,
+      "max_abs_diff": 3.3080577850341797e-06
+     },
+     {
+      "tensor": "model.layers.3.mlp.down_proj.weight",
+      "rel_diff": 1.0824453760252386e-05,
+      "change_over_weight": 0.3153822124004364,
+      "max_abs_diff": 2.9802322387695312e-06
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "rel_diff": 1.1555806537050737e-05,
+      "change_over_weight": 0.29520875215530396,
+      "max_abs_diff": 3.159046173095703e-06
+     }
+    ],
+    "untouched_max_abs_heretic": 0.0,
+    "untouched_max_abs_ide": 0.0,
+    "ide_stored_values": 872
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "base_logits_scale": 0.3172760307788849,
+    "kl_ide": 0.0005852488684467971,
+    "kl_heretic": 0.000585252302698791,
+    "refusals_heretic": 0.0
+   },
+   "weights_from_heretic_means": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 1.5372590191006553e-07
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 1.9086491435747195e-07
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 1.6236483590757004e-07
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 1.7935950502891325e-07
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 1.5094176611701792e-07
+    }
+   ],
+   "difference_over_mean": [
+    0.047652631998062134,
+    0.027022624388337135,
+    0.026096835732460022,
+    0.04002271592617035
+   ]
+  },
+  "one direction, row_normalization pre (seed 12345)": {
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "peft": "0.21.2",
+    "optuna": "5.0.0",
+    "tokenizers": "0.23.2"
+   },
+   "heretic_dtype": "torch.float32",
+   "heretic_device": "cpu",
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ],
+     "lengths_heretic": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ]
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ],
+     "lengths_heretic": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ]
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_per_index": [
+     0.0,
+     1.3506994481660833e-07,
+     1.2833803784137667e-07,
+     1.5511354023041598e-07,
+     2.0825807884118077e-07
+    ],
+    "bad_rel_per_index": [
+     0.0,
+     1.3462946394862562e-07,
+     1.4005825945100966e-07,
+     1.9051824351284626e-07,
+     2.9871439302726616e-07
+    ],
+    "good_max_abs": 2.384185791015625e-07,
+    "bad_max_abs": 4.172325134277344e-07,
+    "typical_norm": 1.463389277458191
+   },
+   "directions": {
+    "cosine_per_index": [
+     0.0,
+     0.9999999999894633,
+     0.9999999999734586,
+     0.9999999999581289,
+     0.9999999999777727
+    ],
+    "max_abs": 6.735324859619141e-06
+   },
+   "parameters": {
+    "direction_index": 1.4758782175156417,
+    "weight_distributions": {
+     "attn.o_proj": {
+      "max_weight": 0.9431921949871278,
+      "max_weight_position": 2.481270034898024,
+      "min_weight": 0.5617131156159574,
+      "min_weight_distance": 1.7716116157884971
+     },
+     "mlp.down_proj": {
+      "max_weight": 0.8930599195252491,
+      "max_weight_position": 2.698687965040694,
+      "min_weight": 0.5836770562669782,
+      "min_weight_distance": 1.598171847417019
+     }
+    }
+   },
+   "keys": {
+    "base": 51,
+    "merged": 51,
+    "only_base": [],
+    "only_merged": []
+   },
+   "weights": {
+    "changed": [
+     {
+      "tensor": "model.layers.1.self_attn.o_proj.weight",
+      "rel_diff": 1.1146631262968335e-05,
+      "change_over_weight": 0.22573381662368774,
+      "max_abs_diff": 2.4437904357910156e-06
+     },
+     {
+      "tensor": "model.layers.2.mlp.down_proj.weight",
+      "rel_diff": 1.1568729666421322e-05,
+      "change_over_weight": 0.2513149678707123,
+      "max_abs_diff": 2.6971101760864258e-06
+     },
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "rel_diff": 1.1042535025745907e-05,
+      "change_over_weight": 0.2919079661369324,
+      "max_abs_diff": 3.248453140258789e-06
+     },
+     {
+      "tensor": "model.layers.3.mlp.down_proj.weight",
+      "rel_diff": 1.092259092748874e-05,
+      "change_over_weight": 0.3140864968299866,
+      "max_abs_diff": 3.069639205932617e-06
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "rel_diff": 1.1590328209552693e-05,
+      "change_over_weight": 0.29393231868743896,
+      "max_abs_diff": 3.1888484954833984e-06
+     }
+    ],
+    "untouched_max_abs_heretic": 0.0,
+    "untouched_max_abs_ide": 0.0,
+    "ide_stored_values": 872
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "base_logits_scale": 0.3172760307788849,
+    "kl_ide": 0.0005741157219745219,
+    "kl_heretic": 0.0005745127564296126,
+    "refusals_heretic": 0.0
+   },
+   "weights_from_heretic_means": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 1.6970321884733139e-07
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 1.9373727181453448e-07
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 1.4265694220094616e-07
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 1.9124786693956117e-07
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 1.7318859510302892e-07
+    }
+   ],
+   "difference_over_mean": [
+    0.047652631998062134,
+    0.027022624388337135,
+    0.026096835732460022,
+    0.04002271592617035
+   ]
+  },
+  "one direction, row_normalization full (seed 12345)": {
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "peft": "0.21.2",
+    "optuna": "5.0.0",
+    "tokenizers": "0.23.2"
+   },
+   "heretic_dtype": "torch.float32",
+   "heretic_device": "cpu",
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ],
+     "lengths_heretic": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ]
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ],
+     "lengths_heretic": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ]
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_per_index": [
+     0.0,
+     1.3506994481660833e-07,
+     1.2833803784137667e-07,
+     1.5511354023041598e-07,
+     2.0825807884118077e-07
+    ],
+    "bad_rel_per_index": [
+     0.0,
+     1.3462946394862562e-07,
+     1.4005825945100966e-07,
+     1.9051824351284626e-07,
+     2.9871439302726616e-07
+    ],
+    "good_max_abs": 2.384185791015625e-07,
+    "bad_max_abs": 4.172325134277344e-07,
+    "typical_norm": 1.463389277458191
+   },
+   "directions": {
+    "cosine_per_index": [
+     0.0,
+     0.9999999999894633,
+     0.9999999999734586,
+     0.9999999999581289,
+     0.9999999999777727
+    ],
+    "max_abs": 6.735324859619141e-06
+   },
+   "parameters": {
+    "direction_index": 1.4758782175156417,
+    "weight_distributions": {
+     "attn.o_proj": {
+      "max_weight": 0.9431921949871278,
+      "max_weight_position": 2.481270034898024,
+      "min_weight": 0.5617131156159574,
+      "min_weight_distance": 1.7716116157884971
+     },
+     "mlp.down_proj": {
+      "max_weight": 0.8930599195252491,
+      "max_weight_position": 2.698687965040694,
+      "min_weight": 0.5836770562669782,
+      "min_weight_distance": 1.598171847417019
+     }
+    }
+   },
+   "keys": {
+    "base": 51,
+    "merged": 51,
+    "only_base": [],
+    "only_merged": []
+   },
+   "weights": {
+    "changed": [
+     {
+      "tensor": "model.layers.1.self_attn.o_proj.weight",
+      "rel_diff": 1.1460775220654846e-05,
+      "change_over_weight": 0.22032102942466736,
+      "max_abs_diff": 2.562999725341797e-06
+     },
+     {
+      "tensor": "model.layers.2.mlp.down_proj.weight",
+      "rel_diff": 1.2391558625220934e-05,
+      "change_over_weight": 0.2505325973033905,
+      "max_abs_diff": 3.0463561415672302e-06
+     },
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "rel_diff": 1.1649950508001988e-05,
+      "change_over_weight": 0.2986244559288025,
+      "max_abs_diff": 3.91155481338501e-06
+     },
+     {
+      "tensor": "model.layers.3.mlp.down_proj.weight",
+      "rel_diff": 1.1359941548622942e-05,
+      "change_over_weight": 0.3219425678253174,
+      "max_abs_diff": 2.86102294921875e-06
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "rel_diff": 1.3577106380458976e-05,
+      "change_over_weight": 0.3000481128692627,
+      "max_abs_diff": 3.7997961044311523e-06
+     }
+    ],
+    "untouched_max_abs_heretic": 0.0,
+    "untouched_max_abs_ide": 0.0,
+    "ide_stored_values": 2616
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "base_logits_scale": 0.3172760307788849,
+    "kl_ide": 0.0007420991314575076,
+    "kl_heretic": 0.000742275093216449,
+    "refusals_heretic": 0.0
+   },
+   "weights_from_heretic_means": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 5.305587663567462e-07
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 5.144903392458798e-07
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 3.1737249181496997e-07
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 3.367225078281947e-07
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 6.506185375358567e-07
+    }
+   ],
+   "difference_over_mean": [
+    0.047652631998062134,
+    0.027022624388337135,
+    0.026096835732460022,
+    0.04002271592617035
+   ]
+  },
+  "a direction per layer, row_normalization full (seed 1)": {
+   "heretic_versions": {
+    "heretic-llm": "2.2.0.dev0",
+    "torch": "2.14.1",
+    "transformers": "5.18.0",
+    "peft": "0.21.2",
+    "optuna": "5.0.0",
+    "tokenizers": "0.23.2"
+   },
+   "heretic_dtype": "torch.float32",
+   "heretic_device": "cpu",
+   "tokens": {
+    "good": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ],
+     "lengths_heretic": [
+      30,
+      35,
+      32,
+      39,
+      36
+     ]
+    },
+    "bad": {
+     "prompts": 5,
+     "identical": 5,
+     "lengths_ide": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ],
+     "lengths_heretic": [
+      31,
+      31,
+      32,
+      29,
+      30
+     ]
+    },
+    "kl": {
+     "prompts": 5,
+     "identical": 5
+    }
+   },
+   "means": {
+    "good_rel_per_index": [
+     0.0,
+     1.3506994481660833e-07,
+     1.2833803784137667e-07,
+     1.5511354023041598e-07,
+     2.0825807884118077e-07
+    ],
+    "bad_rel_per_index": [
+     0.0,
+     1.3462946394862562e-07,
+     1.4005825945100966e-07,
+     1.9051824351284626e-07,
+     2.9871439302726616e-07
+    ],
+    "good_max_abs": 2.384185791015625e-07,
+    "bad_max_abs": 4.172325134277344e-07,
+    "typical_norm": 1.463389277458191
+   },
+   "directions": {
+    "cosine_per_index": [
+     0.0,
+     0.9999999999894633,
+     0.9999999999734586,
+     0.9999999999581289,
+     0.9999999999777727
+    ],
+    "max_abs": 6.735324859619141e-06
+   },
+   "parameters": {
+    "direction_index": null,
+    "weight_distributions": {
+     "attn.o_proj": {
+      "max_weight": 0.9234953914792223,
+      "max_weight_position": 1.9954951278252133,
+      "min_weight": 0.04517520512845649,
+      "min_weight_distance": 1.074035779526326
+     },
+     "mlp.down_proj": {
+      "max_weight": 0.7259452474791995,
+      "max_weight_position": 2.5823698772787886,
+      "min_weight": 0.29734431393826166,
+      "min_weight_distance": 1.3486343312115576
+     }
+    }
+   },
+   "keys": {
+    "base": 51,
+    "merged": 51,
+    "only_base": [],
+    "only_merged": []
+   },
+   "weights": {
+    "changed": [
+     {
+      "tensor": "model.layers.1.self_attn.o_proj.weight",
+      "rel_diff": 1.072953751070156e-05,
+      "change_over_weight": 0.03357364237308502,
+      "max_abs_diff": 3.2782554626464844e-07
+     },
+     {
+      "tensor": "model.layers.2.mlp.down_proj.weight",
+      "rel_diff": 1.3815186539615545e-05,
+      "change_over_weight": 0.16962003707885742,
+      "max_abs_diff": 2.041459083557129e-06
+     },
+     {
+      "tensor": "model.layers.2.self_attn.o_proj.weight",
+      "rel_diff": 1.3411495165178738e-05,
+      "change_over_weight": 0.33648329973220825,
+      "max_abs_diff": 4.500150680541992e-06
+     },
+     {
+      "tensor": "model.layers.3.mlp.down_proj.weight",
+      "rel_diff": 1.1707492413557947e-05,
+      "change_over_weight": 0.17280632257461548,
+      "max_abs_diff": 2.175569534301758e-06
+     },
+     {
+      "tensor": "model.layers.3.self_attn.o_proj.weight",
+      "rel_diff": 1.4028957367235134e-05,
+      "change_over_weight": 0.021787559613585472,
+      "max_abs_diff": 3.2782554626464844e-07
+     }
+    ],
+    "untouched_max_abs_heretic": 0.0,
+    "untouched_max_abs_ide": 0.0,
+    "ide_stored_values": 2616
+   },
+   "behaviour": {
+    "base_logits_max_abs_diff": 1.6391277313232422e-07,
+    "base_logits_scale": 0.3172760307788849,
+    "kl_ide": 0.00012490712106227875,
+    "kl_heretic": 0.00012496468843892217,
+    "refusals_heretic": 0.0
+   },
+   "weights_from_heretic_means": [
+    {
+     "tensor": "model.layers.1.self_attn.o_proj.weight",
+     "rel_diff": 1.8039092513026254e-06
+    },
+    {
+     "tensor": "model.layers.2.mlp.down_proj.weight",
+     "rel_diff": 6.580356211675001e-07
+    },
+    {
+     "tensor": "model.layers.2.self_attn.o_proj.weight",
+     "rel_diff": 5.379930842854244e-07
+    },
+    {
+     "tensor": "model.layers.3.mlp.down_proj.weight",
+     "rel_diff": 6.492190805546429e-07
+    },
+    {
+     "tensor": "model.layers.3.self_attn.o_proj.weight",
+     "rel_diff": 2.4557569728892995e-06
+    }
+   ],
+   "difference_over_mean": [
+    0.047652631998062134,
+    0.027022624388337135,
+    0.026096835732460022,
+    0.04002271592617035
+   ]
+  }
+ }
+}

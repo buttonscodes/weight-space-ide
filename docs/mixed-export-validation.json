@@ -1,0 +1,2157 @@
+{
+  "status": "IDE27B F16 strict quality VERIFIED; overall supervised sequence STOPPED at external baseline; external27B mixed and browser incomplete",
+  "root": "~/.cache/wsp-quantized-ide/mixed-export/evidence",
+  "runs": {
+    "browser-small/watchdog.jsonl": {
+      "sha256": "e15ecea5b69ef67e29ab7ccb8d23ccc983cfac1c99849f031ab6ed3ec9e110a9",
+      "baseline_available_gib": 78.08134460449219,
+      "minimum_available_gib": 76.3841552734375,
+      "peak_rss_gib": 1.4315185546875,
+      "peak_footprint_gib": 1.225206658244133,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 205.18252108304296
+      }
+    },
+    "external-qwen2-base/watchdog.jsonl": {
+      "sha256": "b0527277d0fe70d02263235a5a8fc37174cee75bfa7f67f3c70e331c85f41578",
+      "baseline_available_gib": 77.46194458007812,
+      "minimum_available_gib": 76.11636352539062,
+      "peak_rss_gib": 1.3901824951171875,
+      "peak_footprint_gib": 1.2750871926546097,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 9.285732374992222
+      }
+    },
+    "external-qwen2-f16/watchdog.jsonl": {
+      "sha256": "d8c0eb4df42384eb38f2ea74ebf46a1c530286461d33791726c346c5bbf0aff6",
+      "baseline_available_gib": 77.75617980957031,
+      "minimum_available_gib": 76.36302185058594,
+      "peak_rss_gib": 1.2685394287109375,
+      "peak_footprint_gib": 1.1531540974974632,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 9.271106375032105
+      }
+    },
+    "external-qwen35-base/watchdog.jsonl": {
+      "sha256": "8bfd0bc10f6bed07da17c4793aec033ebad4b2c53735851db4a617f6cf1e58e8",
+      "baseline_available_gib": 77.882080078125,
+      "minimum_available_gib": 75.63401794433594,
+      "peak_rss_gib": 1.9683837890625,
+      "peak_footprint_gib": 1.7780477777123451,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 13.390752167033497
+      }
+    },
+    "external-qwen35-q8/watchdog.jsonl": {
+      "sha256": "1bc2d4c5647cfaa0cdefa5bf9f569c63d8338fbfaae2c20a45141667fe207c3e",
+      "baseline_available_gib": 77.81083679199219,
+      "minimum_available_gib": 75.98150634765625,
+      "peak_rss_gib": 1.9820556640625,
+      "peak_footprint_gib": 1.7957937717437744,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 13.400346958020236
+      }
+    },
+    "qwen2-f16/baseline/watchdog.jsonl": {
+      "sha256": "001c9ffa02cdbff40a978ce5a511f29ff41e765b920ed9986befa2e017f1a615",
+      "baseline_available_gib": 83.32414245605469,
+      "minimum_available_gib": 81.64396667480469,
+      "peak_rss_gib": 1.020904541015625,
+      "peak_footprint_gib": 1.0168476030230522,
+      "peak_metal_gib": 0.3997344970703125,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 1,
+        "remaining": [],
+        "elapsed": 8.341802290990017
+      }
+    },
+    "qwen2-f16-template-fixed/F16-candidate/watchdog.jsonl": {
+      "sha256": "aaf6cd55c65af3d5145ff63566b608e10db1d6045750f512b11c2aa2938e94c2",
+      "baseline_available_gib": 83.10537719726562,
+      "minimum_available_gib": 81.3836669921875,
+      "peak_rss_gib": 1.2799530029296875,
+      "peak_footprint_gib": 1.2233298271894455,
+      "peak_metal_gib": 0.40557861328125,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 11.475338292017113
+      }
+    },
+    "qwen2-f16-template-fixed/F16-export/watchdog.jsonl": {
+      "sha256": "bc54a77ac9604ddc911f090d83845db8c7c1fde2bfec3fd45f305c6063db9826",
+      "baseline_available_gib": 82.98780822753906,
+      "minimum_available_gib": 82.36146545410156,
+      "peak_rss_gib": 0.83575439453125,
+      "peak_footprint_gib": 0.7195447757840157,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 6.268743459018879
+      }
+    },
+    "qwen2-f16-template-fixed/SAME-candidate/watchdog.jsonl": {
+      "sha256": "c77d45b5f746d685fb2883aa5b0e5257f8db170ae48d91923740d2d448577079",
+      "baseline_available_gib": 83.27885437011719,
+      "minimum_available_gib": 81.39263916015625,
+      "peak_rss_gib": 1.257720947265625,
+      "peak_footprint_gib": 1.217882439494133,
+      "peak_metal_gib": 0.3997344970703125,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 3,
+        "remaining": [],
+        "elapsed": 11.470035875041503
+      }
+    },
+    "qwen2-f16-template-fixed/SAME-export/watchdog.jsonl": {
+      "sha256": "dab86abdb7e5ba0286f05930eb78e146493ae9c8025815f5ab39fb15394294c8",
+      "baseline_available_gib": 83.11195373535156,
+      "minimum_available_gib": 82.45829772949219,
+      "peak_rss_gib": 0.8324432373046875,
+      "peak_footprint_gib": 0.7194837406277657,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 6.248833832971286
+      }
+    },
+    "qwen2-f16-template-fixed/baseline/watchdog.jsonl": {
+      "sha256": "375204332ed53f19ec1fcdc6a1452c40d5520a31df7dd42fe54fdeea99ebf5da",
+      "baseline_available_gib": 83.1466064453125,
+      "minimum_available_gib": 81.53669738769531,
+      "peak_rss_gib": 1.181732177734375,
+      "peak_footprint_gib": 1.177034504711628,
+      "peak_metal_gib": 0.3997344970703125,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 8.339780666981824
+      }
+    },
+    "qwen35-adaptive/Q8_0-candidate/watchdog.jsonl": {
+      "sha256": "4dc35deed5c08043948a94371fa469249394c50fe52204348b8202d4d87730de",
+      "baseline_available_gib": 82.89266967773438,
+      "minimum_available_gib": 80.80206298828125,
+      "peak_rss_gib": 2.0548553466796875,
+      "peak_footprint_gib": 1.8623220920562744,
+      "peak_metal_gib": 0.497222900390625,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 16.720189542043954
+      }
+    },
+    "qwen35-adaptive/Q8_0-export/watchdog.jsonl": {
+      "sha256": "d22e20076bec17da4b244823a7df6c2c099b1043fc3659cc4060f20c57ad143f",
+      "baseline_available_gib": 82.91531372070312,
+      "minimum_available_gib": 81.65419006347656,
+      "peak_rss_gib": 1.237060546875,
+      "peak_footprint_gib": 1.0481583029031754,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 8.363100167014636
+      }
+    },
+    "qwen35-adaptive/SAME-candidate/watchdog.jsonl": {
+      "sha256": "8b07ba9d765a430e68a6db9c988bbb5940b73f4e8fcd8ec9a764a21e78730e01",
+      "baseline_available_gib": 82.81005859375,
+      "minimum_available_gib": 80.48060607910156,
+      "peak_rss_gib": 2.0202789306640625,
+      "peak_footprint_gib": 1.8323538973927498,
+      "peak_metal_gib": 0.49664306640625,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 3,
+        "remaining": [],
+        "elapsed": 16.724938499974087
+      }
+    },
+    "qwen35-adaptive/SAME-export/watchdog.jsonl": {
+      "sha256": "26427a9cc84a1d44a7f7d2c4f87e0cde02944563951dd6b00b9ab2fa1a9e275d",
+      "baseline_available_gib": 82.83920288085938,
+      "minimum_available_gib": 81.73184204101562,
+      "peak_rss_gib": 1.23284912109375,
+      "peak_footprint_gib": 1.0483719259500504,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 8.369232667027973
+      }
+    },
+    "qwen35-adaptive/baseline/watchdog.jsonl": {
+      "sha256": "bba5b6f0b6cf58edaee3a0ff77901f1fc044464b8cd75174b291080080e5e511",
+      "baseline_available_gib": 82.791259765625,
+      "minimum_available_gib": 80.58267211914062,
+      "peak_rss_gib": 1.6537628173828125,
+      "peak_footprint_gib": 1.577547624707222,
+      "peak_metal_gib": 0.49664306640625,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 11.508504166966304
+      }
+    },
+    "supervised-27b-f16/F16-candidate/watchdog.jsonl": {
+      "sha256": "8ac90e7ab8968b8b5195a6f20b88cca7a45dff111b199a0b6dceb0fa987fe71b",
+      "baseline_available_gib": 83.22018432617188,
+      "minimum_available_gib": 63.150421142578125,
+      "peak_rss_gib": 2.0677490234375,
+      "peak_footprint_gib": 1.8832877352833748,
+      "peak_metal_gib": 18.191192626953125,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "terminal_event": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 36.07207395799924
+      },
+      "command": [
+        "~/.cache/wsp-quantized-ide/venv/bin/python",
+        "weight-space-ide/scripts/validate_mixed_export.py",
+        "--out",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16",
+        "--phase",
+        "candidate",
+        "--precision",
+        "F16"
+      ],
+      "policy": {
+        "floor": 21474836480,
+        "preferred": 26843545600,
+        "budget": 25769803776,
+        "ceiling": 27917287424,
+        "swap_growth": 0,
+        "compression_growth": 0
+      },
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 36.07207395799924
+      }
+    },
+    "supervised-27b-f16/F16-export/watchdog.jsonl": {
+      "sha256": "80a90f14717d181557216e3b48efa125ca786da1bb224f8c1bf721b9fd96b1c9",
+      "baseline_available_gib": 83.26185607910156,
+      "minimum_available_gib": 82.10685729980469,
+      "peak_rss_gib": 1.281341552734375,
+      "peak_footprint_gib": 1.159425437450409,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "terminal_event": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 46.3334859169554
+      },
+      "command": [
+        "~/.cache/wsp-quantized-ide/venv/bin/python",
+        "weight-space-ide/scripts/validate_mixed_export.py",
+        "--out",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16",
+        "--phase",
+        "export",
+        "--precision",
+        "F16"
+      ],
+      "policy": {
+        "floor": 21474836480,
+        "preferred": 26843545600,
+        "budget": 25769803776,
+        "ceiling": 27917287424,
+        "swap_growth": 0,
+        "compression_growth": 0
+      },
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 46.3334859169554
+      }
+    },
+    "supervised-27b-f16/baseline/watchdog.jsonl": {
+      "sha256": "fc3230b39468088aaf4b46ab9b5a94121cae7e02a0ca99efd4ac32a4c275db5c",
+      "baseline_available_gib": 81.77096557617188,
+      "minimum_available_gib": 63.34912109375,
+      "peak_rss_gib": 1.8105010986328125,
+      "peak_footprint_gib": 1.7316035777330399,
+      "peak_metal_gib": 18.07177734375,
+      "swap_growth": 0,
+      "compression_growth": 0,
+      "pressure_levels": [
+        1
+      ],
+      "terminal_event": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 24.74653079098789
+      },
+      "command": [
+        "~/.cache/wsp-quantized-ide/venv/bin/python",
+        "weight-space-ide/scripts/validate_mixed_export.py",
+        "--out",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16",
+        "--phase",
+        "baseline"
+      ],
+      "policy": {
+        "floor": 21474836480,
+        "preferred": 26843545600,
+        "budget": 25769803776,
+        "ceiling": 27917287424,
+        "swap_growth": 0,
+        "compression_growth": 0
+      },
+      "teardown": {
+        "event": "teardown",
+        "reason": null,
+        "returncode": 0,
+        "remaining": [],
+        "elapsed": 24.74653079098789
+      }
+    },
+    "supervised-27b-f16/external-base/watchdog.jsonl": {
+      "sha256": "83749ac352ae3447915fd466427fb7ee2c696f75ce13c374920109f6b9fddd39",
+      "baseline_available_gib": 83.24819946289062,
+      "minimum_available_gib": 76.3345947265625,
+      "peak_rss_gib": 25.299911499023438,
+      "peak_footprint_gib": 7.016315899789333,
+      "peak_metal_gib": 0.0,
+      "swap_growth": 0,
+      "compression_growth": 17842176,
+      "pressure_levels": [
+        1
+      ],
+      "terminal_event": {
+        "event": "sample",
+        "time": 1794623369.02542,
+        "available": 81963646976,
+        "free": 98877440,
+        "total": 137438953472,
+        "swap_used": 0,
+        "swap_out": 0,
+        "compressed": 9539928064,
+        "pressure": 1,
+        "psutil_available": 76456558592,
+        "inactive": 76358156288,
+        "speculative": 1687552,
+        "purgeable": 1319141376,
+        "file_backed": 81864769536,
+        "reclaimable": 81864769536,
+        "available_estimator": "vm_stat.free_excluding_speculative + file_backed; purgeable credit=0",
+        "vm_pressure": 0,
+        "tree_rss": 27165573120,
+        "tree_footprint": 7533711832,
+        "pids": [
+          60972,
+          62408
+        ],
+        "identities": {
+          "60972": 1794623337.09213,
+          "62408": 1794623365.688395
+        },
+        "stage": {
+          "name": "external four-token smoke",
+          "deadline": 501795.491319458
+        }
+      },
+      "command": [
+        "~/.cache/wsp-quantized-ide/venv/bin/python",
+        "weight-space-ide/scripts/gguf_external_smoke.py",
+        "--model",
+        "~/.cache/wsp-quantized-ide/qwen38/Qwen3.8-27B-Q4_K_M.gguf",
+        "--binary",
+        "~/.cache/wsp-quantized-ide/mixed-export/llama-build/bin/llama-completion",
+        "--out",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16/external-base/result"
+      ],
+      "policy": {
+        "floor": 21474836480,
+        "preferred": 26843545600,
+        "budget": 25769803776,
+        "ceiling": 27917287424,
+        "swap_growth": 0,
+        "compression_growth": 0
+      }
+    }
+  },
+  "candidates": {
+    "qwen2-f16-template-fixed/SAME.gguf.validation.json": {
+      "validation_status": "FAILED",
+      "checks": {
+        "gain_preserved": false,
+        "unrelated_top1_preserved": true,
+        "preservation_drift": true,
+        "max_logit_error": false,
+        "chat_prompt_identical": true
+      },
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "base_margin": 7.167621612548828,
+      "overlay_margin": 7.4801130294799805,
+      "candidate_margin": 7.2072343826293945,
+      "overlay_gain": 0.31249141693115234,
+      "candidate_gain": 0.039612770080566406,
+      "required_gain": 0.28124227523803713,
+      "retention_ratio": 0.12676434594456024,
+      "zero_gain_mode": false,
+      "preservation_kl": [
+        1.5503545886532697e-05,
+        1.2325262354086267e-06,
+        7.63263149523161e-07
+      ],
+      "unrelated_top1": [
+        true,
+        true,
+        true
+      ],
+      "max_logit_error": 0.14115524291992188,
+      "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee",
+      "artifact_sha256": "0dbddfa0e6c4efaa08347e08f41419fd65e2f384c62cbe200b94f686ab5d208d",
+      "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "precision": "SAME",
+      "completion": {
+        "ids": [
+          12095,
+          11,
+          323,
+          432
+        ],
+        "text": " Paris, and it",
+        "seconds": 0.9531121669569984,
+        "tokens_per_second": 4.196777817631687,
+        "prefill_seconds": 0.061771207954734564,
+        "decode_seconds": 0.14491066697519273,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat": {
+        "ids": [
+          9707,
+          0,
+          2585,
+          646
+        ],
+        "text": "Hello! How can",
+        "seconds": 0.34652666695183143,
+        "tokens_per_second": 11.543123174863814,
+        "prefill_seconds": 0.0796239580377005,
+        "decode_seconds": 0.13522775110322982,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 32
+      },
+      "plan_sha256": "17dbfb5b4d7b1750afef42c22017316a1631d27f6e18bbc201fc6847ec602b0b",
+      "baseline_sha256": "0aab6d6e3acd7cf1b248bfdbdb541783e57d68abf8390a122989b11bc0d9a906"
+    },
+    "qwen2-f16-template-fixed/F16.gguf.validation.json": {
+      "validation_status": "VERIFIED",
+      "checks": {
+        "gain_preserved": true,
+        "unrelated_top1_preserved": true,
+        "preservation_drift": true,
+        "max_logit_error": true,
+        "chat_prompt_identical": true
+      },
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "base_margin": 7.167621612548828,
+      "overlay_margin": 7.4801130294799805,
+      "candidate_margin": 7.474906921386719,
+      "overlay_gain": 0.31249141693115234,
+      "candidate_gain": 0.3072853088378906,
+      "required_gain": 0.28124227523803713,
+      "retention_ratio": 0.9833399965209005,
+      "zero_gain_mode": false,
+      "preservation_kl": [
+        1.5067801988684721e-05,
+        1.089864423440324e-06,
+        5.43062930172506e-07
+      ],
+      "unrelated_top1": [
+        true,
+        true,
+        true
+      ],
+      "max_logit_error": 0.0028595924377441406,
+      "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee",
+      "artifact_sha256": "2c5779649a761b1555887b327696ef58ec68083455d1673a11e2820ed2b160a1",
+      "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "precision": "F16",
+      "completion": {
+        "ids": [
+          12095,
+          11,
+          323,
+          432
+        ],
+        "text": " Paris, and it",
+        "seconds": 1.0905350419925526,
+        "tokens_per_second": 3.667924317857286,
+        "prefill_seconds": 0.11638533399673179,
+        "decode_seconds": 0.1726803340134211,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat": {
+        "ids": [
+          9707,
+          0,
+          2585,
+          646
+        ],
+        "text": "Hello! How can",
+        "seconds": 0.4097148749860935,
+        "tokens_per_second": 9.762886934812332,
+        "prefill_seconds": 0.11278450000099838,
+        "decode_seconds": 0.15225158393150195,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 32
+      },
+      "plan_sha256": "17dbfb5b4d7b1750afef42c22017316a1631d27f6e18bbc201fc6847ec602b0b",
+      "baseline_sha256": "0aab6d6e3acd7cf1b248bfdbdb541783e57d68abf8390a122989b11bc0d9a906"
+    },
+    "qwen35-adaptive/SAME.gguf.validation.json": {
+      "validation_status": "FAILED",
+      "checks": {
+        "gain_preserved": false,
+        "unrelated_top1_preserved": true,
+        "preservation_drift": true,
+        "max_logit_error": false,
+        "chat_prompt_identical": true
+      },
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "base_margin": 2.8280649185180664,
+      "overlay_margin": 3.521007537841797,
+      "candidate_margin": 2.9878149032592773,
+      "overlay_gain": 0.6929426193237305,
+      "candidate_gain": 0.15974998474121094,
+      "required_gain": 0.6236483573913575,
+      "retention_ratio": 0.23053854718463865,
+      "zero_gain_mode": false,
+      "preservation_kl": [
+        2.747425726385387e-05,
+        2.261315382331762e-06,
+        8.589204840844187e-06
+      ],
+      "unrelated_top1": [
+        true,
+        true,
+        true
+      ],
+      "max_logit_error": 0.27005672454833984,
+      "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee",
+      "artifact_sha256": "cabf7f68e38e21addba38a185ed8f18877292c7332d12460d7e9608a9ee153f4",
+      "base_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "precision": "SAME",
+      "completion": {
+        "ids": [
+          279,
+          6511,
+          314,
+          279
+        ],
+        "text": " the capital of the",
+        "seconds": 1.0784192089922726,
+        "tokens_per_second": 3.7091327441559527,
+        "prefill_seconds": 0.08161633397685364,
+        "decode_seconds": 0.18906858388800174,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 0.4311482910416089,
+        "tokens_per_second": 9.27755039997125,
+        "prefill_seconds": 0.09024687495548278,
+        "decode_seconds": 0.18663762602955103,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "plan_sha256": "14db66f51ff37825249ba8e613204b589af36b6298b2f96cd1d13b70a5b25f40",
+      "baseline_sha256": "9e3ba440b6a13dd2d135b757261e6a9df2fbb7d734193c0c6919c77fd0668fb2"
+    },
+    "qwen35-adaptive/Q8_0.gguf.validation.json": {
+      "validation_status": "VERIFIED",
+      "checks": {
+        "gain_preserved": true,
+        "unrelated_top1_preserved": true,
+        "preservation_drift": true,
+        "max_logit_error": true,
+        "chat_prompt_identical": true
+      },
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "base_margin": 2.8280649185180664,
+      "overlay_margin": 3.521007537841797,
+      "candidate_margin": 3.497987747192383,
+      "overlay_gain": 0.6929426193237305,
+      "candidate_gain": 0.6699228286743164,
+      "required_gain": 0.6236483573913575,
+      "retention_ratio": 0.9667796582177612,
+      "zero_gain_mode": false,
+      "preservation_kl": [
+        2.873098077096019e-05,
+        4.130223356327858e-06,
+        5.943250235860624e-05
+      ],
+      "unrelated_top1": [
+        true,
+        true,
+        true
+      ],
+      "max_logit_error": 0.038941383361816406,
+      "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee",
+      "artifact_sha256": "62c3cd0bc6eb70a4abc7acd30527d5b28f4ede4161522d0f896452c2518a20a1",
+      "base_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "precision": "Q8_0",
+      "completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 1.0909852919867262,
+        "tokens_per_second": 3.6664105642669536,
+        "prefill_seconds": 0.13610275002429262,
+        "decode_seconds": 0.18535733298631385,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 0.4445782919647172,
+        "tokens_per_second": 8.997290403728146,
+        "prefill_seconds": 0.09482050000224262,
+        "decode_seconds": 0.19111595797585323,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "plan_sha256": "14db66f51ff37825249ba8e613204b589af36b6298b2f96cd1d13b70a5b25f40",
+      "baseline_sha256": "9e3ba440b6a13dd2d135b757261e6a9df2fbb7d734193c0c6919c77fd0668fb2"
+    }
+  },
+  "exports": {
+    "qwen2-f16-template-fixed/SAME.export.json": {
+      "mode": "same-scheme",
+      "precision": "SAME",
+      "validation_status": "UNVALIDATED",
+      "changed_tensor_count": 1,
+      "tensors": [
+        {
+          "name": "model.layers.23.mlp.down_proj.weight",
+          "gguf_name": "blk.23.ffn_down.weight",
+          "shape": [
+            896,
+            4864
+          ],
+          "before": "Q4_0",
+          "after": "Q4_0",
+          "before_bytes": 2451456,
+          "after_bytes": 2451456
+        }
+      ],
+      "output_bytes": 428730496,
+      "original_bytes": 428730208,
+      "increase_bytes": 288,
+      "data_offset": 5948032,
+      "float_slab_limit_bytes": 1048576,
+      "requires_whole_tensor_promotion": true,
+      "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+      "format": "standalone-gguf-same-scheme",
+      "standalone": true,
+      "path": "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen2-f16-template-fixed/SAME.gguf",
+      "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "artifact_sha256": "0dbddfa0e6c4efaa08347e08f41419fd65e2f384c62cbe200b94f686ab5d208d",
+      "rows_encoded": 896,
+      "changed_rows_max_weight_error": 0.00034945830702781677,
+      "changed_rows_rms_weight_error": 2.612490826010689e-06,
+      "backend": "ggml 0.29.0 quantize_chunk",
+      "structural_status": "PASSED",
+      "patches": [
+        {
+          "id": "0002-62862",
+          "message": "Bounded factual reinforcement rank-one experiment",
+          "author": "acceptance",
+          "source": {
+            "kind": "lowrank"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794562862.7554061,
+          "info": {
+            "tests": null,
+            "drift": 0.00014
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 4358144,
+              "norm": 0.005092505723615848,
+              "max_abs": 0.000403155165258795,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 5760,
+              "pieces": 1
+            }
+          ],
+          "changed": 4358144,
+          "stored": 5760
+        },
+        {
+          "id": "0003-62864",
+          "message": "Sparse internal-layer interoperability probe",
+          "author": "acceptance",
+          "source": {
+            "kind": "sparse"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794562864.147279,
+          "info": {
+            "tests": null,
+            "drift": 0.00017
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3,
+              "norm": 0.005151446280443042,
+              "max_abs": 0.0034894479904323816,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9,
+              "pieces": 1
+            }
+          ],
+          "changed": 3,
+          "stored": 9
+        }
+      ]
+    },
+    "qwen2-f16-template-fixed/F16.export.json": {
+      "mode": "mixed",
+      "precision": "F16",
+      "validation_status": "UNVALIDATED",
+      "changed_tensor_count": 1,
+      "tensors": [
+        {
+          "name": "model.layers.23.mlp.down_proj.weight",
+          "gguf_name": "blk.23.ffn_down.weight",
+          "shape": [
+            896,
+            4864
+          ],
+          "before": "Q4_0",
+          "after": "F16",
+          "before_bytes": 2451456,
+          "after_bytes": 8716288
+        }
+      ],
+      "output_bytes": 434995328,
+      "original_bytes": 428730208,
+      "increase_bytes": 6265120,
+      "data_offset": 5948032,
+      "float_slab_limit_bytes": 1048576,
+      "requires_whole_tensor_promotion": true,
+      "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+      "format": "standalone-gguf-mixed",
+      "standalone": true,
+      "path": "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen2-f16-template-fixed/F16.gguf",
+      "base_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "artifact_sha256": "2c5779649a761b1555887b327696ef58ec68083455d1673a11e2820ed2b160a1",
+      "rows_encoded": 896,
+      "changed_rows_max_weight_error": 0.00012177228927612305,
+      "changed_rows_rms_weight_error": 1.4872936877020853e-06,
+      "backend": "ggml 0.29.0 quantize_chunk",
+      "structural_status": "PASSED",
+      "patches": [
+        {
+          "id": "0002-62862",
+          "message": "Bounded factual reinforcement rank-one experiment",
+          "author": "acceptance",
+          "source": {
+            "kind": "lowrank"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794562862.7554061,
+          "info": {
+            "tests": null,
+            "drift": 0.00014
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 4358144,
+              "norm": 0.005092505723615848,
+              "max_abs": 0.000403155165258795,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 5760,
+              "pieces": 1
+            }
+          ],
+          "changed": 4358144,
+          "stored": 5760
+        },
+        {
+          "id": "0003-62864",
+          "message": "Sparse internal-layer interoperability probe",
+          "author": "acceptance",
+          "source": {
+            "kind": "sparse"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794562864.147279,
+          "info": {
+            "tests": null,
+            "drift": 0.00017
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3,
+              "norm": 0.005151446280443042,
+              "max_abs": 0.0034894479904323816,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9,
+              "pieces": 1
+            }
+          ],
+          "changed": 3,
+          "stored": 9
+        }
+      ]
+    },
+    "qwen35-adaptive/Q8_0.export.json": {
+      "mode": "mixed",
+      "precision": "Q8_0",
+      "validation_status": "UNVALIDATED",
+      "changed_tensor_count": 1,
+      "tensors": [
+        {
+          "name": "model.layers.23.mlp.down_proj.weight",
+          "gguf_name": "blk.23.ffn_down.weight",
+          "shape": [
+            1024,
+            3584
+          ],
+          "before": "Q6_K",
+          "after": "Q8_0",
+          "before_bytes": 3010560,
+          "after_bytes": 3899392
+        }
+      ],
+      "output_bytes": 533406240,
+      "original_bytes": 532517120,
+      "increase_bytes": 889120,
+      "data_offset": 10962208,
+      "float_slab_limit_bytes": 1048576,
+      "requires_whole_tensor_promotion": true,
+      "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+      "format": "standalone-gguf-mixed",
+      "standalone": true,
+      "path": "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen35-adaptive/Q8_0.gguf",
+      "base_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "artifact_sha256": "62c3cd0bc6eb70a4abc7acd30527d5b28f4ede4161522d0f896452c2518a20a1",
+      "rows_encoded": 1024,
+      "changed_rows_max_weight_error": 0.0013156849890947342,
+      "changed_rows_rms_weight_error": 4.750950330631613e-05,
+      "backend": "ggml 0.29.0 quantize_chunk",
+      "structural_status": "PASSED",
+      "patches": [
+        {
+          "id": "0001-68180",
+          "message": "Rank-one factual reinforcement",
+          "author": "acceptance",
+          "source": {
+            "kind": "lowrank"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568180.079544,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00049
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3670016,
+              "norm": 0.015495127581600874,
+              "max_abs": 0.0006333910278044641,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 4608,
+              "pieces": 1
+            }
+          ],
+          "changed": 3670016,
+          "stored": 4608
+        },
+        {
+          "id": "0002-68182",
+          "message": "Sparse internal probe",
+          "author": "acceptance",
+          "source": {
+            "kind": "sparse"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568182.9984052,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00054
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3,
+              "norm": 0.0035233640267889866,
+              "max_abs": 0.002247316064313054,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9,
+              "pieces": 1
+            }
+          ],
+          "changed": 3,
+          "stored": 9
+        },
+        {
+          "id": "0003-68185",
+          "message": "Block internal probe",
+          "author": "human",
+          "source": {
+            "kind": "wscript",
+            "script": "P(\"model.layers.23.mlp.down_proj.weight\")[961:962, 96:97] += -0.0005118626868352294"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568185.9177442,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00054
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 1,
+              "norm": 0.0005118626868352294,
+              "max_abs": 0.0005118626868352294,
+              "rank": 1,
+              "kinds": [
+                "block"
+              ],
+              "stored": 1,
+              "pieces": 1
+            }
+          ],
+          "changed": 1,
+          "stored": 1
+        }
+      ]
+    },
+    "qwen35-adaptive/SAME.export.json": {
+      "mode": "same-scheme",
+      "precision": "SAME",
+      "validation_status": "UNVALIDATED",
+      "changed_tensor_count": 1,
+      "tensors": [
+        {
+          "name": "model.layers.23.mlp.down_proj.weight",
+          "gguf_name": "blk.23.ffn_down.weight",
+          "shape": [
+            1024,
+            3584
+          ],
+          "before": "Q6_K",
+          "after": "Q6_K",
+          "before_bytes": 3010560,
+          "after_bytes": 3010560
+        }
+      ],
+      "output_bytes": 532517408,
+      "original_bytes": 532517120,
+      "increase_bytes": 288,
+      "data_offset": 10962208,
+      "float_slab_limit_bytes": 1048576,
+      "requires_whole_tensor_promotion": true,
+      "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+      "format": "standalone-gguf-same-scheme",
+      "standalone": true,
+      "path": "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen35-adaptive/SAME.gguf",
+      "base_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "artifact_sha256": "cabf7f68e38e21addba38a185ed8f18877292c7332d12460d7e9608a9ee153f4",
+      "rows_encoded": 1024,
+      "changed_rows_max_weight_error": 0.00147162564098835,
+      "changed_rows_rms_weight_error": 1.0792403636684192e-05,
+      "backend": "ggml 0.29.0 quantize_chunk",
+      "structural_status": "PASSED",
+      "patches": [
+        {
+          "id": "0001-68180",
+          "message": "Rank-one factual reinforcement",
+          "author": "acceptance",
+          "source": {
+            "kind": "lowrank"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568180.079544,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00049
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3670016,
+              "norm": 0.015495127581600874,
+              "max_abs": 0.0006333910278044641,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 4608,
+              "pieces": 1
+            }
+          ],
+          "changed": 3670016,
+          "stored": 4608
+        },
+        {
+          "id": "0002-68182",
+          "message": "Sparse internal probe",
+          "author": "acceptance",
+          "source": {
+            "kind": "sparse"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568182.9984052,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00054
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 3,
+              "norm": 0.0035233640267889866,
+              "max_abs": 0.002247316064313054,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9,
+              "pieces": 1
+            }
+          ],
+          "changed": 3,
+          "stored": 9
+        },
+        {
+          "id": "0003-68185",
+          "message": "Block internal probe",
+          "author": "human",
+          "source": {
+            "kind": "wscript",
+            "script": "P(\"model.layers.23.mlp.down_proj.weight\")[961:962, 96:97] += -0.0005118626868352294"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794568185.9177442,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00054
+          },
+          "stats": [
+            {
+              "param": "model.layers.23.mlp.down_proj.weight",
+              "changed": 1,
+              "norm": 0.0005118626868352294,
+              "max_abs": 0.0005118626868352294,
+              "rank": 1,
+              "kinds": [
+                "block"
+              ],
+              "stored": 1,
+              "pieces": 1
+            }
+          ],
+          "changed": 1,
+          "stored": 1
+        }
+      ]
+    }
+  },
+  "external": {
+    "external-qwen2-f16/result/report.json": {
+      "artifact_sha256": "2c5779649a761b1555887b327696ef58ec68083455d1673a11e2820ed2b160a1",
+      "parameters": 630167424,
+      "tensor_types": [
+        "F16",
+        "F32",
+        "Q4_0",
+        "Q8_0"
+      ],
+      "command": [
+        "~/.cache/wsp-quantized-ide/mixed-export/llama-build/bin/llama-completion",
+        "-m",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen2-f16-template-fixed/F16.gguf",
+        "-p",
+        "The capital of France is",
+        "-n",
+        "4",
+        "-c",
+        "64",
+        "-b",
+        "64",
+        "-ub",
+        "64",
+        "-t",
+        "4",
+        "-tb",
+        "4",
+        "-ngl",
+        "0",
+        "--seed",
+        "0",
+        "--temp",
+        "0",
+        "-no-cnv",
+        "--no-warmup",
+        "--no-display-prompt",
+        "--simple-io"
+      ],
+      "returncode": 0,
+      "seconds": 0.3045902909943834,
+      "prompt": "The capital of France is",
+      "text": " Paris, and it\n\n",
+      "backend": "llama.cpp CPU only; no Metal",
+      "external_peak_rss_bytes": 839106560,
+      "binary_sha256": "651a794dfbc22a5e144932b09fbec67665d3a1e6164b16b94fff2ccbfb8a2f3f",
+      "cmake_cache_sha256": "faeba82c72815cfaf2d938ece70adfb2187526326141171f76bd5d6a2ac0cc04",
+      "qualification": "Raw completion, no chat template; CPU arithmetic may differ from IDE Metal; no edit-equivalence claim from token agreement"
+    },
+    "external-qwen35-base/result/report.json": {
+      "artifact_sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "parameters": 752393024,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q5_K",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "command": [
+        "~/.cache/wsp-quantized-ide/mixed-export/llama-build/bin/llama-completion",
+        "-m",
+        "~/.cache/wsp-quantized-ide/models/qwen35/Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-p",
+        "The capital of France is",
+        "-n",
+        "4",
+        "-c",
+        "64",
+        "-b",
+        "64",
+        "-ub",
+        "64",
+        "-t",
+        "4",
+        "-tb",
+        "4",
+        "-ngl",
+        "0",
+        "--seed",
+        "0",
+        "--temp",
+        "0",
+        "-no-cnv",
+        "--no-warmup",
+        "--no-display-prompt",
+        "--simple-io"
+      ],
+      "returncode": 0,
+      "seconds": 0.5578378330101259,
+      "prompt": "The capital of France is",
+      "text": " the capital of the\n\n",
+      "backend": "llama.cpp CPU only; no Metal",
+      "external_peak_rss_bytes": 1161838592,
+      "binary_sha256": "651a794dfbc22a5e144932b09fbec67665d3a1e6164b16b94fff2ccbfb8a2f3f",
+      "cmake_cache_sha256": "faeba82c72815cfaf2d938ece70adfb2187526326141171f76bd5d6a2ac0cc04",
+      "qualification": "Raw completion, no chat template; CPU arithmetic may differ from IDE Metal; no edit-equivalence claim from token agreement"
+    },
+    "external-qwen35-q8/result/report.json": {
+      "artifact_sha256": "62c3cd0bc6eb70a4abc7acd30527d5b28f4ede4161522d0f896452c2518a20a1",
+      "parameters": 752393024,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q5_K",
+        "Q6_K",
+        "Q8_0"
+      ],
+      "command": [
+        "~/.cache/wsp-quantized-ide/mixed-export/llama-build/bin/llama-completion",
+        "-m",
+        "~/.cache/wsp-quantized-ide/mixed-export/evidence/qwen35-adaptive/Q8_0.gguf",
+        "-p",
+        "The capital of France is",
+        "-n",
+        "4",
+        "-c",
+        "64",
+        "-b",
+        "64",
+        "-ub",
+        "64",
+        "-t",
+        "4",
+        "-tb",
+        "4",
+        "-ngl",
+        "0",
+        "--seed",
+        "0",
+        "--temp",
+        "0",
+        "-no-cnv",
+        "--no-warmup",
+        "--no-display-prompt",
+        "--simple-io"
+      ],
+      "returncode": 0,
+      "seconds": 0.5196103329653852,
+      "prompt": "The capital of France is",
+      "text": " Paris.\nThe\n\n",
+      "backend": "llama.cpp CPU only; no Metal",
+      "external_peak_rss_bytes": 1161576448,
+      "binary_sha256": "651a794dfbc22a5e144932b09fbec67665d3a1e6164b16b94fff2ccbfb8a2f3f",
+      "cmake_cache_sha256": "faeba82c72815cfaf2d938ece70adfb2187526326141171f76bd5d6a2ac0cc04",
+      "qualification": "Raw completion, no chat template; CPU arithmetic may differ from IDE Metal; no edit-equivalence claim from token agreement"
+    },
+    "external-qwen2-base/result/report.json": {
+      "artifact_sha256": "7671c0c304e6ce5a7fc577bcb12aba01e2c155cc2efd29b2213c95b18edaf6ed",
+      "parameters": 630167424,
+      "tensor_types": [
+        "F32",
+        "Q4_0",
+        "Q8_0"
+      ],
+      "command": [
+        "~/.cache/wsp-quantized-ide/mixed-export/llama-build/bin/llama-completion",
+        "-m",
+        "~/.cache/wsp-quantized-ide/models/qwen2/qwen2.5-0.5b-instruct-q4_0.gguf",
+        "-p",
+        "The capital of France is",
+        "-n",
+        "4",
+        "-c",
+        "64",
+        "-b",
+        "64",
+        "-ub",
+        "64",
+        "-t",
+        "4",
+        "-tb",
+        "4",
+        "-ngl",
+        "0",
+        "--seed",
+        "0",
+        "--temp",
+        "0",
+        "-no-cnv",
+        "--no-warmup",
+        "--no-display-prompt",
+        "--simple-io"
+      ],
+      "returncode": 0,
+      "seconds": 0.29444620897993445,
+      "prompt": "The capital of France is",
+      "text": " Paris, and it\n\n",
+      "backend": "llama.cpp CPU only; no Metal",
+      "binary_sha256": "651a794dfbc22a5e144932b09fbec67665d3a1e6164b16b94fff2ccbfb8a2f3f",
+      "cmake_cache_sha256": "faeba82c72815cfaf2d938ece70adfb2187526326141171f76bd5d6a2ac0cc04",
+      "qualification": "Raw completion, no chat template; CPU arithmetic may differ from IDE Metal; no edit-equivalence claim from token agreement"
+    }
+  },
+  "large_preview": {
+    "base_forecast": {
+      "weights": 19392690176,
+      "runtime": 2147483648,
+      "kv": 167772160,
+      "activations": 508559360,
+      "patches": 270456,
+      "temporary": 1610612736,
+      "recurrent": 603979776,
+      "convolution": 10485760,
+      "total": 24441854072
+    },
+    "plans": {
+      "Q8_0": {
+        "mode": "mixed",
+        "precision": "Q8_0",
+        "validation_status": "UNVALIDATED",
+        "changed_tensor_count": 1,
+        "tensors": [
+          {
+            "name": "model.layers.63.mlp.down_proj.weight",
+            "gguf_name": "blk.63.ffn_down.weight",
+            "shape": [
+              5120,
+              17408
+            ],
+            "before": "Q4_K",
+            "after": "Q8_0",
+            "before_bytes": 50135040,
+            "after_bytes": 94699520
+          }
+        ],
+        "output_bytes": 19448249248,
+        "original_bytes": 19403684480,
+        "increase_bytes": 44564768,
+        "data_offset": 10994592,
+        "float_slab_limit_bytes": 1048576,
+        "requires_whole_tensor_promotion": true,
+        "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+        "forecast_bytes": 24486418840
+      },
+      "F16": {
+        "mode": "mixed",
+        "precision": "F16",
+        "validation_status": "UNVALIDATED",
+        "changed_tensor_count": 1,
+        "tensors": [
+          {
+            "name": "model.layers.63.mlp.down_proj.weight",
+            "gguf_name": "blk.63.ffn_down.weight",
+            "shape": [
+              5120,
+              17408
+            ],
+            "before": "Q4_K",
+            "after": "F16",
+            "before_bytes": 50135040,
+            "after_bytes": 178257920
+          }
+        ],
+        "output_bytes": 19531807616,
+        "original_bytes": 19403684480,
+        "increase_bytes": 128123136,
+        "data_offset": 10994560,
+        "float_slab_limit_bytes": 1048576,
+        "requires_whole_tensor_promotion": true,
+        "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+        "forecast_bytes": 24569977208
+      },
+      "F32": {
+        "mode": "mixed",
+        "precision": "F32",
+        "validation_status": "UNVALIDATED",
+        "changed_tensor_count": 1,
+        "tensors": [
+          {
+            "name": "model.layers.63.mlp.down_proj.weight",
+            "gguf_name": "blk.63.ffn_down.weight",
+            "shape": [
+              5120,
+              17408
+            ],
+            "before": "Q4_K",
+            "after": "F32",
+            "before_bytes": 50135040,
+            "after_bytes": 356515840
+          }
+        ],
+        "output_bytes": 19710065536,
+        "original_bytes": 19403684480,
+        "increase_bytes": 306381056,
+        "data_offset": 10994560,
+        "float_slab_limit_bytes": 1048576,
+        "requires_whole_tensor_promotion": true,
+        "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+        "forecast_bytes": 24748235128
+      }
+    }
+  },
+  "browser": {
+    "runner_loaded_before": false,
+    "runner_loaded_after": false,
+    "verified_receipt": "Exact-hash reuse of guarded Q8 candidate; not a new model run",
+    "failed_receipt": "Exact-hash reuse of guarded SAME candidate; not a fabricated failure",
+    "screenshots": [
+      "browser-small/verified.png",
+      "browser-small/failed.png"
+    ]
+  },
+  "failures_preserved": [
+    "qwen2-f16: historical companion missing Jinja; no candidates started; clean teardown",
+    "qwen35-adaptive/SAME: semantic exit3, retention23.05%",
+    "qwen2-f16-template-fixed/SAME: semantic exit3, retention12.68%",
+    "supervised-27b-f16/external-base: process-tree budget exceeded; cleanup PermissionError; original raw log preserved, independent owned-identity teardown confirmed"
+  ],
+  "regression": {
+    "python_before_cleanup": 265,
+    "python_before_seconds": 15.99,
+    "cleanup_targeted": 7,
+    "bridge": 15,
+    "final_python": 270,
+    "final_seconds": 21.09
+  },
+  "limitations": [
+    "Fixed-suite evidence is not universal or bit-exact equivalence",
+    "External27B CPU baseline exceeded memory budget; no27B mixed external or browser acceptance",
+    "F32 merged accumulation can differ from overlay",
+    "Rows above1MiB refused",
+    "MTP/vision/dflash unsupported"
+  ],
+  "supervised_27b": {
+    "runtime_commit": "90d7fd9e062aace05a1ea9b4401ed0758a176af2",
+    "plan": {
+      "workspace": "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16/source-workspace",
+      "parameters": 26895998464,
+      "base_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "prompts": [
+        "The capital of France is",
+        "The capital of Germany is",
+        "Water freezes at",
+        "A small bird flies over"
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "Say hello."
+        }
+      ],
+      "target": " Paris",
+      "contrast": " London",
+      "context": 64,
+      "new_tokens": 4,
+      "seed": 0,
+      "precisions": [
+        "F16"
+      ],
+      "previews": {
+        "Q8_0": {
+          "mode": "mixed",
+          "precision": "Q8_0",
+          "validation_status": "UNVALIDATED",
+          "changed_tensor_count": 1,
+          "tensors": [
+            {
+              "name": "model.layers.63.mlp.down_proj.weight",
+              "gguf_name": "blk.63.ffn_down.weight",
+              "shape": [
+                5120,
+                17408
+              ],
+              "before": "Q4_K",
+              "after": "Q8_0",
+              "before_bytes": 50135040,
+              "after_bytes": 94699520
+            }
+          ],
+          "output_bytes": 19448249248,
+          "original_bytes": 19403684480,
+          "increase_bytes": 44564768,
+          "data_offset": 10994592,
+          "float_slab_limit_bytes": 1048576,
+          "requires_whole_tensor_promotion": true,
+          "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+          "forecast_bytes": 24486418840
+        },
+        "F16": {
+          "mode": "mixed",
+          "precision": "F16",
+          "validation_status": "UNVALIDATED",
+          "changed_tensor_count": 1,
+          "tensors": [
+            {
+              "name": "model.layers.63.mlp.down_proj.weight",
+              "gguf_name": "blk.63.ffn_down.weight",
+              "shape": [
+                5120,
+                17408
+              ],
+              "before": "Q4_K",
+              "after": "F16",
+              "before_bytes": 50135040,
+              "after_bytes": 178257920
+            }
+          ],
+          "output_bytes": 19531807616,
+          "original_bytes": 19403684480,
+          "increase_bytes": 128123136,
+          "data_offset": 10994560,
+          "float_slab_limit_bytes": 1048576,
+          "requires_whole_tensor_promotion": true,
+          "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+          "forecast_bytes": 24569977208
+        },
+        "F32": {
+          "mode": "mixed",
+          "precision": "F32",
+          "validation_status": "UNVALIDATED",
+          "changed_tensor_count": 1,
+          "tensors": [
+            {
+              "name": "model.layers.63.mlp.down_proj.weight",
+              "gguf_name": "blk.63.ffn_down.weight",
+              "shape": [
+                5120,
+                17408
+              ],
+              "before": "Q4_K",
+              "after": "F32",
+              "before_bytes": 50135040,
+              "after_bytes": 356515840
+            }
+          ],
+          "output_bytes": 19710065536,
+          "original_bytes": 19403684480,
+          "increase_bytes": 306381056,
+          "data_offset": 10994560,
+          "float_slab_limit_bytes": 1048576,
+          "requires_whole_tensor_promotion": true,
+          "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+          "forecast_bytes": 24748235128
+        }
+      },
+      "reservation_bytes": 24696061952,
+      "max_disk_bytes": 25769803776,
+      "total_seconds": 2400,
+      "source_commit": "90d7fd9e062aace05a1ea9b4401ed0758a176af2"
+    },
+    "baseline": {
+      "artifact_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+      "completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 3.0456876670359634,
+        "tokens_per_second": 1.3133323036674884,
+        "prefill_seconds": 0.35516979201929644,
+        "decode_seconds": 0.7492646669852547,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat_prompt": "<|im_start|>user\nSay hello.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.3046741249854676,
+        "tokens_per_second": 3.065899693568733,
+        "prefill_seconds": 0.4599349159980193,
+        "decode_seconds": 0.6980925829848275,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "overlay_completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 1.2904464169987477,
+        "tokens_per_second": 3.0997025117114037,
+        "prefill_seconds": 0.35894629202084616,
+        "decode_seconds": 0.7792187500162981,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "quality": {
+        "validation_status": "VERIFIED",
+        "checks": {
+          "gain_preserved": true,
+          "unrelated_top1_preserved": true,
+          "preservation_drift": true,
+          "max_logit_error": true,
+          "chat_prompt_identical": true
+        },
+        "criteria": {
+          "retention": 0.9,
+          "minimum_gain": 0.1,
+          "max_preservation_kl": 0.01,
+          "max_logit_error": 0.05,
+          "zero_gain_tolerance": 0.01,
+          "direction": 1
+        },
+        "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+        "base_margin": 5.976146697998047,
+        "overlay_margin": 6.523002624511719,
+        "candidate_margin": 6.523002624511719,
+        "overlay_gain": 0.5468559265136719,
+        "candidate_gain": 0.5468559265136719,
+        "required_gain": 0.4921703338623047,
+        "retention_ratio": 1.0,
+        "zero_gain_mode": false,
+        "preservation_kl": [
+          1.3729952019961358e-06,
+          8.155309723832076e-07,
+          6.07215612606917e-05
+        ],
+        "unrelated_top1": [
+          true,
+          true,
+          true
+        ],
+        "max_logit_error": 0.0,
+        "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee"
+      },
+      "residency": {
+        "backend": "ggml-metal",
+        "ggml": "0.29.0",
+        "dtype": "float32 activations / packed weights",
+        "device": "metal",
+        "packed_bytes": 19392690176,
+        "dense_parameter_bytes": 10582016,
+        "forecast": {
+          "weights": 19392690176,
+          "runtime": 2147483648,
+          "kv": 167772160,
+          "activations": 508559360,
+          "patches": 270456,
+          "temporary": 1610612736,
+          "recurrent": 603979776,
+          "convolution": 10485760,
+          "total": 24441854072
+        },
+        "mps_current": 0,
+        "mps_driver": 19404161024,
+        "mps_recommended": 115448725504,
+        "metal_allocated": 19404161024,
+        "metal_recommended": 115448725504,
+        "metal_mapped_bytes": 19403684480
+      }
+    },
+    "candidate": {
+      "validation_status": "VERIFIED",
+      "checks": {
+        "gain_preserved": true,
+        "unrelated_top1_preserved": true,
+        "preservation_drift": true,
+        "max_logit_error": true,
+        "chat_prompt_identical": true
+      },
+      "criteria": {
+        "retention": 0.9,
+        "minimum_gain": 0.1,
+        "max_preservation_kl": 0.01,
+        "max_logit_error": 0.05,
+        "zero_gain_tolerance": 0.01,
+        "direction": 1
+      },
+      "criteria_sha256": "9989eeffefe42567007a557dc696bd2e4f76f76b7b587a9d4761a282bf95bdb9",
+      "base_margin": 5.976146697998047,
+      "overlay_margin": 6.523002624511719,
+      "candidate_margin": 6.527536392211914,
+      "overlay_gain": 0.5468559265136719,
+      "candidate_gain": 0.5513896942138672,
+      "required_gain": 0.4921703338623047,
+      "retention_ratio": 1.0082906072337903,
+      "zero_gain_mode": false,
+      "preservation_kl": [
+        3.815248833295982e-06,
+        7.580997680413852e-07,
+        7.201869346929334e-05
+      ],
+      "unrelated_top1": [
+        true,
+        true,
+        true
+      ],
+      "max_logit_error": 0.027727127075195312,
+      "qualification": "Fixed-suite evidence only; no bit-exact or universal behavior guarantee",
+      "artifact_sha256": "aac8f481e535318cb7c15069e2aa49ed279a4ac475d09431a87d2f9f57dd98ec",
+      "base_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+      "precision": "F16",
+      "completion": {
+        "ids": [
+          11751,
+          13,
+          198,
+          760
+        ],
+        "text": " Paris.\nThe",
+        "seconds": 2.2408201249781996,
+        "tokens_per_second": 1.7850607263886988,
+        "prefill_seconds": 0.4153052499750629,
+        "decode_seconds": 0.712459874979686,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 5
+      },
+      "chat": {
+        "ids": [
+          9419,
+          0,
+          2500,
+          628
+        ],
+        "text": "Hello! How can",
+        "seconds": 1.34265712503111,
+        "tokens_per_second": 2.9791671495485628,
+        "prefill_seconds": 0.477320458041504,
+        "decode_seconds": 0.7117157089523971,
+        "decode_steps": 3,
+        "cache_scope": "single generation call; discarded",
+        "prompt_tokens": 15
+      },
+      "plan_sha256": "d6bfc6a663d935ebb3eebf0d4cafb54f57439ef9ca5bf8eeb97b58dab66fc9f2",
+      "baseline_sha256": "fcecea952c8e0174526ff38c4ea613f773a7a9c6a3310dddd28c92341ae7693b"
+    },
+    "export": {
+      "mode": "mixed",
+      "precision": "F16",
+      "validation_status": "UNVALIDATED",
+      "base_sha256": "d15d4b6de55f662ac40e867702d31afe738d032fa06b829b2b1a21a49d4a48ee",
+      "changed_tensor_count": 1,
+      "tensors": [
+        {
+          "name": "model.layers.63.mlp.down_proj.weight",
+          "gguf_name": "blk.63.ffn_down.weight",
+          "shape": [
+            5120,
+            17408
+          ],
+          "before": "Q4_K",
+          "after": "F16",
+          "before_bytes": 50135040,
+          "after_bytes": 178257920
+        }
+      ],
+      "output_bytes": 19531807616,
+      "original_bytes": 19403684480,
+      "increase_bytes": 128123136,
+      "data_offset": 10994560,
+      "float_slab_limit_bytes": 1048576,
+      "requires_whole_tensor_promotion": true,
+      "limitations": "A tiny patch promotes its whole tensor; no undo; no inference in preview/export; use companion for faithful edits",
+      "format": "standalone-gguf-mixed",
+      "standalone": true,
+      "path": "~/.cache/wsp-quantized-ide/mixed-export/evidence/supervised-27b-f16/F16.gguf",
+      "artifact_sha256": "aac8f481e535318cb7c15069e2aa49ed279a4ac475d09431a87d2f9f57dd98ec",
+      "rows_encoded": 5120,
+      "changed_rows_max_weight_error": 0.0001576542854309082,
+      "changed_rows_rms_weight_error": 2.412694060492619e-06,
+      "backend": "ggml 0.29.0 quantize_chunk",
+      "structural_status": "PASSED",
+      "patches": [
+        {
+          "id": "0001-20153",
+          "message": "Rank-one factual reinforcement",
+          "author": "acceptance",
+          "source": {
+            "kind": "lowrank"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794620153.177611,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00032
+          },
+          "stats": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 89128960,
+              "norm": 0.016650328509270985,
+              "max_abs": 0.00028124835807830095,
+              "rank": 1,
+              "kinds": [
+                "lowrank"
+              ],
+              "stored": 22528,
+              "pieces": 1
+            }
+          ],
+          "changed": 89128960,
+          "stored": 22528
+        },
+        {
+          "id": "0002-20165",
+          "message": "Sparse internal probe",
+          "author": "acceptance",
+          "source": {
+            "kind": "sparse"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794620165.72419,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00033
+          },
+          "stats": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 3,
+              "norm": 0.006595317033209126,
+              "max_abs": 0.004260675515979528,
+              "rank": null,
+              "kinds": [
+                "sparse"
+              ],
+              "stored": 9,
+              "pieces": 1
+            }
+          ],
+          "changed": 3,
+          "stored": 9
+        },
+        {
+          "id": "0003-20177",
+          "message": "Block internal probe",
+          "author": "human",
+          "source": {
+            "kind": "wscript",
+            "script": "P(\"model.layers.63.mlp.down_proj.weight\")[2606:2607, 3028:3029] += 0.0010396114084869623"
+          },
+          "enabled": true,
+          "strength": 1.0,
+          "created": 1794620177.530914,
+          "info": {
+            "tests": [
+              4,
+              4
+            ],
+            "drift": 0.00033
+          },
+          "stats": [
+            {
+              "param": "model.layers.63.mlp.down_proj.weight",
+              "changed": 1,
+              "norm": 0.0010396111756563187,
+              "max_abs": 0.0010396111756563187,
+              "rank": 1,
+              "kinds": [
+                "block"
+              ],
+              "stored": 1,
+              "pieces": 1
+            }
+          ],
+          "changed": 1,
+          "stored": 1
+        }
+      ]
+    },
+    "manual_teardown": {
+      "event": "manual_teardown_verification",
+      "time": 1794623405.0541198,
+      "original_error": "PermissionError from stop_group killpg SIGKILL",
+      "known": [
+        {
+          "pid": 60972,
+          "already_exited": true
+        },
+        {
+          "pid": 62408,
+          "already_exited": true
+        }
+      ],
+      "remaining": [],
+      "permits_revoked": true,
+      "independent_recheck": {
+        "time": 1794623469.4512799,
+        "identities": [
+          {
+            "pid": 60972,
+            "owned_identity_present": false,
+            "reason": "NoSuchProcess"
+          },
+          {
+            "pid": 62408,
+            "owned_identity_present": false,
+            "reason": "NoSuchProcess"
+          }
+        ],
+        "owned_group_members": [],
+        "port43879_lsof": {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "earlier_global_socket_scan_error": "psutil.AccessDenied inspecting unrelated PID80079; used scoped lsof instead"
+      }
+    },
+    "approval": "explicit supervised approval; permits now revoked",
+    "stopped_reason": "External original-model CPU process-tree memory exceeded24GiB budget; same final sample also exceeded zero-compressor-growth policy; teardown killpg raised PermissionError. No retry.",
+    "outstanding": [
+      "External27B mixed portability",
+      "Actual27B browser acceptance"
+    ],
+    "limits": {
+      "seconds": 2400,
+      "phase_seconds": 600,
+      "first_smoke_seconds": 60,
+      "context": 64,
+      "new_tokens": 4,
+      "forecast_gib": 23,
+      "stop_budget_gib": 24,
+      "ceiling_gib": 26
+    }
+  }
+}

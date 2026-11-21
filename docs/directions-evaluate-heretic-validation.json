@@ -1,0 +1,1218 @@
+{
+ "date": "2026-11-18",
+ "what": "POST /api/directions/evaluate (a modified checkpoint scored against its base as an uncommitted change) against Heretic's evaluate_model, on the merged models of finished Heretic runs",
+ "script": "scripts/heretic_compare_evaluate.py, stages E0 to E7; bounds in its docstring, written before any run",
+ "ide": {
+  "commit": "491f664",
+  "runner": "HFRunner",
+  "dtype": "float32",
+  "device": "cpu",
+  "versions": {
+   "torch": "2.15.0",
+   "transformers": "5.22.2",
+   "tokenizers": "0.23.3",
+   "safetensors": "0.8.0"
+  }
+ },
+ "heretic": {
+  "repository": "github.com/p-e-w/heretic",
+  "commit": "64e9991",
+  "dtype": "float32",
+  "device": "cpu",
+  "batch_size": 1,
+  "versions": {
+   "heretic-llm": "2.2.0.dev0",
+   "torch": "2.14.1",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2"
+  }
+ },
+ "corrections_after_the_first_run": [
+  "The script's E4 KL assertion passed its verdict twice (TypeError: Report.check() got multiple values for argument 'ok'), which stopped the first run on Qwen2.5-0.5B at its first label after the tiny model had passed. The call was corrected; no bound, prompt or assertion changed, and all three models were run again from the start."
+ ],
+ "models": {
+  "tiny-random/qwen2.5": {
+   "totals": {
+    "assertions": 40,
+    "passed": 40
+   },
+   "guard": {
+    "peak_footprint_gib": 1.02,
+    "least_available_gib": 54.7,
+    "seconds": 6.2,
+    "returncode": 0,
+    "violation": null
+   },
+   "labels": {
+    "full": {
+     "max_response_length": 10,
+     "E0": {
+      "eps": 1.4901161193847656e-07,
+      "logit_scale": 0.3172760307788849,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 51,
+      "differ": 5,
+      "changed": 6656,
+      "of": 2462792
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 5,
+      "script_differ": 5,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "tiny",
+      "method": "ablation",
+      "docs": 5,
+      "found": 5,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 8.063415180004085e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       37.4,
+       37.4
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       40.0,
+       40.0
+      ],
+      "kl": [
+       0.0007419359055347741,
+       0.0007421084446832538
+      ],
+      "kl_difference": 1.7253914847965672e-07,
+      "kl_bound": 1.7421084446832538e-06
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared (no previous)",
+      "kl_h4": 0.0007419359055347741
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "ara-s1": {
+     "max_response_length": 10,
+     "E0": {
+      "eps": 1.4901161193847656e-07,
+      "logit_scale": 0.3172760307788849,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 51,
+      "differ": 2,
+      "changed": 4094,
+      "of": 2462792
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 2,
+      "script_differ": 2,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "tiny",
+      "method": "ARA",
+      "docs": null,
+      "found": 2,
+      "equal": null
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 7.776841215445529e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       37.4,
+       37.4
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       35.6,
+       35.6
+      ],
+      "kl": [
+       9.925767699314747e-07,
+       1.0392672038506134e-06
+      ],
+      "kl_difference": 4.669043391913878e-08,
+      "kl_bound": 1.0010392672038506e-06
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared (no previous)",
+      "kl_h4": 9.925767699314747e-07
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "search-full": {
+     "max_response_length": 10,
+     "E0": {
+      "eps": 1.4901161193847656e-07,
+      "logit_scale": 0.3172760307788849,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 51,
+      "differ": 6,
+      "changed": 6912,
+      "of": 2462792
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 6,
+      "script_differ": 6,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "tiny",
+      "method": "ablation",
+      "docs": 5,
+      "found": 6,
+      "equal": false
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 8.048136379557036e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       37.4,
+       37.4
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       38.4,
+       38.4
+      ],
+      "kl": [
+       0.00016635057691019028,
+       0.00016635601059533656
+      ],
+      "kl_difference": 5.4336851462776035e-09,
+      "kl_bound": 1.1663560105953365e-06
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared (no previous)",
+      "kl_h4": 0.00016635057691019028
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "search-ara": {
+     "max_response_length": 10,
+     "E0": {
+      "eps": 1.4901161193847656e-07,
+      "logit_scale": 0.3172760307788849,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 51,
+      "differ": 1,
+      "changed": 2048,
+      "of": 2462792
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 1,
+      "script_differ": 1,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "tiny",
+      "method": "ARA",
+      "docs": null,
+      "found": 1,
+      "equal": null
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 7.776661448133382e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 5,
+       "identical": 5,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       37.4,
+       37.4
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       37.4,
+       37.4
+      ],
+      "kl": [
+       5.891843812833031e-08,
+       7.555581760243513e-08
+      ],
+      "kl_difference": 1.663737947410482e-08,
+      "kl_bound": 1.0001737762095476e-06
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared (no previous)",
+      "kl_h4": 5.891843812833031e-08
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    }
+   }
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct": {
+   "totals": {
+    "assertions": 53,
+    "passed": 53
+   },
+   "guard": {
+    "peak_footprint_gib": 4.81,
+    "least_available_gib": 49.2,
+    "seconds": 558.8,
+    "returncode": 0,
+    "violation": null
+   },
+   "labels": {
+    "full": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 7.915496826171875e-05,
+      "logit_scale": 23.16415786743164,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 290,
+      "differ": 31,
+      "changed": 71106082,
+      "of": 494032768
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 31,
+      "script_differ": 31,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen2.5",
+      "method": "ablation",
+      "docs": 31,
+      "found": 31,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 1.1002737920762229e-07,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.9375,
+       0.9375
+      ],
+      "mean_length": [
+       133.53125,
+       133.53125
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.875,
+       0.875
+      ],
+      "mean_length": [
+       131.53125,
+       131.53125
+      ],
+      "kl": [
+       0.01325146468661842,
+       0.013251330703496933
+      ],
+      "kl_difference": 1.339831214863807e-07,
+      "kl_bound": 3.9658426924123344e-05
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "pass": true,
+      "kl_h4": 0.01325146468661842,
+      "kl_s5": 0.013251462760308641,
+      "difference": 1.926309778355062e-09,
+      "bound": 2.325146276030864e-06
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "none": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 7.915496826171875e-05,
+      "logit_scale": 23.16415786743164,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 290,
+      "differ": 31,
+      "changed": 71105720,
+      "of": 494032768
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 31,
+      "script_differ": 31,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen2.5",
+      "method": "ablation",
+      "docs": 31,
+      "found": 31,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 1.0992983590085714e-07,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.9375,
+       0.9375
+      ],
+      "mean_length": [
+       133.53125,
+       133.53125
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.875,
+       0.875
+      ],
+      "mean_length": [
+       132.25,
+       132.25
+      ],
+      "kl": [
+       0.013385060541622806,
+       0.013385008089244366
+      ],
+      "kl_difference": 5.245237844064832e-08,
+      "kl_bound": 3.985292776345133e-05
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "pass": true,
+      "kl_h4": 0.013385060541622806,
+      "kl_s5": 0.013385046833718661,
+      "difference": 1.3707904145121574e-08,
+      "bound": 2.338504683371866e-06
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "ara": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 7.915496826171875e-05,
+      "logit_scale": 23.16415786743164,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 290,
+      "differ": 8,
+      "changed": 20643832,
+      "of": 494032768
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 8,
+      "script_differ": 8,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen2.5",
+      "method": "ARA",
+      "docs": 8,
+      "found": 8,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 6.122527906882169e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.9375,
+       0.9375
+      ],
+      "mean_length": [
+       133.53125,
+       133.53125
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       128.0625,
+       128.0625
+      ],
+      "kl": [
+       0.08775495513691567,
+       0.08775538206100464
+      ],
+      "kl_difference": 4.269240889698267e-07,
+      "kl_bound": 0.00010048355869509986
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "pass": true,
+      "kl_h4": 0.08775495513691567,
+      "kl_s5": 0.08775501047784928,
+      "difference": 5.534093361347914e-08,
+      "bound": 9.77550104778493e-06
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "search-abl-full": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 7.915496826171875e-05,
+      "logit_scale": 23.16415786743164,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 290,
+      "differ": 24,
+      "changed": 33488235,
+      "of": 494032768
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 24,
+      "script_differ": 24,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen2.5",
+      "method": "ablation",
+      "docs": 31,
+      "found": 24,
+      "equal": false
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 1.0990760301865521e-07,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.9375,
+       0.9375
+      ],
+      "mean_length": [
+       133.53125,
+       133.53125
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.09375,
+       0.09375
+      ],
+      "mean_length": [
+       133.9375,
+       133.9375
+      ],
+      "kl": [
+       0.04274326299491804,
+       0.042743150144815445
+      ],
+      "kl_difference": 1.1285010259598494e-07,
+      "kl_bound": 7.04300846533237e-05
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared",
+      "kl_h4": 0.04274326299491804
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    },
+    "search-ara": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 7.915496826171875e-05,
+      "logit_scale": 23.16415786743164,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 290,
+      "differ": 8,
+      "changed": 20643832,
+      "of": 494032768
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 8,
+      "script_differ": 8,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": []
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen2.5",
+      "method": "ARA",
+      "docs": 8,
+      "found": 8,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 6.122527906882169e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.9375,
+       0.9375
+      ],
+      "mean_length": [
+       133.53125,
+       133.53125
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       128.0625,
+       128.0625
+      ],
+      "kl": [
+       0.08775495513691567,
+       0.08775538206100464
+      ],
+      "kl_difference": 4.269240889698267e-07,
+      "kl_bound": 0.00010048355869509986
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "compared": "not compared",
+      "kl_h4": 0.08775495513691567
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    }
+   }
+  },
+  "Qwen/Qwen3-0.6B": {
+   "totals": {
+    "assertions": 11,
+    "passed": 11
+   },
+   "guard": {
+    "peak_footprint_gib": 5.54,
+    "least_available_gib": 47.7,
+    "seconds": 191.5,
+    "returncode": 0,
+    "violation": null
+   },
+   "labels": {
+    "ara": {
+     "max_response_length": 30,
+     "E0": {
+      "eps": 6.29425048828125e-05,
+      "logit_scale": 29.405860900878906,
+      "response_margin_bound": 0.001
+     },
+     "compare": {
+      "tensors": 310,
+      "differ": 44,
+      "changed": 115343288,
+      "of": 596049920
+     },
+     "E1": {
+      "pass": true,
+      "ide_differ": 44,
+      "script_differ": 44,
+      "worst_norm_relative": 0.0,
+      "bound": 1e-06,
+      "tied": [
+       "lm_head.weight"
+      ]
+     },
+     "E1_counts_against_the_docs": {
+      "model": "qwen3",
+      "method": "ARA",
+      "docs": 44,
+      "found": 44,
+      "equal": true
+     },
+     "E1b": {
+      "pass": true,
+      "max_abs": 0.0,
+      "bound": 8.440925114427955e-08,
+      "inexact": 0
+     },
+     "E2_base_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E3_modified_responses": {
+      "pass": true,
+      "refusal": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      },
+      "length": {
+       "prompts": 32,
+       "identical": 32,
+       "accepted_divergences": 0
+      }
+     },
+     "E4_base": {
+      "pass": true,
+      "refusals": [
+       0.09375,
+       0.09375
+      ],
+      "mean_length": [
+       143.9375,
+       143.9375
+      ]
+     },
+     "E4_modified": {
+      "pass": true,
+      "refusals": [
+       0.0,
+       0.0
+      ],
+      "mean_length": [
+       143.09375,
+       143.09375
+      ],
+      "kl": [
+       0.1809987014348735,
+       0.18099737167358398
+      ],
+      "kl_difference": 1.329761289525777e-06,
+      "kl_bound": 0.00018199737167358399
+     },
+     "E5_merged_model_as_its_own_workspace": {
+      "pass": true,
+      "kl_h4": 0.1809987014348735,
+      "kl_s5": 0.1809987062588334,
+      "difference": 4.823959898203611e-09,
+      "bound": 1.9099870625883342e-05
+     },
+     "E6_nothing_written": {
+      "pass": true,
+      "version": [
+       1,
+       1
+      ],
+      "patches": [
+       0,
+       0
+      ],
+      "merged_same": true
+     },
+     "E7_refusals": {
+      "pass": true,
+      "texts": [
+       "path holds the open workspace's own base checkpoint: there is nothing to compare",
+       "path has no safetensors weights (model.safetensors, an index, or *.safetensors files)"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "totals": {
+  "assertions": 104,
+  "passed": 104
+ }
+}
